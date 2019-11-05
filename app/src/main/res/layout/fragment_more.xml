@@ -1,0 +1,378 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:fillViewport="true"
+
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:id="@+id/ll_profile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+
+            >
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_profile"
+                android:tint="@color/colorPrimary" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/my_profile"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:id="@+id/arrow1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="15dp"
+                android:rotation="90"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_edit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_edt_profile"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/edit_profile"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:id="@+id/arrow2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="15dp"
+                android:rotation="90"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/ll_lang"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+
+            >
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_lang" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/language_setting"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:id="@+id/arrow3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="15dp"
+                android:rotation="90"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/ll_terms"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            >
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_nav_check"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/terms_of_use"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:id="@+id/arrow4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="15dp"
+                android:rotation="90"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/ll_about"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            >
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_about"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/about"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="15dp"
+                android:rotation="90"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/ll_contact"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            >
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_contact" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/contact_us"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:id="@+id/arrow5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="15dp"
+                android:rotation="90"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/ll_bank"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            >
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_bank" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/bank_account"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="15dp"
+                android:rotation="90"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary" />
+
+        <LinearLayout
+            android:id="@+id/ll_logout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            >
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_logout"
+
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="start|center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/logout"
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:id="@+id/arrow7"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+                android:padding="15dp"
+                android:rotation="90"
+                android:src="@drawable/ic_right_arrow" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/colorPrimary" />
+    </LinearLayout>
+</ScrollView>

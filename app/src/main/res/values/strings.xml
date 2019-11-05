@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">RegisterMe</string>
+
+    <string name="suc">Success !</string>
+    <string name="cancel">Cancel</string>
+    <string name="field_req">Field is required</string>
+    <string name="inv_email">Invalid email address</string>
+    <string name="sign_up2">Sign Up</string>
+    <string name="code">code</string>
+    <string name="email_exists">Email exists</string>
+    <string name="something">Error ! Something went haywire</string>
+    <string name="inc_em_pas">Incorrect email or password</string>
+    <string name="login">Log in</string>
+    <string name="skip">skip</string>
+    <string name="user_name">user_name</string>
+    <string name="user_password">password</string>
+    <string name="user_email">Email (Optional)</string>
+    <string name="user_phone">Phone number</string>
+    <string name="register">register</string>
+    <string name="si_su">Please Sign in or sign up .</string>
+    <string name="home">home</string>
+    <string name="new_user">Sign up.</string>
+    <string name="wait">wait ...</string>
+    <string name="gender">gender</string>
+    <string name="notifications">notifications</string>
+    <string name="ok">Ok</string>
+    <string name="sign_in">sign in</string>
+    <string name="sign_up">sign up</string>
+    <string name="select_a_picture_to_upload">select a picture to upload</string>
+    <string name="camera">camera</string>
+    <string name="gallery">gallery</string>
+    <string name="upload_image">upload image</string>
+    <string name="female">female</string>
+    <string name="male">male</string>
+    <string name="select_language">select language</string>
+    <string name="select">select </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_profile">my profile</string>
+    <string name="edit_profile">edit profile</string>
+    <string name="language_setting">language setting</string>
+    <string name="terms_of_use">terms of use</string>
+    <string name="about">about us</string>
+    <string name="contact_us">contact us</string>
+    <string name="bank_account">bank account</string>
+    <string name="logout">logout</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="save">save</string>
+    <string name="subject">subject</string>
+    <string name="message">message</string>
+    <string name="send">send</string>
+    <string name="bank_accounts">bank accounts</string>
+    <string name="bank_name">bank name</string>
+    <string name="account_name">account name</string>
+    <string name="account_iban">account iban</string>
+    <string name="account_number">account number</string>
+    <string name="perm_image_denied">Permision Images Deined</string>
+    <string name="inc_phone_pas">phone or Password InCorrect</string>
+    <string name="inc_phone">phone  InCorrect</string>
+    <string name="inc_pass">Password InCorrect</string>
+    <string name="my_orders">My Orders</string>
+    <string name="more">More</string>
+
+</resources>
