@@ -3,6 +3,7 @@ package com.creativeshare.registerme.activities_fragments.activities.home_activi
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -27,6 +28,7 @@ private DiscreteScrollView discreteScrollView;
     private List<CategoryModel> categoryModelList;
 private Home_Activity activity;
     private CategoryAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
 
     public static Fragment_Main newInstance() {
 
@@ -48,7 +50,7 @@ private Home_Activity activity;
                    
                 }, 500);
 
-discreteScrollView.setOverScrollEnabled(false);
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,6 +65,10 @@ discreteScrollView.setOverScrollEnabled(false);
         categoryModelList=new ArrayList<>();
         activity=(Home_Activity)getActivity(); 
         discreteScrollView=view.findViewById(R.id.discreteScrollView);
+
+    discreteScrollView.setScrollContainer(false);
+        discreteScrollView.setHorizontalScrollBarEnabled(false);
+        discreteScrollView.canScrollHorizontally(-1);
         discreteScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
                 .setMinScale(0.75f)
