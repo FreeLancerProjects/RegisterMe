@@ -14,6 +14,8 @@ import com.creativeshare.registerme.activities_fragments.activities.home_activit
 import com.creativeshare.registerme.adapter.CategoryAdapter;
 import com.creativeshare.registerme.models.CategoryModel;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.transform.Pivot;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,7 @@ private Home_Activity activity;
                    
                 }, 500);
 
+discreteScrollView.setOverScrollEnabled(false);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +63,12 @@ private Home_Activity activity;
         categoryModelList=new ArrayList<>();
         activity=(Home_Activity)getActivity(); 
         discreteScrollView=view.findViewById(R.id.discreteScrollView);
+        discreteScrollView.setItemTransformer(new ScaleTransformer.Builder()
+                .setMaxScale(1.0f)
+                .setMinScale(0.75f)
+                .setPivotX(Pivot.X.CENTER)
+                .setPivotY(Pivot.Y.BOTTOM)
+                .build());
     }
 
 
