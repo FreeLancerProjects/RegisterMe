@@ -42,7 +42,7 @@ private Home_Activity activity;
 
         new Handler()
                 .postDelayed(() -> {
-               discreteScrollView.scrollToPosition(2);
+               discreteScrollView.scrollToPosition(1);
                    
                 }, 500);
 
