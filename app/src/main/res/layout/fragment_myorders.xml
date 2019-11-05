@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.MyOrders_Fragment">
+    tools:context="com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_MyOrders">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

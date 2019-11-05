@@ -1,4 +1,4 @@
-package com.creativeshare.roses.activites_fragments.splash_activity.home_activity.fragments;
+package com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -44,13 +44,11 @@ public class Fragment_Home extends Fragment {
     private Home_Activity homeActivity;
     private AHBottomNavigation ah_bottom_nav;
     private String cuurent_language;
-    public DrawerLayout mDrawer;
-    private NavigationView nvView;
+
     private TextView tv_title;
     private Preferences preferences;
     private UserModel userModel;
     private ImageView im_cart,im_menu;
-    private RecyclerView rec_depart;
     private TextView textNotify;
     private int amount=0;
 
@@ -73,11 +71,7 @@ public class Fragment_Home extends Fragment {
         tv_title = view.findViewById(R.id.tv_title);
 
 
-        mDrawer = view.findViewById(R.id.drawer_layout);
-        nvView = view.findViewById(R.id.nvView);
-        rec_depart.setDrawingCacheEnabled(true);
-        rec_depart.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-        rec_depart.setItemViewCacheSize(25);
+
 
 
 
@@ -91,11 +85,23 @@ public class Fragment_Home extends Fragment {
                         homeActivity.DisplayFragmentMain();
                         break;
                     case 1:
-                        homeActivity.DisplayFragmentMain();
+                        if(userModel!=null){
+
+                            homeActivity.DisplayFragmentMyorders();}
+                        else {
+                            Common.CreateUserNotSignInAlertDialog(homeActivity);
+
+                        }
 
                         break;
                     case 2:
-                        homeActivity.DisplayFragmentMain();
+                        if(userModel!=null){
+
+                            homeActivity.DisplayFragmentNotifications();}
+                        else {
+                            Common.CreateUserNotSignInAlertDialog(homeActivity);
+
+                        }
 
                         break;
                     case 3:
@@ -117,26 +123,28 @@ public class Fragment_Home extends Fragment {
     }
 
 
-    }
+
 
     private void setUpBottomNavigation() {
 
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.home), R.drawable.shops);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(getString(R.string.Search), R.drawable.ic_placeholder);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.my_profile), R.drawable.profile);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.more), R.drawable.more);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(getString(R.string.home), R.drawable.ic_nav_home);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(getString(R.string.my_orders), R.drawable.ic_order);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(getString(R.string.notifications), R.drawable.ic_nav_notification);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(getString(R.string.my_profile), R.drawable.ic_user_profile);
+        AHBottomNavigationItem item5 = new AHBottomNavigationItem(getString(R.string.more), R.drawable.ic_more);
 
         ah_bottom_nav.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         ah_bottom_nav.setDefaultBackgroundColor(ContextCompat.getColor(homeActivity, R.color.white));
         ah_bottom_nav.setTitleTextSizeInSp(14, 12);
         ah_bottom_nav.setForceTint(true);
-        ah_bottom_nav.setAccentColor(ContextCompat.getColor(homeActivity, R.color.colorAccent));
+        ah_bottom_nav.setAccentColor(ContextCompat.getColor(homeActivity, R.color.colorPrimary));
         ah_bottom_nav.setInactiveColor(ContextCompat.getColor(homeActivity, R.color.gray4));
 
         ah_bottom_nav.addItem(item1);
         ah_bottom_nav.addItem(item2);
         ah_bottom_nav.addItem(item3);
         ah_bottom_nav.addItem(item4);
+        ah_bottom_nav.addItem(item5);
 
 
     }

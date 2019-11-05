@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/about_hand_break"
+            android:text="@string/about"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"

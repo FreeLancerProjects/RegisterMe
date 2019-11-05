@@ -25,7 +25,7 @@ import java.util.Locale;
 import io.paperdb.Paper;
 
 public class Fragment_More extends Fragment {
-    private LinearLayout ll_lang, ll_terms, ll_about, ll_contact, ll_register_as_a_company, ll_logout,ll_bank, ll_edit_profile;
+    private LinearLayout ll_lang, ll_terms, ll_about, ll_contact, ll_logout,ll_bank, ll_edit_profile;
     private Home_Activity homeActivity;
     private Preferences preferences;
     private UserModel userModel;
@@ -59,7 +59,6 @@ public class Fragment_More extends Fragment {
         ll_terms = view.findViewById(R.id.ll_terms);
         ll_about = view.findViewById(R.id.ll_about);
         ll_contact=view.findViewById(R.id.ll_contact);
-        ll_register_as_a_company = view.findViewById(R.id.ll_register_as_a_company);
         ll_logout = view.findViewById(R.id.ll_logout);
         ll_edit_profile =view.findViewById(R.id.ll_edit_profile);
 ll_bank=view.findViewById(R.id.ll_bank);
@@ -116,13 +115,7 @@ ll_bank=view.findViewById(R.id.ll_bank);
             }
         });
 
-        ll_register_as_a_company.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://rosemart.store/market_register"));
-                startActivity(browserIntent);
-            }
-        });
+
     }
     private void CreateLanguageDialog()
     {
