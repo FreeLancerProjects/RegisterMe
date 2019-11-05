@@ -59,4 +59,7 @@
     <string name="inc_pass">كلمة المرور خطأ</string>
     <string name="my_orders">My Orders</string>
     <string name="more">More</string>
+    <string name="create_cv">Create Cv</string>
+    <string name="create_email">Create Email</string>
+    <string name="jobs">Jobs</string>
 </resources>
