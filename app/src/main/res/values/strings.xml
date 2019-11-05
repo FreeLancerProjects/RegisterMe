@@ -61,6 +61,15 @@
     <string name="inc_pass">Password InCorrect</string>
     <string name="my_orders">My Orders</string>
     <string name="more">More</string>
+    <string name="Create_Cv">Create Cv</string>
+    <string name="Edit_cv">Edit Cv</string>
+    <string name="name">full name</string>
+    <string name="email">email</string>
+    <string name="experience">experience</string>
+    <string name="qualification">qualification</string>
+    <string name="Hand_graduation">Hand graduation</string>
+    <string name="Skills">Skills</string>
+    <string name="others">others</string>
     <string name="create_cv">Create Cv</string>
     <string name="create_email">Create Email</string>
     <string name="jobs">Jobs</string>
