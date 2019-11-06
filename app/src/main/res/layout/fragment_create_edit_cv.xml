@@ -41,11 +41,14 @@ android:background="@color/white"
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabSelectedTextColor="@color/white"
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:tabIndicatorHeight="0dp"
-        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorColor="@color/white"
+        app:tabRippleColor="@color/colorPrimary"
+        app:tabBackground="@drawable/tab_selected"
+        app:tabTextColor="@color/white"
         >
 
     </com.google.android.material.tabs.TabLayout>
