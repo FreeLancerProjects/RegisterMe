@@ -72,6 +72,7 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_edt_profile"
+                android:padding="8dp"
 
                 />
 
@@ -118,7 +119,10 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_lang" />
+                android:src="@drawable/ic_lang"
+                android:padding="8dp"
+
+                />
 
             <TextView
                 android:layout_width="0dp"
@@ -163,6 +167,7 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_nav_check"
+                android:padding="8dp"
 
                 />
 
@@ -209,6 +214,7 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_about"
+                android:padding="8dp"
 
                 />
 
@@ -253,7 +259,10 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_contact" />
+                android:src="@drawable/ic_contact"
+                android:padding="8dp"
+
+                />
 
             <TextView
                 android:layout_width="0dp"
@@ -297,7 +306,10 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_bank" />
+                android:src="@drawable/ic_bank"
+                android:padding="8dp"
+
+                />
 
             <TextView
                 android:layout_width="0dp"
@@ -341,6 +353,7 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_logout"
+                android:padding="8dp"
 
                 />
 

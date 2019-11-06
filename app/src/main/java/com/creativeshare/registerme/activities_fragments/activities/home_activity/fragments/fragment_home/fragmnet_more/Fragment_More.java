@@ -65,19 +65,19 @@ ll_bank=view.findViewById(R.id.ll_bank);
         ll_terms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // homeActivity.DisplayFragmentTerms_Condition();
+                homeActivity.DisplayFragmentTerms_Condition();
             }
         });
         ll_about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   homeActivity.DisplayFragmentabout();
+                homeActivity.DisplayFragmentabout();
             }
         });
         ll_contact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  homeActivity.DisplayFragmentContactUS();
+                homeActivity.DisplayFragmentContactUS();
             }
         });
         ll_logout.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +86,7 @@ ll_bank=view.findViewById(R.id.ll_bank);
                 if (userModel == null) {
                     Common.CreateUserNotSignInAlertDialog(homeActivity);
                 } else {
-                  //  homeActivity.Logout();
+                  // homeActivity.Logout();
                 }
             }
         });
@@ -99,7 +99,7 @@ ll_bank=view.findViewById(R.id.ll_bank);
         ll_bank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //    homeActivity.DisplayFragmentBankAccount();
+               homeActivity.DisplayFragmentBankAccount();
             }
         });
         ll_edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +107,7 @@ ll_bank=view.findViewById(R.id.ll_bank);
             public void onClick(View view) {
                 if(userModel!=null){
                 Log.e("llll","edit");
-               // homeActivity.DisplayFragmentEditprofile();
+                homeActivity.DisplayFragmentEditprofile();
                 }
                 else {
                     Common.CreateUserNotSignInAlertDialog(homeActivity);
@@ -152,10 +152,10 @@ ll_bank=view.findViewById(R.id.ll_bank);
                 int pos = numberPicker.getValue();
                 if (pos == 0)
                 {
-                 //   homeActivity.RefreshActivity("en");
+                    homeActivity.RefreshActivity("en");
                 }else if (pos ==1)
                 {
-                  //  homeActivity.RefreshActivity("ar");
+                    homeActivity.RefreshActivity("ar");
 
                 }
 

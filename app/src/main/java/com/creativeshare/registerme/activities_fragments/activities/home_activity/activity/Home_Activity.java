@@ -3,6 +3,7 @@ package com.creativeshare.registerme.activities_fragments.activities.home_activi
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -494,6 +495,26 @@ public class Home_Activity extends AppCompatActivity {
     }
 */
 
+    public void RefreshActivity(String lang) {
+        //Log.e("lang",selected_language);
+        Paper.book().write("lang", lang);
+        preferences.create_update_language(this, lang);
+        preferences.setIsLanguageSelected(this);
+        Language_Helper.setNewLocale(this, lang);
+
+        new Handler()
+                .postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+                }, 1050);
+
+
+    }
 
 
 }

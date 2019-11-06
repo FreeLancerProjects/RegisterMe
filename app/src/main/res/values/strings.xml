@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RegisterMe</string>
+    <string name="app_name">Register Me</string>
 
     <string name="suc">Success !</string>
     <string name="cancel">Cancel</string>
@@ -36,7 +36,6 @@
     <string name="select">select </string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="my_profile">my profile</string>
     <string name="edit_profile">edit profile</string>
     <string name="language_setting">language setting</string>
@@ -80,5 +79,6 @@
     <string name="private_sector">Private Sector</string>
     <string name="government_sector">Government Sector</string>
     <string name="cv">CV</string>
+    <string name="failed">Failed</string>
 
 </resources>

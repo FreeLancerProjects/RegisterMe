@@ -79,13 +79,13 @@ public class Fragment_Contact_Us extends Fragment {
 
         updateUI();
 
-       /* image_back.setOnClickListener(new View.OnClickListener() {
+       image_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.Back();
             }
         });
-*/
+
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,8 +101,8 @@ public class Fragment_Contact_Us extends Fragment {
 
         if (userModel != null) {
 
-          //  edt_name.setText(userModel.getName());
-            //  edt_email.setText(userModel.gety);
+            //edt_name.setText(userModel.getName());
+            // edt_email.setText(userModel.gety);
 
         }
     }
@@ -123,7 +123,7 @@ public class Fragment_Contact_Us extends Fragment {
             edt_msg.setError(null);
             edt_subject.setError(null);
             Common.CloseKeyBoard(activity, edt_name);
-            //Send(m_name, m_email, m_msg,subject);
+            Send(m_name, m_email, m_msg,subject);
         } else {
             if (TextUtils.isEmpty(m_name)) {
                 edt_name.setError(getString(R.string.field_req));
@@ -154,7 +154,7 @@ if(TextUtils.isEmpty(subject)){
         }
     }
 
-   /* private void Send(String m_name, String m_email, String m_msg, String subject) {
+   private void Send(String m_name, String m_email, String m_msg, String subject) {
 
 
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
@@ -189,5 +189,5 @@ if(TextUtils.isEmpty(subject)){
                         }
                     }
                 });
-    }*/
+    }
 }

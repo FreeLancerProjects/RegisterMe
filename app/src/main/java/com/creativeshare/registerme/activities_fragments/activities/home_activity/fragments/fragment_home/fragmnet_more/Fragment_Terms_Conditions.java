@@ -63,12 +63,12 @@ public class Fragment_Terms_Conditions extends Fragment {
         getAppData();
 
 
-       /* back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.Back();
             }
-        });*/
+        });
     }
 
     private void getAppData() {

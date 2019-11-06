@@ -63,12 +63,12 @@ Fragment_About about=new Fragment_About();
         //getAppData(cuurent_language);
 
 
-     /*   back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.Back();
             }
-        });*/
+        });
     }
 /*
     private void getAppData(String cuurent_language) {

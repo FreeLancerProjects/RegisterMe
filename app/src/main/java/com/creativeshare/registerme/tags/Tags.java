@@ -2,7 +2,7 @@ package com.creativeshare.registerme.tags;
 
 public class Tags {
 
-   public static String base_url = "";
+   public static String base_url = "http://registerme.creativeshare.sa/";
 
 
    public static final String IMAGE_SLIDER_URL = base_url+"upload/sliders/";
