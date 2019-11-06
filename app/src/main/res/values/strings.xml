@@ -74,5 +74,10 @@
     <string name="jobs">Jobs</string>
     <string name="enter_the_name_you_want_to_become_your_email">Enter the name you want to become your email</string>
     <string name="choose_the_type_of_email_you_want">Choose the type of email you want</string>
+    <string name="enter_job_link">Enter Job Link</string>
+    <string name="no_jobs_to_display">No Jobs To Display</string>
+    <string name="applay_for_job">Applay For Job</string>
+    <string name="private_sector">Private Sector</string>
+    <string name="government_sector">Government Sector</string>
 
 </resources>

@@ -51,6 +51,9 @@ holder.itemView.setOnClickListener(new View.OnClickListener() {
         else if(holder.getLayoutPosition()==1){
          activity.DisplayFragmentCreateEmail();
         }
+        else {
+            activity.DisplayFragmentJobs();
+        }
     }
 });
     }

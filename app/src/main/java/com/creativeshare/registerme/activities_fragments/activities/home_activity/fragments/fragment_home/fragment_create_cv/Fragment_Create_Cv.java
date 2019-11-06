@@ -18,7 +18,7 @@ public class Fragment_Create_Cv extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_edit_cv, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_cv, container, false);
         initView(view);
         return view;
 

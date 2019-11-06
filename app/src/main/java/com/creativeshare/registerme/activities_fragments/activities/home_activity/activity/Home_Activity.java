@@ -14,6 +14,7 @@ import com.creativeshare.registerme.activities_fragments.activities.home_activit
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Profile;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Create_Edit_Cv;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_email.Fragment_Create_Email;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_jobs.Fragment_Jobs;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragmnet_more.Fragment_About;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragmnet_more.Fragment_Bank_Account;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragmnet_more.Fragment_Contact_Us;
@@ -52,6 +53,7 @@ public class Home_Activity extends AppCompatActivity {
     private Fragment_Edit_profile fragment_edit_profile;
     private Fragment_Create_Email fragment_create_email;
     private Fragment_Create_Edit_Cv fragment_create_edit_cv;
+    private Fragment_Jobs fragment_jobs;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -382,7 +384,20 @@ public class Home_Activity extends AppCompatActivity {
         }
 
     }
+    public void DisplayFragmentJobs() {
+        fragment_count += 1;
+        fragment_jobs = Fragment_Jobs.newInstance();
 
+
+        if (fragment_jobs.isAdded()) {
+            fragmentManager.beginTransaction().show(fragment_jobs).commit();
+
+        } else {
+            fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_jobs, "fragment_jobs").addToBackStack("fragment_jobs").commit();
+
+        }
+
+    }
     public void onBackPressed() {
         Back();
     }
