@@ -32,9 +32,11 @@ public class Fragment_Jobs extends Fragment {
     private String cuurent_language;
     private TabLayout tab;
     private ViewPager pager;
+    private ImageView im_back;
     private ViewPagerAdapter adapter;
     private List<Fragment> fragmentList;
     private List<String> titleList;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +53,16 @@ public class Fragment_Jobs extends Fragment {
         tab = view.findViewById(R.id.tab);
         pager = view.findViewById(R.id.pager);
         tab.setupWithViewPager(pager);
+        im_back=view.findViewById(R.id.arrow);
+        if(cuurent_language.equals("en")){
+            im_back.setRotation(180.0f);
+        }
+        im_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeActivity.Back();
+            }
+        });
         pager.setOffscreenPageLimit(3);
         fragmentList = new ArrayList<>();
         titleList = new ArrayList<>();

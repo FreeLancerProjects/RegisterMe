@@ -3,28 +3,29 @@
 <FrameLayout android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    >
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="1dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
+
 
         >
     <com.makeramen.roundedimageview.RoundedImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         app:riv_corner_radius="10dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/job"
         />
     </androidx.cardview.widget.CardView>
 

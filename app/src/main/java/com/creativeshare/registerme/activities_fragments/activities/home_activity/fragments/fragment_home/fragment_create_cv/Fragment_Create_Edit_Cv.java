@@ -35,6 +35,8 @@ public class Fragment_Create_Edit_Cv extends Fragment {
     private List<Fragment> fragmentList;
     private List<String> titleList;
     private int image[];
+    private ImageView im_back;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +53,16 @@ public class Fragment_Create_Edit_Cv extends Fragment {
         tab = view.findViewById(R.id.tab);
         pager = view.findViewById(R.id.pager);
         tab.setupWithViewPager(pager);
+        im_back=view.findViewById(R.id.arrow);
+        if(cuurent_language.equals("en")){
+            im_back.setRotation(180.0f);
+        }
+        im_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeActivity.Back();
+            }
+        });
         pager.setOffscreenPageLimit(3);
         fragmentList = new ArrayList<>();
         titleList = new ArrayList<>();
