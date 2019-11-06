@@ -79,5 +79,6 @@
     <string name="applay_for_job">Applay For Job</string>
     <string name="private_sector">Private Sector</string>
     <string name="government_sector">Government Sector</string>
+    <string name="cv">CV</string>
 
 </resources>

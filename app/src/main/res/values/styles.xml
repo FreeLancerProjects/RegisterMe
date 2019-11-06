@@ -35,4 +35,9 @@
         <item name="android:windowEnterAnimation">@anim/dialog_congratulation_enter</item>
         <item name="android:windowExitAnimation">@anim/dialog_congratulation_exit</item>
     </style>
+    <style name="TabLayoutStyle" parent="Base.Widget.Design.TabLayout">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

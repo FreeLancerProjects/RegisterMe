@@ -62,7 +62,7 @@ public class Fragment_Jobs extends Fragment {
 
         adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.AddFragments(fragmentList);
-
+        adapter.AddTitles(titleList);
         pager.setAdapter(adapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
 
