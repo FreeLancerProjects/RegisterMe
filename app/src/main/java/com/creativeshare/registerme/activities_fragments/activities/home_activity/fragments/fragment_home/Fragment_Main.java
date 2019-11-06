@@ -28,7 +28,6 @@ private DiscreteScrollView discreteScrollView;
     private List<CategoryModel> categoryModelList;
 private Home_Activity activity;
     private CategoryAdapter adapter;
-    private LinearLayoutManager linearLayoutManager;
 
     public static Fragment_Main newInstance() {
 
@@ -37,7 +36,7 @@ private Home_Activity activity;
 
 
     private void updateUI() {
-        categoryModelList.add(new CategoryModel(R.drawable.ic_cv, getString(R.string.create_cv)));
+        categoryModelList.add(new CategoryModel(R.drawable.ic_cv, getString(R.string.Create_Cv)));
         categoryModelList.add(new CategoryModel(R.drawable.ic_email3, getString(R.string.create_email)));
         categoryModelList.add(new CategoryModel(R.drawable.ic_team, getString(R.string.jobs)));
  
@@ -66,9 +65,7 @@ private Home_Activity activity;
         activity=(Home_Activity)getActivity(); 
         discreteScrollView=view.findViewById(R.id.discreteScrollView);
 
-    discreteScrollView.setScrollContainer(false);
-        discreteScrollView.setHorizontalScrollBarEnabled(false);
-        discreteScrollView.canScrollHorizontally(-1);
+
         discreteScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
                 .setMinScale(0.75f)

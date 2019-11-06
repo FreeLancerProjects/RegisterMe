@@ -1,7 +1,5 @@
 package com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,7 +26,7 @@ import java.util.Locale;
 import io.paperdb.Paper;
 
 
-public class Create_Edit_Cv_Fragment extends Fragment {
+public class Fragment_Create_Edit_Cv extends Fragment {
     private Home_Activity homeActivity;
     private String cuurent_language;
     private TabLayout tab;
@@ -57,8 +55,8 @@ public class Create_Edit_Cv_Fragment extends Fragment {
         fragmentList = new ArrayList<>();
         titleList = new ArrayList<>();
         image = new int[]{R.drawable.ic_about, R.drawable.ic_edt_profile};
-        fragmentList.add(Create_Cv_Fragment.newInstance());
-        fragmentList.add(Edit_Cv_Fragment.newInstance());
+        fragmentList.add(Fragment_Create_Cv.newInstance());
+        fragmentList.add(Fragment_Edit_Cv.newInstance());
 
         titleList.add(getString(R.string.Create_Cv));
         titleList.add(getString(R.string.Edit_cv));
@@ -98,8 +96,8 @@ public class Create_Edit_Cv_Fragment extends Fragment {
 
 
     }
-    public static Create_Edit_Cv_Fragment newInstance() {
-        return new Create_Edit_Cv_Fragment();
+    public static Fragment_Create_Edit_Cv newInstance() {
+        return new Fragment_Create_Edit_Cv();
     }
 
     private void createTabIcons() {

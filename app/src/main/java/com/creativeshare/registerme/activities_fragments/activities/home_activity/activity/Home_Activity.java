@@ -12,6 +12,8 @@ import com.creativeshare.registerme.activities_fragments.activities.home_activit
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_MyOrders;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Notification;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Profile;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Create_Edit_Cv;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_email.Fragment_Create_Email;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragmnet_more.Fragment_About;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragmnet_more.Fragment_Bank_Account;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragmnet_more.Fragment_Contact_Us;
@@ -22,6 +24,7 @@ import com.creativeshare.registerme.activities_fragments.activities.sign_in_sign
 import com.creativeshare.registerme.language.Language_Helper;
 import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
+import com.creativeshare.registerme.share.Common;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,6 +50,8 @@ public class Home_Activity extends AppCompatActivity {
     private Fragment_Contact_Us fragment_contact_us;
     private Fragment_Bank_Account fragment_bank_account;
     private Fragment_Edit_profile fragment_edit_profile;
+    private Fragment_Create_Email fragment_create_email;
+    private Fragment_Create_Edit_Cv fragment_create_edit_cv;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -349,15 +354,41 @@ public class Home_Activity extends AppCompatActivity {
         }
 
     }
+    public void DisplayFragmentCreateEmail() {
+        fragment_count += 1;
+            fragment_create_email = Fragment_Create_Email.newInstance();
 
 
+        if (fragment_create_email.isAdded()) {
+            fragmentManager.beginTransaction().show(fragment_create_email).commit();
+
+        } else {
+            fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_create_email, "fragment_create_email").addToBackStack("fragment_create_email").commit();
+
+        }
+
+    }
+    public void DisplayFragmentCreateEditCv() {
+        fragment_count += 1;
+        fragment_create_edit_cv = Fragment_Create_Edit_Cv.newInstance();
+
+
+        if (fragment_create_edit_cv.isAdded()) {
+            fragmentManager.beginTransaction().show(fragment_create_edit_cv).commit();
+
+        } else {
+            fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_create_edit_cv, "fragment_create_edit_cv").addToBackStack("fragment_create_edit_cv").commit();
+
+        }
+
+    }
 
     public void onBackPressed() {
         Back();
     }
 
     public void Back() {
-      /*  if (fragment_count > 1) {
+        if (fragment_count > 1) {
             fragment_count -= 1;
             super.onBackPressed();
         } else {
@@ -376,7 +407,7 @@ public class Home_Activity extends AppCompatActivity {
                 DisplayFragmentHome();
             }
         }
-*/
+
     }
 
     public void NavigateToSignInActivity(boolean isSignIn) {

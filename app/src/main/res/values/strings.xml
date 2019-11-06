@@ -70,8 +70,9 @@
     <string name="Hand_graduation">Hand graduation</string>
     <string name="Skills">Skills</string>
     <string name="others">others</string>
-    <string name="create_cv">Create Cv</string>
     <string name="create_email">Create Email</string>
     <string name="jobs">Jobs</string>
+    <string name="enter_the_name_you_want_to_become_your_email">Enter the name you want to become your email</string>
+    <string name="choose_the_type_of_email_you_want">Choose the type of email you want</string>
 
 </resources>

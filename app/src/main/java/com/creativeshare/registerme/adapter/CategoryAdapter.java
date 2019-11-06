@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.creativeshare.registerme.R;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Main;
 import com.creativeshare.registerme.models.CategoryModel;
 
@@ -20,10 +21,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
     private List<CategoryModel> categoryModelList;
     private Context context;
     private Fragment_Main fragment_main;
+    private Home_Activity activity;
     public CategoryAdapter(List<CategoryModel> categoryModelList, Context context, Fragment_Main fragment_main) {
         this.categoryModelList = categoryModelList;
         this.context = context;
         this.fragment_main = fragment_main;
+        activity=(Home_Activity)context;
     }
 
     @NonNull
@@ -38,6 +41,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyHold
         CategoryModel categoryModel=categoryModelList.get(position);
 tv_title.setText(categoryModel.getTitle());
 image.setImageDrawable(context.getResources().getDrawable(categoryModel.getImg()));
+holder.itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(holder.getLayoutPosition()==0){
+            activity.DisplayFragmentCreateEditCv();
+
+        }
+        else if(holder.getLayoutPosition()==1){
+         activity.DisplayFragmentCreateEmail();
+        }
+    }
+});
     }
 
     @Override

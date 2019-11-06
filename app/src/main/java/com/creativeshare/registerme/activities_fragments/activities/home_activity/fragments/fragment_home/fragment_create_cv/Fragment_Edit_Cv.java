@@ -13,12 +13,12 @@ import android.view.ViewGroup;
 import com.creativeshare.registerme.R;
 
 
-public class Create_Cv_Fragment extends Fragment {
+public class Fragment_Edit_Cv extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create_edit_cv, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_cv, container, false);
         initView(view);
         return view;
 
@@ -29,9 +29,8 @@ public class Create_Cv_Fragment extends Fragment {
 
 
     }
-    public static Create_Cv_Fragment newInstance() {
-        return new Create_Cv_Fragment();
+    public static Fragment_Edit_Cv newInstance() {
+        return new Fragment_Edit_Cv();
     }
-
 
 }
