@@ -4,6 +4,7 @@ package com.creativeshare.registerme.services;
 import com.creativeshare.registerme.models.AppDataModel;
 import com.creativeshare.registerme.models.BankDataModel;
 import com.creativeshare.registerme.models.Slider_Model;
+import com.creativeshare.registerme.models.UserModel;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,4 +35,13 @@ public interface Services {
 
     @GET("api/all_banks")
     Call<BankDataModel> getBankAccount();
+    @FormUrlEncoded
+    @POST("api/register")
+    Call<UserModel> Signup(
+            @Field("name") String name,
+            @Field("phone") String phone,
+            @Field("phone_code") String phone_code,
+            @Field("email") String email,
+            @Field("gender") int gender
+    );
 }

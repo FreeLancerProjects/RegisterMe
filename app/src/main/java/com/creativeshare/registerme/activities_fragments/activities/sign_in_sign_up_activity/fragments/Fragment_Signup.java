@@ -34,6 +34,7 @@ import com.mukesh.countrypicker.listeners.OnCountryPickerListener;
 import java.io.IOException;
 import java.util.Locale;
 
+import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 import io.paperdb.Paper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,13 +45,15 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
 
 
     private ImageView image_back, image_phone_code;
-    private EditText edt_name, edt_phone, edt_email, edt_password;
+    private EditText edt_name, edt_phone, edt_email;
+    private SegmentedButtonGroup segmentedButtonGroup;
     private TextView tv_code;
     private Button btn_sign_up;
     private CountryPicker picker;
     private Login_Activity activity;
     private String current_language;
     private String code = "";
+    private int gender=0;
     private Preferences preferences;
 
 
@@ -84,7 +87,7 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
         edt_phone = view.findViewById(R.id.edt_phone);
         tv_code = view.findViewById(R.id.tv_code);
         edt_email = view.findViewById(R.id.edt_email);
-        edt_password = view.findViewById(R.id.edt_password);
+        segmentedButtonGroup=view.findViewById(R.id.segmentGroup);
         btn_sign_up = view.findViewById(R.id.btn_sign_up);
 
         CreateCountryDialog();
@@ -111,7 +114,17 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
             }
         });
 
-
+segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClickedButtonListener() {
+    @Override
+    public void onClickedButton(int position) {
+        if(position==0){
+            gender=1;
+        }
+        else if(position==1){
+            gender=2;
+        }
+    }
+});
     }
 
     private void CreateCountryDialog() {
@@ -160,24 +173,28 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
         String m_name = edt_name.getText().toString().trim();
         String m_phone = edt_phone.getText().toString().trim();
         String m_email = edt_email.getText().toString().trim();
-        String m_password = edt_password.getText().toString().trim();
 
         if (!TextUtils.isEmpty(m_name) &&
                 !TextUtils.isEmpty(m_phone) &&
-                !TextUtils.isEmpty(m_email) &&
-                Patterns.EMAIL_ADDRESS.matcher(m_email).matches() &&
-                !TextUtils.isEmpty(m_password) &&
-                !TextUtils.isEmpty(code)
+               // !TextUtils.isEmpty(m_email) &&
+                //Patterns.EMAIL_ADDRESS.matcher(m_email).matches() &&
+                ( TextUtils.isEmpty(m_email)||(!TextUtils.isEmpty(m_email) &&
+                        Patterns.EMAIL_ADDRESS.matcher(m_email).matches()))&&
+        !TextUtils.isEmpty(code)
+                &&gender!=0
 
         ) {
             Common.CloseKeyBoard(activity, edt_name);
             edt_name.setError(null);
             edt_phone.setError(null);
             edt_email.setError(null);
-            edt_password.setError(null);
+            //edt_password.setError(null);
 
-            sign_up(m_name, code, m_phone, m_email, m_password);
+            sign_up(m_name, code, m_phone, m_email);
         } else {
+            if(gender==0){
+                Toast.makeText(activity,activity.getResources().getString(R.string.choose_gender),Toast.LENGTH_LONG).show();
+            }
             if (TextUtils.isEmpty(m_name)) {
                 edt_name.setError(getString(R.string.field_req));
             } else {
@@ -194,9 +211,7 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
             }
 
 
-            if (TextUtils.isEmpty(m_email)) {
-                edt_email.setError(getString(R.string.field_req));
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(m_email).matches()) {
+           if (!TextUtils.isEmpty(m_email)&&!Patterns.EMAIL_ADDRESS.matcher(m_email).matches()) {
                 edt_email.setError(getString(R.string.inv_email));
 
             } else {
@@ -204,12 +219,7 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
 
             }
 
-            if (TextUtils.isEmpty(m_password)) {
-                edt_password.setError(getString(R.string.field_req));
-            } else {
-                edt_password.setError(null);
 
-            }
 
 
             if (TextUtils.isEmpty(code)) {
@@ -223,18 +233,18 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
 
     }
 
-    private void sign_up(String m_name, String code, String m_phone, String m_email, String m_password) {
+    private void sign_up(String m_name, String code, String m_phone, String m_email) {
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-       /* Api.getService(Tags.base_url)
-                .sign_up(m_name, m_email, m_password, code.replace("+", "00"), m_phone, 1)
+       Api.getService(Tags.base_url)
+                .Signup(m_name,m_phone,code.replace("+","00"),m_email,gender)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful()&&response.body()!=null) {
-
+CreateLoginDialog();
                             preferences = Preferences.getInstance();
                             preferences.create_update_userdata(activity,response.body());
                             activity.NavigateToHomeActivity();
@@ -259,8 +269,9 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
                         } catch (Exception e) {
                         }
                     }
-                });*/
+                });
     }
+
 
 
 }

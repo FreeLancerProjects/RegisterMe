@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorAccent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/verfication_code"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textSize="17sp"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/a_message_will_appear_on_your_phone_by_barely_waiting_your_seconds"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        />
+
+    <com.jkb.vcedittext.VerificationCodeEditText
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:text="_ _ _ _"
+        android:textColor="@color/colorPrimary"
+        android:textSize="40sp"
+        app:bottomLineNormalColor="@color/white"
+        app:bottomLineSelectedColor="@color/colorPrimary"
+        app:figures="4"
+        app:selectedBackgroundColor="@color/white"
+        app:verCodeMargin="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:background="@drawable/button_shape"
+            android:text="@string/confirm"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+
+            />
+
+
+</LinearLayout>
