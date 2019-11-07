@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 
@@ -27,6 +28,7 @@ import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.remote.Api;
 import com.creativeshare.registerme.share.Common;
 import com.creativeshare.registerme.tags.Tags;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.mukesh.countrypicker.Country;
 import com.mukesh.countrypicker.CountryPicker;
 import com.mukesh.countrypicker.listeners.OnCountryPickerListener;
@@ -244,7 +246,7 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful()&&response.body()!=null) {
-CreateLoginDialog();
+                           CreateSignAlertDialog(activity);
                             preferences = Preferences.getInstance();
                             preferences.create_update_userdata(activity,response.body());
                             activity.NavigateToHomeActivity();
@@ -270,6 +272,22 @@ CreateLoginDialog();
                         }
                     }
                 });
+    }
+    public void CreateSignAlertDialog(Context context) {
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setCancelable(true)
+                .create();
+
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog_login, null);
+        dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_bg_login));
+
+
+
+        //dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        // dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        dialog.setView(view);
+        dialog.show();
     }
 
 
