@@ -4,6 +4,7 @@ package com.creativeshare.registerme.adapter;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.models.Slider_Model;
+import com.creativeshare.registerme.tags.Tags;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -50,9 +52,8 @@ public class SlidingImage_Adapter extends PagerAdapter {
         assert imageLayout != null;
         final RoundedImageView imageView =  imageLayout
                 .findViewById(R.id.image);
-       // Log.e("im",IMAGES.get(position));
-//Slider_Model.Data data=IMAGES.get(position);
-  //      Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+data.getImage())).fit().into(imageView);
+Slider_Model.Data data=IMAGES.get(position);
+        Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+data.getImage())).fit().into(imageView);
         view.addView(imageLayout, 0);
 
         return imageLayout;

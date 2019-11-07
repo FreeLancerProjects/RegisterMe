@@ -1,15 +1,20 @@
 package com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home;
 
+import android.app.MediaRouteButton;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
@@ -17,16 +22,23 @@ import com.creativeshare.registerme.adapter.CategoryAdapter;
 import com.creativeshare.registerme.adapter.SlidingImage_Adapter;
 import com.creativeshare.registerme.models.CategoryModel;
 import com.creativeshare.registerme.models.Slider_Model;
+import com.creativeshare.registerme.remote.Api;
+import com.creativeshare.registerme.tags.Tags;
 import com.google.android.material.tabs.TabLayout;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.Pivot;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Fragment_Main extends Fragment {
@@ -39,6 +51,7 @@ private Home_Activity activity;
     private TabLayout indicator;
 private List<Slider_Model.Data>dataList;
     private SlidingImage_Adapter slidingImage__adapter;
+    private ProgressBar progBarAds;
 
     public static Fragment_Main newInstance() {
 
@@ -68,6 +81,7 @@ private List<Slider_Model.Data>dataList;
         View view= inflater.inflate(R.layout.fragment_main, container, false);
         initview(view);
         updateUI();
+        get_slider();
         change_slide_image();
         return view;
     }
@@ -89,6 +103,54 @@ private List<Slider_Model.Data>dataList;
             }
         }, 3000, 3000);
     }
+    private void get_slider() {
+        Api.getService(Tags.base_url).get_slider().enqueue(new Callback<Slider_Model>() {
+            @Override
+            public void onResponse(Call<Slider_Model> call, Response<Slider_Model> response) {
+                progBarAds.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    if (response.body().getData().size() > 0) {
+                        NUM_PAGES = response.body().getData().size();
+                        slidingImage__adapter = new SlidingImage_Adapter(activity, response.body().getData());
+                        mPager.setAdapter(slidingImage__adapter);
+                        indicator.setupWithViewPager(mPager);
+                    } else {
+                        //    error.setText("No data Found");
+                        // recc.setVisibility(View.GONE);
+                        mPager.setVisibility(View.GONE);
+                    }
+                } else if (response.code() == 404) {
+                    //  error.setText(activity.getString(R.string.no_data));
+                    //recc.setVisibility(View.GONE);
+                    mPager.setVisibility(View.GONE);
+                } else {
+                    // recc.setVisibility(View.GONE);
+                    mPager.setVisibility(View.GONE);
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Slider_Model> call, Throwable t) {
+                try {
+                    Log.e("Error", t.getMessage());
+                    progBarAds.setVisibility(View.GONE);
+                    //error.setText(activity.getString(R.string.faild));
+                    //recc.setVisibility(View.GONE);
+                    mPager.setVisibility(View.GONE);
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+
+    }
 
     private void initview(View view) {
         dataList=new ArrayList<>();
@@ -97,14 +159,11 @@ private List<Slider_Model.Data>dataList;
         discreteScrollView=view.findViewById(R.id.discreteScrollView);
         mPager = view.findViewById(R.id.pager);
         indicator = view.findViewById(R.id.tabLayout);
-        dataList.add(new Slider_Model.Data());
-        dataList.add(new Slider_Model.Data());
+        progBarAds = view.findViewById(R.id.progBarSlider);
+        progBarAds.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
 
-        dataList.add(new Slider_Model.Data());
 
-        slidingImage__adapter = new SlidingImage_Adapter(activity, dataList);
-        mPager.setAdapter(slidingImage__adapter);
-        indicator.setupWithViewPager(mPager);
+
         discreteScrollView.setItemTransformer(new ScaleTransformer.Builder()
                 .setMaxScale(1.0f)
                 .setMinScale(0.75f)
