@@ -1,6 +1,8 @@
 package com.creativeshare.registerme.services;
 
 
+import com.creativeshare.registerme.models.AppDataModel;
+import com.creativeshare.registerme.models.BankDataModel;
 import com.creativeshare.registerme.models.Slider_Model;
 
 import okhttp3.ResponseBody;
@@ -21,4 +23,15 @@ public interface Services {
     );
     @GET("api/all_slider")
     Call<Slider_Model> get_slider();
+
+    @GET("api/aboutUs")
+    Call<AppDataModel> getabout(
+            );
+
+    @GET("api/condtions")
+    Call<AppDataModel> getterms(
+            );
+
+    @GET("api/all_banks")
+    Call<BankDataModel> getBankAccount();
 }

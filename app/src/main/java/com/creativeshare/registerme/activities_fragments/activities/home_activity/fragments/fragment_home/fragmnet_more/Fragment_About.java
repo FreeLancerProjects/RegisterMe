@@ -60,7 +60,7 @@ Fragment_About about=new Fragment_About();
 
             back.setRotation(180);
         }
-        //getAppData(cuurent_language);
+        getAppData();
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -70,8 +70,8 @@ Fragment_About about=new Fragment_About();
             }
         });
     }
-/*
-    private void getAppData(String cuurent_language) {
+
+    private void getAppData() {
 
         Api.getService(Tags.base_url)
                 .getabout()
@@ -80,7 +80,7 @@ Fragment_About about=new Fragment_About();
                     public void onResponse(Call<AppDataModel> call, Response<AppDataModel> response) {
                       //  smoothprogressbar.setVisibility(View.GONE);
 
-                        if (response.isSuccessful()&&response.body()!=null)
+                        if (response.isSuccessful()&&response.body()!=null&&response.body().getData()!=null)
                         {
                             updateTermsContent(response.body());
                         }
@@ -90,6 +90,7 @@ Fragment_About about=new Fragment_About();
                     public void onFailure(Call<AppDataModel> call, Throwable t) {
                         try {
                            // smoothprogressbar.setVisibility(View.GONE);
+
                             Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
                             Log.e("Error",t.getMessage());
                         }catch (Exception e){}
@@ -97,14 +98,14 @@ Fragment_About about=new Fragment_About();
                 });
 
     }
-*/
+
 
     private void updateTermsContent(AppDataModel appDataModel) {
 
         if(cuurent_language.equals("ar")){
-            tv_content.setText(appDataModel.getData().getAbout().getAr_content());}
+            tv_content.setText(appDataModel.getData().getAr_content());}
         else {
-            tv_content.setText(appDataModel.getData().getAbout().getEn_content());
+            tv_content.setText(appDataModel.getData().getEn_content());
         }
 
     }

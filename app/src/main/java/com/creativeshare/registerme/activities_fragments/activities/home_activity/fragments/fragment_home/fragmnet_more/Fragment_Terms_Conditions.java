@@ -73,14 +73,14 @@ public class Fragment_Terms_Conditions extends Fragment {
 
     private void getAppData() {
 
-      /*  Api.getService(Tags.base_url)
+        Api.getService(Tags.base_url)
                 .getterms()
                 .enqueue(new Callback<AppDataModel>() {
                     @Override
                     public void onResponse(Call<AppDataModel> call, Response<AppDataModel> response) {
                         //  smoothprogressbar.setVisibility(View.GONE);
-                      //  Log.e("lang", cuurent_language);
-                        if (response.isSuccessful() && response.body() != null) {
+                        Log.e("Error", response.code() + "" );
+                        if (response.isSuccessful()&&response.body()!=null&&response.body().getData()!=null){
                             updateTermsContent(response.body());
                         } else {
                             try {
@@ -100,18 +100,19 @@ public class Fragment_Terms_Conditions extends Fragment {
                             // smoothprogressbar.setVisibility(View.GONE);
                             Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
                             Log.e("Error", t.getMessage());
+
                         } catch (Exception e) {
                         }
                     }
                 });
-*/
+
     }
 
     private void updateTermsContent(AppDataModel appDataModel) {
 if(cuurent_language.equals("ar")){
-        tv_content.setText(appDataModel.getData().getConditions().getAr_content());}
+        tv_content.setText(appDataModel.getData().getAr_content());}
 else {
-    tv_content.setText(appDataModel.getData().getConditions().getEn_content());
+    tv_content.setText(appDataModel.getData().getEn_content());
 }
 
 

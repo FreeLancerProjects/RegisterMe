@@ -83,17 +83,17 @@ public class Fragment_Bank_Account extends Fragment {
         recView.setAdapter(adapter);
 
         ll_back = view.findViewById(R.id.ll_back);
-      /*  ll_back.setOnClickListener(new View.OnClickListener() {
+        ll_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.Back();
             }
         });
-*/
-       // getBankAccount();
+
+        getBankAccount();
     }
 
-/*
+
     private void getBankAccount() {
         Api.getService(Tags.base_url)
                 .getBankAccount()
@@ -128,5 +128,5 @@ public class Fragment_Bank_Account extends Fragment {
                     }
                 });
     }
-*/
+
 }

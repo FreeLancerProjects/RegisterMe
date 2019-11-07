@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
 import com.creativeshare.registerme.R;
@@ -18,7 +20,7 @@ import com.creativeshare.registerme.tags.Tags;
 
 
 public class Splash_Activity extends AppCompatActivity {
-   private FrameLayout fl;
+   private ImageView fl;
    private Preferences preferences;
    private String session;
    private Animation animation;
@@ -39,7 +41,7 @@ public class Splash_Activity extends AppCompatActivity {
     private void initView() {
         preferences=Preferences.getInstance();
         session=preferences.getSession(this);
-        fl=findViewById(R.id.fl);
+        fl=findViewById(R.id.image);
 
         animation= AnimationUtils.loadAnimation(getBaseContext(),R.anim.lanuch);
 

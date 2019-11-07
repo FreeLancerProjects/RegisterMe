@@ -68,9 +68,9 @@ public class BankAdapter extends RecyclerView.Adapter<BankAdapter.MyHolder> {
         public void BindData(BankDataModel.BankModel bankModel) {
 
             tv_bank_name.setText(bankModel.getBank_name());
-            tv_account_iban.setText(bankModel.getIBN());
-            tv_account_number.setText(bankModel.getAccount_number());
-            tv_account_name.setText(bankModel.getAccount_name());
+            tv_account_iban.setText(bankModel.getIban());
+            tv_account_number.setText(bankModel.getNumber());
+            tv_account_name.setText(bankModel.getName());
 
         }
     }
