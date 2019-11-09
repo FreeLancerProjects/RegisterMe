@@ -247,9 +247,9 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
                         dialog.dismiss();
                         if (response.isSuccessful()&&response.body()!=null) {
                            CreateSignAlertDialog(activity);
-                            preferences = Preferences.getInstance();
-                            preferences.create_update_userdata(activity,response.body());
-                            activity.NavigateToHomeActivity();
+                           // preferences = Preferences.getInstance();
+                            //preferences.create_update_userdata(activity,response.body());
+                           // activity.NavigateToHomeActivity();
                         } else if (response.code() == 422) {
                                 Common.CreateSignAlertDialog(activity,getString(R.string.email_exists));
                         } else {
@@ -285,7 +285,7 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
 
         //dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
-        // dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
         dialog.setView(view);
         dialog.show();
     }
