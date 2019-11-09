@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -55,5 +56,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation'com.justkiddingbaby:vercodeedittext:1.1.0'
+    implementation 'com.justkiddingbaby:vercodeedittext:1.1.0'
+    implementation 'com.avast:android-styled-dialogs:2.3.3'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+
 }

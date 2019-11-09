@@ -1,6 +1,7 @@
 package com.creativeshare.registerme.activities_fragments.activities.sign_in_sign_up_activity.fragments;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,13 +12,17 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 
@@ -28,6 +33,14 @@ import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.remote.Api;
 import com.creativeshare.registerme.share.Common;
 import com.creativeshare.registerme.tags.Tags;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskExecutors;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.mukesh.countrypicker.Country;
 import com.mukesh.countrypicker.CountryPicker;
@@ -35,6 +48,7 @@ import com.mukesh.countrypicker.listeners.OnCountryPickerListener;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 import io.paperdb.Paper;
@@ -57,7 +71,11 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
     private String code = "";
     private int gender=0;
     private Preferences preferences;
-
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
+    private String id;
+    private String vercode;
+    private FirebaseAuth mAuth;
+    private Dialog dialog;
 
     public static Fragment_Signup newInstance() {
         return new Fragment_Signup();
@@ -68,9 +86,61 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
         initView(view);
+        authn();
         return view;
     }
+    private void authn() {
 
+        mAuth= FirebaseAuth.getInstance();
+        mCallbacks=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                super.onCodeSent(s, forceResendingToken);
+                Log.e("id",s);
+                id=s;
+            }
+
+            @Override
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+//                Log.e("code",phoneAuthCredential.getSmsCode());
+//phoneAuthCredential.getProvider();
+                if(phoneAuthCredential.getSmsCode()!=null){
+                    code=phoneAuthCredential.getSmsCode();
+                  //  edt_confirm_code.setText(code);
+                    verfiycode(code);}
+
+
+            }
+
+            @Override
+            public void onVerificationFailed(@NonNull FirebaseException e) {
+                Log.e("llll",e.getMessage());
+            }
+        };
+
+    }
+    private void verfiycode(String code) {
+        Toast.makeText(activity,code,Toast.LENGTH_LONG).show();
+        Log.e("ccc",code);
+        PhoneAuthCredential credential=PhoneAuthProvider.getCredential(id,code);
+        siginwithcredental(credential);
+    }
+
+    private void siginwithcredental(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.e("task",code);
+
+            }
+        });
+    }
+
+    private void sendverficationcode(String phone, String phone_code) {
+        Log.e("kkk",phone_code+phone);
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(phone_code+phone,59, TimeUnit.SECONDS, TaskExecutors.MAIN_THREAD,  mCallbacks);
+
+    }
     private void initView(View view) {
         activity = (Login_Activity) getActivity();
         Paper.init(activity);
@@ -246,7 +316,7 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful()&&response.body()!=null) {
-                           CreateSignAlertDialog(activity);
+                           CreateSignAlertDialog();
                            // preferences = Preferences.getInstance();
                             //preferences.create_update_userdata(activity,response.body());
                            // activity.NavigateToHomeActivity();
@@ -273,20 +343,14 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
                     }
                 });
     }
-    public void CreateSignAlertDialog(Context context) {
-        final AlertDialog dialog = new AlertDialog.Builder(context)
-                .setCancelable(true)
-                .create();
+    public void CreateSignAlertDialog() {
+       dialog = new Dialog(activity, R.style.CustomAlertDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_dialog_login);
+        LinearLayout ll = dialog.findViewById(R.id.ll);
 
-        View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog_login, null);
-        dialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.custom_bg_login));
-
-
-
-        //dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
-        dialog.setCanceledOnTouchOutside(false);
-         dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
-        dialog.setView(view);
+        ll.setBackgroundResource(R.drawable.custom_bg_login);
         dialog.show();
     }
 
