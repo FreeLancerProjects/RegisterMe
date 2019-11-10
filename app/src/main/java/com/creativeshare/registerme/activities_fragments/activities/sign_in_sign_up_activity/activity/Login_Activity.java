@@ -91,8 +91,9 @@ private UserModel userModel;
         dialo = Common.createProgressDialog(this,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
+        if(id!=null){
         PhoneAuthCredential credential=PhoneAuthProvider.getCredential(id,code);
-        siginwithcredental(credential);
+        siginwithcredental(credential);}
     }
 
     private void siginwithcredental(PhoneAuthCredential credential) {
