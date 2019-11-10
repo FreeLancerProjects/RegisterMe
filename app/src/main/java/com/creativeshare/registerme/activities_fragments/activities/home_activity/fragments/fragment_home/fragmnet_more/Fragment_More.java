@@ -86,7 +86,7 @@ ll_bank=view.findViewById(R.id.ll_bank);
                 if (userModel == null) {
                     Common.CreateUserNotSignInAlertDialog(homeActivity);
                 } else {
-                  // homeActivity.Logout();
+                   homeActivity.Logout();
                 }
             }
         });

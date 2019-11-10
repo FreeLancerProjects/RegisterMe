@@ -1,5 +1,6 @@
 package com.creativeshare.registerme.activities_fragments.activities.home_activity.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +27,9 @@ import com.creativeshare.registerme.activities_fragments.activities.sign_in_sign
 import com.creativeshare.registerme.language.Language_Helper;
 import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
+import com.creativeshare.registerme.remote.Api;
 import com.creativeshare.registerme.share.Common;
+import com.creativeshare.registerme.tags.Tags;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,6 +37,10 @@ import java.util.Date;
 import java.util.Locale;
 
 import io.paperdb.Paper;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Home_Activity extends AppCompatActivity {
     private FragmentManager fragmentManager;
@@ -516,5 +523,47 @@ public class Home_Activity extends AppCompatActivity {
 
     }
 
+    public void Logout() {
+        final ProgressDialog dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.show();
+        Api.getService(Tags.base_url)
+                .Logout(userModel.getUser().getId() + "")
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful()) {
+                            /*new Handler()
+                                    .postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                                            manager.cancelAll();
+                                        }
+                                    },1);
+                            userSingleTone.clear(ClientHomeActivity.this);*/
+                            preferences.create_update_userdata(Home_Activity.this, null);
+                            preferences.create_update_session(Home_Activity.this, Tags.session_logout);
+                            Intent intent = new Intent(Home_Activity.this, Login_Activity.class);
+                            startActivity(intent);
+                            finish();
+                            if (cuurent_language.equals("ar")) {
+                                //  overridePendingTransition(R.anim.from_left,R.anim.to_right);
+
+
+                            } else {
+                                //  overridePendingTransition(R.anim.from_right,R.anim.to_left);
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+    }
 
 }

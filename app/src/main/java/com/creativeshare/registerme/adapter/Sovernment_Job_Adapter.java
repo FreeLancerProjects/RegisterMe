@@ -8,17 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
-import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_email.Fragment_Create_Email;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_jobs.Fragment_Private_Sector;
 import com.creativeshare.registerme.models.AllInFo_Model;
 import com.creativeshare.registerme.tags.Tags;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -29,19 +27,19 @@ import java.util.Locale;
 
 import io.paperdb.Paper;
 
-public class Mail_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Sovernment_Job_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int ITEM_DATA = 1;
     private final int ITEM_LOAD = 2;
 
-    private List<AllInFo_Model.Data.EmailTypes> data;
+    private List<AllInFo_Model.Data.Scompanies> data;
     private Context context;
     private Home_Activity activity;
     private Fragment fragment;
     private String current_lang;
-    private Fragment_Create_Email fragment_create_email;
     private int i=-1;
+    private Fragment_Private_Sector fragment_private_sector;
 
-    public Mail_Adapter(List<AllInFo_Model.Data.EmailTypes> data, Context context, Fragment fragment) {
+    public Sovernment_Job_Adapter(List<AllInFo_Model.Data.Scompanies> data, Context context, Fragment fragment) {
 
         this.data = data;
         this.context = context;
@@ -58,7 +56,7 @@ public class Mail_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         if (viewType == ITEM_DATA) {
-            View view = LayoutInflater.from(context).inflate(R.layout.mail_row, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.job_row, parent, false);
             return new MyHolder(view);
         } else {
             View view = LayoutInflater.from(context).inflate(R.layout.load_more_row, parent, false);
@@ -71,31 +69,30 @@ public class Mail_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof MyHolder) {
-            AllInFo_Model.Data.EmailTypes data1 = data.get(position);
 
             final MyHolder myHolder = (MyHolder) holder;
-myHolder.tv_tittle.setText(data1.getName());
+            AllInFo_Model.Data.Scompanies data1 = data.get(position);
+
             Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+data1.getLogo())).fit().into(myHolder.imageView);
+            myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(fragment instanceof  Fragment_Private_Sector){
+                        fragment_private_sector=(Fragment_Private_Sector)fragment;
+                        fragment_private_sector.setid(data.get(myHolder.getLayoutPosition()).getId());
+                    }
+                    i=position;
+                    notifyDataSetChanged();
+                }
+            });
+            if(i==position){
 
-myHolder.itemView.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if(fragment instanceof Fragment_Create_Email){
-            fragment_create_email=(Fragment_Create_Email)fragment;
-            fragment_create_email.setid(data.get(myHolder.getLayoutPosition()).getId());
-        }
-        i=position;
-        notifyDataSetChanged();
-    }
-});
-if(i==position){
+                myHolder.cardView.setBackgroundResource(R.drawable.item_selected);
+            }
+            else {
+                myHolder.cardView.setBackgroundResource(R.drawable.item_unselected);
 
- myHolder.cardView.setBackgroundResource(R.drawable.item_selected);
-}
-else {
-    myHolder.cardView.setBackgroundResource(R.drawable.item_unselected);
-
-}
+            }
             //Log.e("msg",advertsing.getMain_image());
         } else {
             LoadMoreHolder loadMoreHolder = (LoadMoreHolder) holder;
@@ -110,14 +107,14 @@ else {
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-private TextView tv_tittle;
-private RoundedImageView imageView;
-private FrameLayout cardView;
+        private RoundedImageView imageView;
+        private FrameLayout cardView;
+
         public MyHolder(View itemView) {
             super(itemView);
-imageView=itemView.findViewById(R.id.im_mail);
-tv_tittle=itemView.findViewById(R.id.tv_name);
-cardView=itemView.findViewById(R.id.frame);
+
+            imageView=itemView.findViewById(R.id.image);
+            cardView=itemView.findViewById(R.id.frame);
 
         }
 
@@ -135,7 +132,7 @@ cardView=itemView.findViewById(R.id.frame);
 
     @Override
     public int getItemViewType(int position) {
-        AllInFo_Model.Data.EmailTypes data1 = data.get(position);
+        AllInFo_Model.Data.Scompanies data1 = data.get(position);
         if (data1 == null) {
             return ITEM_LOAD;
         } else {

@@ -52,5 +52,31 @@ public interface Services {
             @Field("phone") String phone,
             @Field("phone_code") String phone_code
     );
+    @FormUrlEncoded
+    @POST("api/email_order")
+    Call<ResponseBody> create_email(
 
+            @Field("email") String email,
+            @Field("password")String password,
+            @Field("user_id")int user_id,
+            @Field("type_id_fk") int type_id_fk);
+    @FormUrlEncoded
+    @POST("api/job_order_link")
+    Call<ResponseBody> send_link(
+
+
+            @Field("user_id")int user_id,
+            @Field("lik_job") String lik_job);
+    @FormUrlEncoded
+    @POST("api/job_order_company")
+    Call<ResponseBody> send_company(
+
+
+            @Field("user_id")int user_id,
+            @Field("campany_id_fk") int campany_id_fk);
+    @FormUrlEncoded
+    @POST("api/logout")
+    Call<ResponseBody> Logout(@Field("id") String id
+
+    );
 }

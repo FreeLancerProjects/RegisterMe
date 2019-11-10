@@ -88,5 +88,8 @@
     <string name="confirm">Confirm</string>
     <string name="user_not_found">User Not Found</string>
     <string name="attach_previous_cv">Attach the previous CV</string>
+    <string name="pass_must_more_than_6_digit">PassWord Must More Than 6 digit</string>
+    <string name="sucess">Sucess</string>
+    <string name="choose_company">Choose Company</string>
 
 </resources>
