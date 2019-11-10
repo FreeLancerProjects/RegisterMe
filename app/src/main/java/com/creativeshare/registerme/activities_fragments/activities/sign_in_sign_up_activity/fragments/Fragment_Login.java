@@ -149,7 +149,6 @@ public class Fragment_Login extends Fragment  implements OnCountryPickerListener
     }
     private void checkData() {
         String m_phone = edt_phone.getText().toString().trim();
-m_phone=m_phone.replaceFirst("0","");
         if (!TextUtils.isEmpty(m_phone) &&
 
                 !TextUtils.isEmpty(code)
@@ -157,7 +156,10 @@ m_phone=m_phone.replaceFirst("0","");
             edt_phone.setError(null);
 
             Common.CloseKeyBoard(activity, edt_phone);
-
+            if (m_phone.startsWith("0"))
+            {
+                m_phone=m_phone.replaceFirst("0","");
+            }
             Login(m_phone);
 
         } else {

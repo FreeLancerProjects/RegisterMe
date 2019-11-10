@@ -205,7 +205,10 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
             edt_phone.setError(null);
             edt_email.setError(null);
             //edt_password.setError(null);
-
+            if (m_phone.startsWith("0"))
+            {
+                m_phone=m_phone.replaceFirst("0","");
+            }
             sign_up(m_name, code, m_phone, m_email);
         } else {
             if(gender==0){
@@ -250,6 +253,7 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
     }
 
     private void sign_up(String m_name, String code, String m_phone, String m_email) {
+
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
