@@ -38,6 +38,7 @@
         />
 
     <com.jkb.vcedittext.VerificationCodeEditText
+        android:id="@+id/edt_ver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
@@ -46,7 +47,7 @@
         app:bottomLineHeight="2dp"
         app:bottomLineNormalColor="@color/colorAccent"
         app:bottomLineSelectedColor="@color/colorAccent"
-        app:figures="4"
+        app:figures="6"
         app:selectedBackgroundColor="@color/white"
         app:verCodeMargin="10dp"
         android:layout_marginTop="15dp"

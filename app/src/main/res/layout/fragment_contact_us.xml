@@ -101,7 +101,7 @@
                     android:layout_height="35dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/linear_shape"
-                    android:hint="@string/user_email"
+                    android:hint="@string/user_email2"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"

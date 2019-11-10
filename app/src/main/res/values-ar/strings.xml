@@ -8,14 +8,16 @@
     <string name="inv_email">البريد الالكتروني غير صحيح</string>
     <string name="sign_up2">إنشاء حساب</string>
     <string name="code">الكود</string>
-    <string name="email_exists">البريد الالكتروني موجود مسبقا</string>
+    <string name="email_exists">الجوال موجود مسبقا</string>
     <string name="something">خطأ ! تحقق من الاتصال بالانترنت</string>
-    <string name="inc_em_pas">البريد الالكتروني او كلمة المرور غير صحيحة</string>
+    <string name="inc_em_pas">الجوال غير صحيح</string>
     <string name="login" >دخول</string>
     <string name="skip">تخطي</string>
     <string name="user_name">إسم المستخدم</string>
     <string name="user_password">كلمة المرور</string>
     <string name="user_email"> البريد الإلكترونى (اختياري ) </string>
+    <string name="user_email2"> البريد الإلكترونى  </string>
+
     <string name="user_phone">رقم الجوال</string>
     <string name="register">تسجيل</string>
     <string name="si_su">قم بتسجيل الدخول أو إنشاء حساب جديد .</string>
@@ -60,7 +62,7 @@
     <string name="my_orders">طلباتى</string>
     <string name="more">المزيد</string>
     <string name="Create_Cv">انشاء سيره ذاتيه</string>
-    <string name="Edit_cv">تعديل السيره الذاتيه</string>
+    <string name="Edit_cv">تطوير السيره الذاتيه</string>
     <string name="name">الاسم بالكامل</string>
     <string name="email">البريد الالكترونى</string>
     <string name="experience">الخبره</string>
@@ -79,8 +81,10 @@
     <string name="government_sector">قطاع حكومى</string>
     <string name="cv">سيره ذاتيه</string>
     <string name="failed">فشل</string>
-    <string name="choose_gender">Choose Gender</string>
-    <string name="verfication_code">Verfication Code</string>
-    <string name="a_message_will_appear_on_your_phone_by_barely_waiting_your_seconds">A message will appear on your phone by barely waiting your seconds</string>
-    <string name="confirm">Confirm</string>
+    <string name="choose_gender">اختر النوع </string>
+    <string name="verfication_code">كود التفعيل</string>
+    <string name="a_message_will_appear_on_your_phone_by_barely_waiting_your_seconds">ستظهر رسالة على هاتفك بالكاد تنتظر ثواني</string>
+    <string name="confirm">تاكيد</string>
+    <string name="user_not_found">هذا المستخدم غير موجود</string>
+    <string name="attach_previous_cv">ارفق السيره الذاتيه السابقه</string>
 </resources>

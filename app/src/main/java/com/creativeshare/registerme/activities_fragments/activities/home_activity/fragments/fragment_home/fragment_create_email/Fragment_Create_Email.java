@@ -49,6 +49,7 @@ public class Fragment_Create_Email extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_email, container, false);
         initView(view);
+        get_mailtype();
         return view;
 
     }

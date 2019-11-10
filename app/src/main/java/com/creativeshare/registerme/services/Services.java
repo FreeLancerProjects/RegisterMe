@@ -46,5 +46,11 @@ public interface Services {
             @Field("email") String email,
             @Field("gender") int gender
     );
+    @FormUrlEncoded
+    @POST("api/login")
+    Call<UserModel> Signin(
+            @Field("phone") String phone,
+            @Field("phone_code") String phone_code
+    );
 
 }

@@ -1,10 +1,19 @@
 package com.creativeshare.registerme.activities_fragments.activities.sign_in_sign_up_activity.activity;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -14,8 +23,21 @@ import com.creativeshare.registerme.activities_fragments.activities.sign_in_sign
 import com.creativeshare.registerme.activities_fragments.activities.sign_in_sign_up_activity.fragments.Fragment_Login;
 import com.creativeshare.registerme.activities_fragments.activities.sign_in_sign_up_activity.fragments.Fragment_Signup;
 import com.creativeshare.registerme.language.Language_Helper;
+import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
+import com.creativeshare.registerme.share.Common;
 import com.creativeshare.registerme.tags.Tags;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskExecutors;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
+import com.jkb.vcedittext.VerificationCodeEditText;
+
+import java.util.concurrent.TimeUnit;
 
 import io.paperdb.Paper;
 
@@ -28,8 +50,76 @@ public class Login_Activity extends AppCompatActivity {
 
     private int fragment_counter = 0;
     private Preferences preferences;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
+    private String id;
+    private String vercode;
+    private FirebaseAuth mAuth;
+    private Dialog dialog;
+     private VerificationCodeEditText verificationCodeEditText;
+    private ProgressDialog dialo;
+private UserModel userModel;
+    private void authn() {
+
+        mAuth= FirebaseAuth.getInstance();
+        mCallbacks=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            @Override
+            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                super.onCodeSent(s, forceResendingToken);
+                id=s;
+            }
+
+            @Override
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+//                Log.e("code",phoneAuthCredential.getSmsCode());
+//phoneAuthCredential.getProvider();
+                if(phoneAuthCredential.getSmsCode()!=null){
+                    vercode=phoneAuthCredential.getSmsCode();
+                      verificationCodeEditText.setText(vercode);
+                    verfiycode(vercode);}
 
 
+            }
+
+            @Override
+            public void onVerificationFailed(@NonNull FirebaseException e) {
+                Log.e("llll",e.getMessage());
+            }
+        };
+
+    }
+    private void verfiycode(String code) {
+        dialo = Common.createProgressDialog(this,getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        PhoneAuthCredential credential=PhoneAuthProvider.getCredential(id,code);
+        siginwithcredental(credential);
+    }
+
+    private void siginwithcredental(PhoneAuthCredential credential) {
+
+        mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+         dialo.dismiss();
+         dialog.dismiss();
+         if(task.isSuccessful()){
+             preferences = Preferences.getInstance();
+             preferences.create_update_userdata(Login_Activity.this,userModel);
+             // activity.NavigateToHomeActivity();
+             NavigateToHomeActivity();
+         }
+
+            }
+        });
+    }
+
+    public void sendverficationcode(String phone, String phone_code, UserModel userModel) {
+        dialog.show();
+        this.userModel=userModel;
+        Log.e("kkk",phone_code+phone);
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(phone_code+phone,59, TimeUnit.SECONDS, TaskExecutors.MAIN_THREAD,  mCallbacks);
+
+    }
     @Override
     protected void attachBaseContext(Context base)
     {
@@ -39,6 +129,9 @@ public class Login_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        CreateSignAlertDialog();
+        authn();
+
         preferences = Preferences.getInstance();
         Paper.init(this);
 
@@ -154,5 +247,27 @@ public class Login_Activity extends AppCompatActivity {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
+    }
+    public void CreateSignAlertDialog() {
+        dialog = new Dialog(this, R.style.CustomAlertDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.custom_dialog_login);
+        LinearLayout ll = dialog.findViewById(R.id.ll);
+verificationCodeEditText=dialog.findViewById(R.id.edt_ver);
+        ll.setBackgroundResource(R.drawable.custom_bg_login);
+        Button confirm=dialog.findViewById(R.id.btn_confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+vercode=verificationCodeEditText.getText().toString();
+if(TextUtils.isEmpty(vercode)){
+    verificationCodeEditText.setError(getResources().getString(R.string.field_req));
+}
+else {
+    verfiycode(vercode);
+}
+            }
+        });
     }
 }

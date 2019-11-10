@@ -15,6 +15,8 @@
     <string name="user_name">user_name</string>
     <string name="user_password">password</string>
     <string name="user_email">Email (Optional)</string>
+    <string name="user_email2">Email </string>
+
     <string name="user_phone">Phone number</string>
     <string name="register">register</string>
     <string name="si_su">Please Sign in or sign up .</string>
@@ -84,5 +86,7 @@
     <string name="verfication_code">Verfication Code</string>
     <string name="a_message_will_appear_on_your_phone_by_barely_waiting_your_seconds">A message will appear on your phone by barely waiting your seconds</string>
     <string name="confirm">Confirm</string>
+    <string name="user_not_found">User Not Found</string>
+    <string name="attach_previous_cv">Attach the previous CV</string>
 
 </resources>

@@ -149,7 +149,7 @@ public class Fragment_Login extends Fragment  implements OnCountryPickerListener
     }
     private void checkData() {
         String m_phone = edt_phone.getText().toString().trim();
-
+m_phone=m_phone.replaceFirst("0","");
         if (!TextUtils.isEmpty(m_phone) &&
 
                 !TextUtils.isEmpty(code)
@@ -158,7 +158,7 @@ public class Fragment_Login extends Fragment  implements OnCountryPickerListener
 
             Common.CloseKeyBoard(activity, edt_phone);
 
-          //  Login(m_phone);
+            Login(m_phone);
 
         } else {
 
@@ -182,22 +182,21 @@ public class Fragment_Login extends Fragment  implements OnCountryPickerListener
     }
 
 
-/*
-    private void Login(String m_phone, String m_password) {
+
+    private void Login(String m_phone) {
         final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
         Api.getService(Tags.base_url)
-                .Signin( m_phone, code.replace("+","00"),m_password)
+                .Signin( m_phone, code.replace("+","00"))
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful()&&response.body()!=null) {
 
-                            preferences = Preferences.getInstance();
-                            preferences.create_update_userdata(activity,response.body());
-                            activity.NavigateToHomeActivity();
+                            activity.sendverficationcode(m_phone,code.replace("00","+"),response.body());
+
                         } else if (response.code() == 404) {
                             Common.CreateSignAlertDialog(activity,getString(R.string.user_not_found));
                         } else {
@@ -222,7 +221,7 @@ public class Fragment_Login extends Fragment  implements OnCountryPickerListener
                     }
                 });
     }
-*/
+
 
 
 

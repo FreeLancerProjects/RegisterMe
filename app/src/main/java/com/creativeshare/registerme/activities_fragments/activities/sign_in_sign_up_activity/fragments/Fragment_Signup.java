@@ -69,13 +69,9 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
     private Login_Activity activity;
     private String current_language;
     private String code = "";
-    private int gender=0;
+    private int gender=1;
     private Preferences preferences;
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-    private String id;
-    private String vercode;
-    private FirebaseAuth mAuth;
-    private Dialog dialog;
+
 
     public static Fragment_Signup newInstance() {
         return new Fragment_Signup();
@@ -86,61 +82,9 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_signup, container, false);
         initView(view);
-        authn();
         return view;
     }
-    private void authn() {
 
-        mAuth= FirebaseAuth.getInstance();
-        mCallbacks=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-            @Override
-            public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                super.onCodeSent(s, forceResendingToken);
-                Log.e("id",s);
-                id=s;
-            }
-
-            @Override
-            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-//                Log.e("code",phoneAuthCredential.getSmsCode());
-//phoneAuthCredential.getProvider();
-                if(phoneAuthCredential.getSmsCode()!=null){
-                    code=phoneAuthCredential.getSmsCode();
-                  //  edt_confirm_code.setText(code);
-                    verfiycode(code);}
-
-
-            }
-
-            @Override
-            public void onVerificationFailed(@NonNull FirebaseException e) {
-                Log.e("llll",e.getMessage());
-            }
-        };
-
-    }
-    private void verfiycode(String code) {
-        Toast.makeText(activity,code,Toast.LENGTH_LONG).show();
-        Log.e("ccc",code);
-        PhoneAuthCredential credential=PhoneAuthProvider.getCredential(id,code);
-        siginwithcredental(credential);
-    }
-
-    private void siginwithcredental(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.e("task",code);
-
-            }
-        });
-    }
-
-    private void sendverficationcode(String phone, String phone_code) {
-        Log.e("kkk",phone_code+phone);
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(phone_code+phone,59, TimeUnit.SECONDS, TaskExecutors.MAIN_THREAD,  mCallbacks);
-
-    }
     private void initView(View view) {
         activity = (Login_Activity) getActivity();
         Paper.init(activity);
@@ -316,10 +260,9 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
                         if (response.isSuccessful()&&response.body()!=null) {
-                           CreateSignAlertDialog();
-                           // preferences = Preferences.getInstance();
-                            //preferences.create_update_userdata(activity,response.body());
-                           // activity.NavigateToHomeActivity();
+                            activity.sendverficationcode(m_phone,code.replace("00","+"),response.body());
+                       //    activity.CreateSignAlertDialog();
+
                         } else if (response.code() == 422) {
                                 Common.CreateSignAlertDialog(activity,getString(R.string.email_exists));
                         } else {
@@ -343,16 +286,7 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
                     }
                 });
     }
-    public void CreateSignAlertDialog() {
-       dialog = new Dialog(activity, R.style.CustomAlertDialog);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.custom_dialog_login);
-        LinearLayout ll = dialog.findViewById(R.id.ll);
 
-        ll.setBackgroundResource(R.drawable.custom_bg_login);
-        dialog.show();
-    }
 
 
 
