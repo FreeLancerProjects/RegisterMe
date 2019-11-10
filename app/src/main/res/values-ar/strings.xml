@@ -56,7 +56,7 @@
     <string name="account_iban">رقم الايبان</string>
     <string name="account_number">رقم الحساب</string>
     <string name="perm_image_denied">لم يتمكن التطبيق للوصل الى الصور</string>
-    <string name="inc_phone_pas">رقم الجوال وا كلمة المرور خطأ</string>
+    <string name="inc_phone_pas">رقم الجوال  خطأ</string>
     <string name="inc_phone">رقم الجوال  خطأ</string>
     <string name="inc_pass">كلمة المرور خطأ</string>
     <string name="my_orders">طلباتى</string>
