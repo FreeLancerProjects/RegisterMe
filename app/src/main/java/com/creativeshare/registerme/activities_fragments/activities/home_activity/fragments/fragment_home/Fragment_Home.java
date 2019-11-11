@@ -105,12 +105,12 @@ public class Fragment_Home extends Fragment {
 
                         break;
                     case 3:
-                       // if(userModel!=null){
+                        if(userModel!=null){
                             homeActivity.DisplayFragmentclientprofile();
-                            //}
-                       // else {
-                          //  Common.CreateUserNotSignInAlertDialog(homeActivity);
-                        //}
+                            }
+                        else {
+                            Common.CreateUserNotSignInAlertDialog(homeActivity);
+                        }
                         break;
                     case 4:
                         homeActivity.DisplayFragmentMore();
