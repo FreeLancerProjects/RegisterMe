@@ -59,7 +59,7 @@ private CircleImageView im_user;
     }
 
     private void intitview(View view) {
-        activity=(Home_Activity)activity;
+        activity=(Home_Activity)getActivity();
         Paper.init(activity);
         preferences=Preferences.getInstance();
         userModel=preferences.getUserData(activity);
