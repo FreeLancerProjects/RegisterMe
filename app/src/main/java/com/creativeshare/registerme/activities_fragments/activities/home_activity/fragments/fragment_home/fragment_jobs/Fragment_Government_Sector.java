@@ -111,7 +111,7 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
                     Toast.makeText(home_activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
 
                   //  Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
-home_activity.Back();
+                    home_activity.Displayorder();
                 } else {
                     Common.CreateSignAlertDialog(home_activity, getString(R.string.failed));
 

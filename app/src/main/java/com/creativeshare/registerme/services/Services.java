@@ -4,6 +4,8 @@ package com.creativeshare.registerme.services;
 import com.creativeshare.registerme.models.AllInFo_Model;
 import com.creativeshare.registerme.models.AppDataModel;
 import com.creativeshare.registerme.models.BankDataModel;
+import com.creativeshare.registerme.models.NotificationDataModel;
+import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.models.Slider_Model;
 import com.creativeshare.registerme.models.UserModel;
 
@@ -77,6 +79,25 @@ public interface Services {
     @FormUrlEncoded
     @POST("api/logout")
     Call<ResponseBody> Logout(@Field("id") String id
+
+    );
+    @FormUrlEncoded
+    @POST("api/my_orders")
+    Call<Order_Model> getorders(
+
+            @Field("user_id") int user_id
+
+
+
+    );
+    @FormUrlEncoded
+    @POST("api/my_notifications ")
+    Call<NotificationDataModel> getnotifications(
+
+            @Field("user_id") int user_id,
+            @Field("page")int page
+
+
 
     );
 }

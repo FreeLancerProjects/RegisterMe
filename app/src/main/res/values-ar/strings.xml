@@ -87,7 +87,23 @@
     <string name="confirm">تاكيد</string>
     <string name="user_not_found">هذا المستخدم غير موجود</string>
     <string name="attach_previous_cv">ارفق السيره الذاتيه السابقه</string>
-    <string name="pass_must_more_than_6_digit">PassWord Must More Than 6 digit</string>
-    <string name="sucess">Sucess</string>
-    <string name="choose_company">Choose Company</string>
+    <string name="pass_must_more_than_6_digit">الرقم السرى يجب ان يكون اكثر من 6 حروف</string>
+    <string name="sucess">تم بنجاح</string>
+    <string name="choose_company">اختر الشركه</string>
+
+    <string name="detials">تفاصيل</string>
+    <string name="new_order">طلب جديد</string>
+    <string name="your_request_is_being_distributed">جارى توزيع طلبك</string>
+    <string name="received">تم الاستلام</string>
+    <string name="been_completed">تم الانتهاء</string>
+    <string name="order_num"> رقم الطلب : </string>
+    <string name="order_satus">حالة الطلب : </string>
+    <string name="no_orders_found">لا يوجد طلبات</string>
+    <string name="just_now">الان</string>
+    <string name="a_minute_ago">منذ دقيقة</string>
+    <string name="min">د</string>
+    <string name="an_hour_ago">منذ ساعة</string>
+    <string name="hs">س</string>
+    <string name="yesterday">أمس</string>
+    <string name="day">يوم</string>
 </resources>

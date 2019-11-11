@@ -66,6 +66,7 @@ private UserModel userModel;
             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                 super.onCodeSent(s, forceResendingToken);
                 id=s;
+                Log.e("id",id);
             }
 
             @Override

@@ -92,4 +92,20 @@
     <string name="sucess">Sucess</string>
     <string name="choose_company">Choose Company</string>
 
+    <string name="detials">Detials</string>
+    <string name="new_order">New Order</string>
+    <string name="your_request_is_being_distributed">Your request is being distributed</string>
+    <string name="received">Received</string>
+    <string name="been_completed">Been completed</string>
+    <string name="order_num">Order Num : </string>
+    <string name="order_satus">Order Satus : </string>
+    <string name="no_orders_found">No Orders Found</string>
+
+    <string name="just_now">just now</string>
+    <string name="a_minute_ago">a minute ago</string>
+    <string name="min">MIN</string>
+    <string name="an_hour_ago">an hour ago</string>
+    <string name="hs">Hs</string>
+    <string name="yesterday">yesterday</string>
+    <string name="day">D</string>
 </resources>

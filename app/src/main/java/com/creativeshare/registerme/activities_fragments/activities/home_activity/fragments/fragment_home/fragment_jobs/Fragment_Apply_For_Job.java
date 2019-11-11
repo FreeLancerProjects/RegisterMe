@@ -97,7 +97,7 @@ home_activity=(Home_Activity)getActivity();
                 if (response.isSuccessful()) {
                     Toast.makeText(home_activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
 
-                    home_activity.Back();
+                    home_activity.Displayorder();
 
                 } else {
                     Common.CreateSignAlertDialog(home_activity, getString(R.string.failed));

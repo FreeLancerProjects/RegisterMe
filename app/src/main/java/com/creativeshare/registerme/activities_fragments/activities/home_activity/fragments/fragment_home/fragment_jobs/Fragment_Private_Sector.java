@@ -107,7 +107,7 @@ bt_send.setOnClickListener(new View.OnClickListener() {
                 if (response.isSuccessful()) {
                     Toast.makeText(home_activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
 
-                    home_activity.Back();
+                    home_activity.Displayorder();
 
                   //  Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
 

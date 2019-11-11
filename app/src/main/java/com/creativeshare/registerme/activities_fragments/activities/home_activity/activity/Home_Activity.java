@@ -566,4 +566,11 @@ public class Home_Activity extends AppCompatActivity {
                 });
     }
 
+    public void Displayorder() {
+        Back();
+        if(fragment_myorders!=null&&fragment_myorders.isAdded()){
+            fragment_myorders.getOrders();
+        }
+        DisplayFragmentMyorders();
+    }
 }
