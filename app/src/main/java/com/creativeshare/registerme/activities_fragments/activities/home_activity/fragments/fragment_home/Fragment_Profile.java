@@ -54,7 +54,7 @@ private CircleImageView im_user;
         this.userModel=userModel;
         tv_name.setText(userModel.getUser().getName());
         tv_phone.setText(userModel.getUser().getPhone());
-        Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL+userModel.getUser().getImage())).fit().into(im_user);
+        Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL+userModel.getUser().getImage())).placeholder(R.drawable.ic_user).fit().into(im_user);
 
     }
 
