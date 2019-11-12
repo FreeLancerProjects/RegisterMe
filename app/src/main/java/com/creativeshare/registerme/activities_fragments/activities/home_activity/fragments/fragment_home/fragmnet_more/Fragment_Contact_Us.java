@@ -101,9 +101,10 @@ public class Fragment_Contact_Us extends Fragment {
 
         if (userModel != null) {
 
-            //edt_name.setText(userModel.getName());
-            // edt_email.setText(userModel.gety);
-
+            edt_name.setText(userModel.getUser().getName());
+            if(userModel.getUser().getEmail()!=null) {
+                edt_email.setText(userModel.getUser().getEmail());
+            }
         }
     }
 
