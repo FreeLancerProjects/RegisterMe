@@ -108,6 +108,9 @@ public class Fragment_Profile extends Fragment {
         tv_name = view.findViewById(R.id.tv_name);
         tv_phone = view.findViewById(R.id.tv_phone);
         im_user = view.findViewById(R.id.image);
+        tab = view.findViewById(R.id.tab);
+        pager = view.findViewById(R.id.pager);
+        tab.setupWithViewPager(pager);
         im_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
