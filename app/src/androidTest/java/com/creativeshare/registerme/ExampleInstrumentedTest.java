@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.elashry.registerme", appContext.getPackageName());
+        assertEquals("com.creativeshare.registerme", appContext.getPackageName());
     }
 }

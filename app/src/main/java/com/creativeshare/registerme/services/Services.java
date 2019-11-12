@@ -9,12 +9,16 @@ import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.models.Slider_Model;
 import com.creativeshare.registerme.models.UserModel;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface Services {
     @FormUrlEncoded
@@ -100,4 +104,8 @@ public interface Services {
 
 
     );
+    @Multipart
+    @POST("api/user_image")
+    Call<UserModel> editUserImage(@Part("user_id") RequestBody user_id,
+                                  @Part MultipartBody.Part image);
 }
