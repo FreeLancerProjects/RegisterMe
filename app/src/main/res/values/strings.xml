@@ -108,4 +108,7 @@
     <string name="hs">Hs</string>
     <string name="yesterday">yesterday</string>
     <string name="day">D</string>
+    <string name="my_cv">My Cv</string>
+    <string name="my_emails">My Emails</string>
+    <string name="my_jobs">My Jobs</string>
 </resources>

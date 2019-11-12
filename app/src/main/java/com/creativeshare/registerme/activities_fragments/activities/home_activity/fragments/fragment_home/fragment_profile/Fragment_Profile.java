@@ -1,9 +1,8 @@
-package com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home;
+package com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_profile;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -28,15 +28,21 @@ import android.widget.Toast;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Create_Cv;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Edit_Cv;
+import com.creativeshare.registerme.adapter.ViewPagerAdapter;
 import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.remote.Api;
 import com.creativeshare.registerme.share.Common;
 import com.creativeshare.registerme.tags.Tags;
+import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
@@ -61,6 +67,13 @@ public class Fragment_Profile extends Fragment {
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private final String write_permission = Manifest.permission.WRITE_EXTERNAL_STORAGE;
     private final String camera_permission = Manifest.permission.CAMERA;
+    private Home_Activity homeActivity;
+    private String cuurent_language;
+    private TabLayout tab;
+    private ViewPager pager;
+    private ViewPagerAdapter adapter;
+    private List<Fragment> fragmentList;
+    private List<String> titleList;
     public static Fragment_Profile newInstance() {
 
         return new Fragment_Profile();
@@ -99,6 +112,40 @@ public class Fragment_Profile extends Fragment {
             @Override
             public void onClick(View v) {
 CreateImageAlertDialog();
+            }
+        });
+        pager.setOffscreenPageLimit(3);
+        fragmentList = new ArrayList<>();
+        titleList = new ArrayList<>();
+        fragmentList.add(Fragment_MyCv.newInstance());
+        fragmentList.add(Fragment_MyEmails.newInstance());
+        fragmentList.add(Fragment_MyJobs.newInstance());
+
+        titleList.add(getString(R.string.my_cv));
+        titleList.add(getString(R.string.my_emails));
+        titleList.add(getString(R.string.my_jobs));
+        adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.AddFragments(fragmentList);
+        adapter.AddTitles(titleList);
+        pager.setAdapter(adapter);
+
+
+        pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
+
+        tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }

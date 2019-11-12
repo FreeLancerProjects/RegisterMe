@@ -106,4 +106,7 @@
     <string name="hs">س</string>
     <string name="yesterday">أمس</string>
     <string name="day">يوم</string>
+    <string name="my_cv">My Cv</string>
+    <string name="my_emails">My Emails</string>
+    <string name="my_jobs">My Jobs</string>
 </resources>

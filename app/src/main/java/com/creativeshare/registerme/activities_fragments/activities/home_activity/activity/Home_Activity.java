@@ -13,7 +13,7 @@ import com.creativeshare.registerme.activities_fragments.activities.home_activit
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Main;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_MyOrders;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Notification;
-import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Profile;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_profile.Fragment_Profile;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Create_Edit_Cv;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_email.Fragment_Create_Email;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_jobs.Fragment_Jobs;
