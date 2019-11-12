@@ -77,7 +77,38 @@ public class Fragment_Create_Edit_Cv extends Fragment {
 adapter.AddTitles(titleList);
         pager.setAdapter(adapter);
 
+        createTabIcons();
 
+        tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                View v = tab.getCustomView();
+                TextView tv_tab = v.findViewById(R.id.tv_tab);
+                ImageView im_tab = v.findViewById(R.id.im_tab);
+tab.getCustomView().setBackgroundColor(homeActivity.getResources().getColor(R.color.colorPrimary));
+                tv_tab.setTextColor(getResources().getColor(R.color.white));
+                im_tab.setColorFilter(getResources().getColor(R.color.white));
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View v = tab.getCustomView();
+                TextView tv_tab = v.findViewById(R.id.tv_tab);
+                ImageView im_tab = v.findViewById(R.id.im_tab);
+                tab.getCustomView().setBackgroundColor(homeActivity.getResources().getColor(R.color.colorAccent));
+
+                tv_tab.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                im_tab.setColorFilter(getResources().getColor(R.color.colorPrimaryDark));
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
 
     }
