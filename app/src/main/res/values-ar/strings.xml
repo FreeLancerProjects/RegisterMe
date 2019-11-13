@@ -109,4 +109,5 @@
     <string name="my_cv">السير الذاتيه</string>
     <string name="my_emails">ايميلاتى</string>
     <string name="my_jobs">وظائفى</string>
+    <string name="no_cv_found">No Cv Found</string>
 </resources>

@@ -6,6 +6,7 @@ import com.creativeshare.registerme.models.AppDataModel;
 import com.creativeshare.registerme.models.BankDataModel;
 import com.creativeshare.registerme.models.NotificationDataModel;
 import com.creativeshare.registerme.models.Order_Model;
+import com.creativeshare.registerme.models.Profile_Order_Model;
 import com.creativeshare.registerme.models.Slider_Model;
 import com.creativeshare.registerme.models.UserModel;
 
@@ -29,20 +30,24 @@ public interface Services {
                                   @Field("subject") String subject
 
     );
+
     @GET("api/all_slider")
     Call<Slider_Model> get_slider();
+
     @GET("api/all_info")
     Call<AllInFo_Model> get_Info();
+
     @GET("api/aboutUs")
     Call<AppDataModel> getabout(
-            );
+    );
 
     @GET("api/condtions")
     Call<AppDataModel> getterms(
-            );
+    );
 
     @GET("api/all_banks")
     Call<BankDataModel> getBankAccount();
+
     @FormUrlEncoded
     @POST("api/register")
     Call<UserModel> Signup(
@@ -52,39 +57,45 @@ public interface Services {
             @Field("email") String email,
             @Field("gender") int gender
     );
+
     @FormUrlEncoded
     @POST("api/login")
     Call<UserModel> Signin(
             @Field("phone") String phone,
             @Field("phone_code") String phone_code
     );
+
     @FormUrlEncoded
     @POST("api/email_order")
     Call<ResponseBody> create_email(
 
             @Field("email") String email,
-            @Field("password")String password,
-            @Field("user_id")int user_id,
+            @Field("password") String password,
+            @Field("user_id") int user_id,
             @Field("type_id_fk") int type_id_fk);
+
     @FormUrlEncoded
     @POST("api/job_order_link")
     Call<ResponseBody> send_link(
 
 
-            @Field("user_id")int user_id,
+            @Field("user_id") int user_id,
             @Field("lik_job") String lik_job);
+
     @FormUrlEncoded
     @POST("api/job_order_company")
     Call<ResponseBody> send_company(
 
 
-            @Field("user_id")int user_id,
+            @Field("user_id") int user_id,
             @Field("campany_id_fk") int campany_id_fk);
+
     @FormUrlEncoded
     @POST("api/logout")
     Call<ResponseBody> Logout(@Field("id") String id
 
     );
+
     @FormUrlEncoded
     @POST("api/my_orders")
     Call<Order_Model> getorders(
@@ -92,18 +103,28 @@ public interface Services {
             @Field("user_id") int user_id
 
 
+    );
+
+    @FormUrlEncoded
+    @POST("api/my_end_order")
+    Call<Profile_Order_Model> getorders_type(
+
+            @Field("user_id") int user_id,
+            @Field("type") int type
+
 
     );
+
     @FormUrlEncoded
     @POST("api/my_notifications ")
     Call<NotificationDataModel> getnotifications(
 
             @Field("user_id") int user_id,
-            @Field("page")int page
-
+            @Field("page") int page
 
 
     );
+
     @Multipart
     @POST("api/user_image")
     Call<UserModel> editUserImage(@Part("user_id") RequestBody user_id,

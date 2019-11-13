@@ -111,4 +111,5 @@
     <string name="my_cv">My Cv</string>
     <string name="my_emails">My Emails</string>
     <string name="my_jobs">My Jobs</string>
+    <string name="no_cv_found">No Cv Found</string>
 </resources>
