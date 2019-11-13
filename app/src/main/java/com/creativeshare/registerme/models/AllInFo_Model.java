@@ -13,6 +13,7 @@ public class AllInFo_Model implements Serializable {
 
     public  class Data implements Serializable
         {
+            private List<Quallifcation> quallifcation;
             private List<EmailTypes>emailTypes;
 private List<Gcompanies>Gcompanies;
 private List<Scompanies>Scompanies;
@@ -27,6 +28,45 @@ private List<Scompanies>Scompanies;
 
             public List<Data.Scompanies> getScompanies() {
                 return Scompanies;
+            }
+
+            public List<Quallifcation> getQuallifcation() {
+                return quallifcation;
+            }
+
+            public class Quallifcation implements Serializable
+            {
+                private int id;
+                    private String ar_title;
+                    private String en_title;
+
+                private String available;
+                private String created_at;
+                private String updated_at;
+
+                public int getId() {
+                    return id;
+                }
+
+                public String getAr_title() {
+                    return ar_title;
+                }
+
+                public String getEn_title() {
+                    return en_title;
+                }
+
+                public String getAvailable() {
+                    return available;
+                }
+
+                public String getCreated_at() {
+                    return created_at;
+                }
+
+                public String getUpdated_at() {
+                    return updated_at;
+                }
             }
 
             public class  EmailTypes implements Serializable
