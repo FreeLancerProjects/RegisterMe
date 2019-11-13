@@ -20,6 +20,7 @@ import com.creativeshare.registerme.activities_fragments.activities.home_activit
 import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.models.Profile_Order_Model;
 import com.creativeshare.registerme.tags.Tags;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -93,7 +94,7 @@ else {
 }
 }
 else {
-    Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+data1.getEmail_type_logo())).fit().into(myHolder.im_order);
+    Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+data1.getEmail_type_logo())).placeholder(R.drawable.ic_email3).fit().into(myHolder.im_order);
 myHolder.tv_order_name.setText(data1.getEmail_name());
 }
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
@@ -117,7 +118,7 @@ myHolder.tv_order_name.setText(data1.getEmail_name());
 
     public class MyHolder extends RecyclerView.ViewHolder {
         private TextView tv_order_name,tv_date;
-private ImageView im_order;
+private RoundedImageView im_order;
         public MyHolder(View itemView) {
             super(itemView);
             tv_order_name = itemView.findViewById(R.id.tvname);
