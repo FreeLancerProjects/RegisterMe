@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.creativeshare.registerme.R;
@@ -49,6 +50,7 @@ private Home_Activity activity;
     private ImagesAdapter galleryAdapter;
     private List<Uri> uriList;
     private RecyclerView recyclerView_images;
+    private Spinner q;
 
     @Nullable
     @Override
