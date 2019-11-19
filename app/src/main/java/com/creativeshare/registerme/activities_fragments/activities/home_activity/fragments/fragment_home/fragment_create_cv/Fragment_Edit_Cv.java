@@ -1,6 +1,7 @@
 package com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,9 +33,17 @@ import com.creativeshare.registerme.adapter.Spinner_Skills_Adapter;
 import com.creativeshare.registerme.models.AllInFo_Model;
 import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
+import com.creativeshare.registerme.remote.Api;
+import com.creativeshare.registerme.share.Common;
+import com.creativeshare.registerme.tags.Tags;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Fragment_Edit_Cv extends Fragment {
@@ -60,9 +70,11 @@ public class Fragment_Edit_Cv extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_cv, container, false);
         initView(view);
+        get_cvinfo();
         return view;
 
     }
+
 
     private void initView(View view) {
         quallifcationList = new ArrayList<>();
@@ -178,6 +190,66 @@ public class Fragment_Edit_Cv extends Fragment {
             }
         }
     }
+    private void get_cvinfo() {
+        final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url).get_Info().enqueue(new Callback<AllInFo_Model>() {
+            @Override
+            public void onResponse(Call<AllInFo_Model> call, Response<AllInFo_Model> response) {
+                dialog.dismiss();
+                //  dataList.clear();
+                if (response.isSuccessful()) {
+                    updatedata(response.body());
+                } else {
+                    // recc.setVisibility(View.GONE);
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllInFo_Model> call, Throwable t) {
+                try {
+                    Log.e("Error", t.getMessage());
+                    dialog.dismiss();
+                    Toast.makeText(activity,getString(R.string.something), Toast.LENGTH_SHORT).show();
+
+//error.setText(activity.getString(R.string.faild));
+                    //recc.setVisibility(View.GONE);
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+
+    }
+    private void updatedata(AllInFo_Model body) {
+        if(body.getData().getHandGraduations()!=null&&body.getData().getHandGraduations().size()>0){
+            handGraduationsList.clear();
+            handGraduationsList.add(new AllInFo_Model.Data.HandGraduations("اختر","choose"));
+            handGraduationsList.addAll(body.getData().getHandGraduations());
+        }
+        if(body.getData().getQuallifcation()!=null&&body.getData().getQuallifcation().size()>0){
+            quallifcationList.clear();
+            quallifcationList.add(new AllInFo_Model.Data.Quallifcation("اختر","choose"));
+            quallifcationList.addAll(body.getData().getQuallifcation());
+        }
+        if(body.getData().getSkills()!=null&&body.getData().getSkills().size()>0){
+            skillsList.clear();
+            skillsList.add(new AllInFo_Model.Data.Skills("اختر","choose"));
+            skillsList.addAll(body.getData().getSkills());
+        }
+        spinner_skills_adapter.notifyDataSetChanged();
+        spinner_handGrafuation_adapter.notifyDataSetChanged();
+        spinner_qulificatin_adapter.notifyDataSetChanged();
+    }
+
     public static Fragment_Edit_Cv newInstance() {
         return new Fragment_Edit_Cv();
     }

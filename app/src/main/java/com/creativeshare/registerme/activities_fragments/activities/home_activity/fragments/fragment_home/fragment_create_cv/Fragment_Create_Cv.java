@@ -531,6 +531,26 @@ else {
         });
 
     }
+    private void updatedata(AllInFo_Model body) {
+        if(body.getData().getHandGraduations()!=null&&body.getData().getHandGraduations().size()>0){
+            handGraduationsList.clear();
+            handGraduationsList.add(new AllInFo_Model.Data.HandGraduations("اختر","choose"));
+            handGraduationsList.addAll(body.getData().getHandGraduations());
+        }
+        if(body.getData().getQuallifcation()!=null&&body.getData().getQuallifcation().size()>0){
+            quallifcationList.clear();
+            quallifcationList.add(new AllInFo_Model.Data.Quallifcation("اختر","choose"));
+            quallifcationList.addAll(body.getData().getQuallifcation());
+        }
+        if(body.getData().getSkills()!=null&&body.getData().getSkills().size()>0){
+            skillsList.clear();
+            skillsList.add(new AllInFo_Model.Data.Skills("اختر","choose"));
+            skillsList.addAll(body.getData().getSkills());
+        }
+        spinner_skills_adapter.notifyDataSetChanged();
+        spinner_handGrafuation_adapter.notifyDataSetChanged();
+        spinner_qulificatin_adapter.notifyDataSetChanged();
+    }
 
     private void updateImagetype(ImageTypeModel body) {
         String type=getResources().getString(R.string.upload_image)+":";
@@ -552,26 +572,6 @@ else {
         }
     }
 
-    private void updatedata(AllInFo_Model body) {
-        if(body.getData().getHandGraduations()!=null&&body.getData().getHandGraduations().size()>0){
-            handGraduationsList.clear();
-            handGraduationsList.add(new AllInFo_Model.Data.HandGraduations("اختر","choose"));
-            handGraduationsList.addAll(body.getData().getHandGraduations());
-        }
-        if(body.getData().getQuallifcation()!=null&&body.getData().getQuallifcation().size()>0){
-            quallifcationList.clear();
-            quallifcationList.add(new AllInFo_Model.Data.Quallifcation("اختر","choose"));
-            quallifcationList.addAll(body.getData().getQuallifcation());
-        }
-        if(body.getData().getSkills()!=null&&body.getData().getSkills().size()>0){
-            skillsList.clear();
-            skillsList.add(new AllInFo_Model.Data.Skills("اختر","choose"));
-            skillsList.addAll(body.getData().getSkills());
-        }
-        spinner_skills_adapter.notifyDataSetChanged();
-        spinner_handGrafuation_adapter.notifyDataSetChanged();
-        spinner_qulificatin_adapter.notifyDataSetChanged();
-    }
 
 
 }
