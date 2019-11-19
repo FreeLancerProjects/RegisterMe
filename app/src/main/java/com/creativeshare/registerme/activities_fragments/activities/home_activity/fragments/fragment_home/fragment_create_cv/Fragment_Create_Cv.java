@@ -544,7 +544,7 @@ else {
 
         }
         if(i<body.getData().size()-1){
-            type+=":";
+            type+=",";
         }
         }
 
