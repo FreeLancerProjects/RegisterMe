@@ -3,12 +3,15 @@ package com.creativeshare.registerme.activities_fragments.activities.home_activi
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +38,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.Locale;
 
+import co.ceryle.segmentedbutton.SegmentedButtonGroup;
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.paperdb.Paper;
 import okhttp3.MultipartBody;
@@ -50,13 +54,15 @@ public class Fragment_Edit_profile extends Fragment {
     private UserModel userModel;
     private CircleImageView im_profile;
     private CountryCodePicker countryCodePicker;
-    private EditText edt_name, edt_phone, edt_pass;
+    private EditText edt_name, edt_phone;
+    //, edt_pass;
     private Button bt_save;
     private ImageView back;
     private final int IMG1 = 1;
     private Uri uri = null;
     private final String read_permission = Manifest.permission.READ_EXTERNAL_STORAGE;
-
+    private SegmentedButtonGroup segmentedButtonGroup;
+    private int gender=1;
     public static Fragment_Edit_profile newInstance() {
         Fragment_Edit_profile fragment_edit_profile = new Fragment_Edit_profile();
 
@@ -70,19 +76,28 @@ public class Fragment_Edit_profile extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_profile, container, false);
         initview(view);
-        updateprofile();
+        updateprofile(userModel);
         return view;
     }
 
-    private void updateprofile() {
+    private void updateprofile(UserModel body) {
+        if(body!=userModel){
+        this.userModel=body;
+        preferences.create_update_userdata(homeActivity,userModel);}
         if (userModel != null) {
 
-          /*  Picasso.with(homeActivity).load(Uri.parse(Tags.IMAGE_URL + userModel.getLogo())).fit().placeholder(
+           Picasso.with(homeActivity).load(Uri.parse(Tags.IMAGE_URL + userModel.getUser().getImage())).fit().placeholder(
                     R.drawable.logo
             ).into(im_profile);
-            edt_name.setText(userModel.getName());
-            edt_phone.setText(userModel.getPhone());
-            countryCodePicker.setCountryForPhoneCode(Integer.parseInt(userModel.getPhone_code()));*/
+            edt_name.setText(userModel.getUser().getName());
+            edt_phone.setText(userModel.getUser().getPhone().replaceAll(" ",""));
+            countryCodePicker.setCountryForPhoneCode(Integer.parseInt(userModel.getUser().getPhone_code()));
+            if(userModel.getUser().getGender().equals("1")){
+                segmentedButtonGroup.setPosition(0);
+            }
+            else {
+                segmentedButtonGroup.setPosition(1);
+            }
         }
     }
 
@@ -98,12 +113,23 @@ public class Fragment_Edit_profile extends Fragment {
         edt_name = view.findViewById(R.id.edt_name);
         edt_phone = view.findViewById(R.id.edt_phone);
         back = view.findViewById(R.id.arrow);
-
+        segmentedButtonGroup=view.findViewById(R.id.segmentGroup);
+        segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClickedButtonListener() {
+            @Override
+            public void onClickedButton(int position) {
+                if(position==0){
+                    gender=1;
+                }
+                else if(position==1){
+                    gender=2;
+                }
+            }
+        });
         // edt_location = view.findViewById(R.id.edt_loc);
         // edt_commercial = view.findViewById(R.id.edt_commercial);
         countryCodePicker = view.findViewById(R.id.ccp);
         countryCodePicker.registerCarrierNumberEditText(edt_phone);
-        edt_pass = view.findViewById(R.id.edt_password);
+      //  edt_pass = view.findViewById(R.id.edt_password);
         bt_save = view.findViewById(R.id.bt_save);
         if (current_lang.equals("en")) {
 
@@ -122,12 +148,12 @@ public class Fragment_Edit_profile extends Fragment {
                 checkdata();
             }
         });
-       /* back.setOnClickListener(new View.OnClickListener() {
+       back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 homeActivity.Back();
             }
-        });*/
+        });
     }
 
     private void Check_ReadPermission(int img_req) {
@@ -158,6 +184,51 @@ public class Fragment_Edit_profile extends Fragment {
         intent.setType("image/*");
         startActivityForResult(intent, img1);
     }
+    private void editImageProfile(String user_id, String image) {
+        ProgressDialog dialog = Common.createProgressDialog(homeActivity, getResources().getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+
+        RequestBody id_part = Common.getRequestBodyText(String.valueOf(user_id));
+
+        MultipartBody.Part image_part = Common.getMultiPart(homeActivity, Uri.parse(image), "image");
+
+        Api.getService(Tags.base_url)
+                .editUserImage(id_part, image_part)
+                .enqueue(new Callback<UserModel>() {
+                    @Override
+                    public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                        dialog.dismiss();
+                        if (response.isSuccessful() && response.body() != null) {
+                            //listener.onSuccess(response.body());
+                            preferences.create_update_userdata(homeActivity, response.body());
+                            Toast.makeText(homeActivity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
+                            updateprofile(response.body());
+
+                        } else {
+                            Log.e("codeimage", response.code() + "_");
+                            try {
+                                Toast.makeText(homeActivity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
+
+                                Log.e("respons", response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            // listener.onFailed(response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserModel> call, Throwable t) {
+                        try {
+                            dialog.dismiss();
+                            Toast.makeText(homeActivity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+
+                        } catch (Exception e) {
+                        }
+                    }
+                });
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -165,7 +236,7 @@ public class Fragment_Edit_profile extends Fragment {
         if (requestCode == IMG1 && resultCode == Activity.RESULT_OK && data != null) {
             uri = data.getData();
             Picasso.with(homeActivity).load(uri).fit().into(im_profile);
-
+editImageProfile(userModel.getUser().getId()+"",uri.toString());
             // UpdateImage(uri);
         }
 
@@ -191,36 +262,50 @@ public class Fragment_Edit_profile extends Fragment {
         String phone = edt_phone.getText().toString();
         String phonecode = countryCodePicker.getSelectedCountryCode();
         //String city = edt_location.getText().toString();
-
+phone=phone.replaceAll(" ","");
         //String coomericial = edt_commercial.getText().toString();
-        String pass = edt_pass.getText().toString();
-        if (name.isEmpty() || phone.isEmpty() || !countryCodePicker.isValidFullNumber() || pass.isEmpty() || pass.length() < 6) {
-            if (name.isEmpty()) {
-                edt_name.setError(getResources().getString(R.string.field_req));
-            }
+      //  String pass = edt_pass.getText().toString();
+        if (!TextUtils.isEmpty(name) &&
+                !TextUtils.isEmpty(phone) &&
+                // !TextUtils.isEmpty(m_email) &&
+                //Patterns.EMAIL_ADDRESS.matcher(m_email).matches() &&
 
-            if (phone.isEmpty()) {
-                edt_phone.setError(getResources().getString(R.string.field_req));
+                countryCodePicker.isValidFullNumber()
+                &&gender!=0
 
-            }
-            if (!countryCodePicker.isValidFullNumber()) {
-                edt_phone.setError(getResources().getString(R.string.inc_phone));
-            }
+        ) {
+            updateprofile(name, phone, phonecode);
 
 
-            if (pass.isEmpty()) {
-                edt_pass.setError(getResources().getString(R.string.field_req));
-            }
-            if (pass.length() < 6) {
-                edt_pass.setError(getResources().getString(R.string.inc_pass));
-            }
-        } else {
-            updateprofile(name, phone, phonecode, pass, uri);
         }
+        else {
+            if(gender==0){
+                Toast.makeText(homeActivity,homeActivity.getResources().getString(R.string.choose_gender),Toast.LENGTH_LONG).show();
+            }
+            if (TextUtils.isEmpty(name)) {
+                edt_name.setError(getString(R.string.field_req));
+            } else {
+                edt_name.setError(null);
+
+            }
+
+
+            if (TextUtils.isEmpty(phone)) {
+                edt_phone.setError(getString(R.string.field_req));
+            } else {
+                edt_phone.setError(null);
+
+            }
+
+
+
+
+        }
+
 
     }
 
-    private void updateprofile(String name, String phone, String phonecode, String pass, Uri uri) {
+    private void updateprofile(String name, String phone, String phonecode) {
         final Dialog dialog = Common.createProgressDialog(homeActivity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -230,59 +315,9 @@ public class Fragment_Edit_profile extends Fragment {
         }*/
 
 
-       // Log.e("data",name+" "+phone+" "+phonecode+" "+pass+" "+uri.toString());
-if(uri==null){
-       /* try {
 
-            RequestBody token_part = Common.getRequestBodyText(userModel.getId() + "");
-            RequestBody name_part = Common.getRequestBodyText(name);
-            RequestBody phone_part = Common.getRequestBodyText(phone);
-            RequestBody phone_code_part = Common.getRequestBodyText( phonecode.replace("+", "00"));
-            RequestBody pass_part = Common.getRequestBodyText(pass);
-            MultipartBody.Part avatar_part = Common.getMultiPart(homeActivity, uri, "logo");
-            Api.getService(Tags.base_url)
-                    .udateprofile(token_part, name_part, phone_part, phone_code_part, pass_part, avatar_part)
-                    .enqueue(new Callback<UserModel>() {
-                        @Override
-                        public void onResponse(Call<UserModel> call, Response<UserModel> response) {
 
-                            dialog.dismiss();
-
-                            if (response.isSuccessful()) {
-
-                                if (response.body() != null) {
-                                    Toast.makeText(homeActivity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
-                                    userModel = response.body();
-                                    preferences.create_update_userdata(homeActivity, userModel);
-                                    updateprofile();
-
-                                }
-
-                            } else {
-                                Common.CreateSignAlertDialog(homeActivity, getString(R.string.something));
-                            }
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<UserModel> call, Throwable t) {
-                            try {
-                                dialog.dismiss();
-                                Log.e("Error", t.getMessage());
-                                Toast.makeText(homeActivity, R.string.failed, Toast.LENGTH_SHORT).show();
-
-                            } catch (Exception e) {
-                            }
-                        }
-                    });
-        } catch (
-                Exception e) {
-        }*/
-    }
-
-    else {
-/*
-    Api.getService(Tags.base_url).updateprofile(userModel.getId()+"",  name, phone, phonecode.replace("+", "00"),  pass).enqueue(new Callback<UserModel>() {
+    Api.getService(Tags.base_url).updateprofile(userModel.getUser().getId()+"",  name, phone, phonecode.replace("+", "00"),  gender+"",1).enqueue(new Callback<UserModel>() {
         @Override
         public void onResponse(Call<UserModel> call, Response<UserModel> response) {
             dialog.dismiss();
@@ -290,12 +325,12 @@ if(uri==null){
                 Toast.makeText(homeActivity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                 userModel = response.body();
                 preferences.create_update_userdata(homeActivity, userModel);
-                updateprofile();
+                updateprofile(response.body());
 
                 // Common.CreateSignAlertDialog(homeActivity, getResources().getString(R.string.suc));
 
                 // edt_pass.setText("");
-                 updateprofile();
+               //  updateprofile();
             } else {
 
                 try {
@@ -321,8 +356,7 @@ if(uri==null){
 
         }
     });
-*/
-    }
+
     }
 
 

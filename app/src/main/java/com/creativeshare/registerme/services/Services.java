@@ -155,4 +155,19 @@ public interface Services {
     @POST("api/user_image")
     Call<UserModel> editUserImage(@Part("user_id") RequestBody user_id,
                                   @Part MultipartBody.Part image);
+    @FormUrlEncoded
+    @POST("api/update_profile")
+    Call<UserModel> updateprofile(
+            @Field("user_id") String user_id,
+
+            @Field("name") String name,
+            @Field("phone") String phone,
+            @Field("phone_code") String phone_code,
+            @Field("gender") String gender,
+
+            @Field("software_type") int software_type
+
+
+
+    );
 }
