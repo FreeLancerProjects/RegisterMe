@@ -32,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.creativeshare.registerme.R;
@@ -41,6 +42,7 @@ import com.creativeshare.registerme.adapter.Spinner_HandGrafuation_Adapter;
 import com.creativeshare.registerme.adapter.Spinner_Qulificatin_Adapter;
 import com.creativeshare.registerme.adapter.Spinner_Skills_Adapter;
 import com.creativeshare.registerme.models.AllInFo_Model;
+import com.creativeshare.registerme.models.ImageTypeModel;
 import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.remote.Api;
@@ -50,7 +52,9 @@ import com.creativeshare.registerme.tags.Tags;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import io.paperdb.Paper;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -79,8 +83,10 @@ public class Fragment_Create_Cv extends Fragment {
     private RecyclerView recyclerView_images;
     private Spinner spinner_qualification, spinner_handgraduate, spinner_skill;
     private EditText edt_email,edt_note;
+    private TextView tv_type;
     private Button bt_Send;
 private int qulifid=0,skillid=0,qradutateid=0;
+    private String current_lang;
 
     @Nullable
     @Override
@@ -88,6 +94,7 @@ private int qulifid=0,skillid=0,qradutateid=0;
         View view = inflater.inflate(R.layout.fragment_create_cv, container, false);
         initView(view);
         get_cvinfo();
+        get_cvImagetype();
         return view;
 
     }
@@ -98,6 +105,8 @@ private int qulifid=0,skillid=0,qradutateid=0;
         skillsList = new ArrayList<>();
         uriList = new ArrayList<>();
         activity = (Home_Activity) getActivity();
+        Paper.init(activity);
+        current_lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
         image_selection = view.findViewById(R.id.imageSelectPhoto);
@@ -105,6 +114,7 @@ private int qulifid=0,skillid=0,qradutateid=0;
         spinner_qualification = view.findViewById(R.id.spinner_qualification);
         spinner_handgraduate = view.findViewById(R.id.spinner_hanfgraduate);
         spinner_skill = view.findViewById(R.id.spinner_skill);
+        tv_type=view.findViewById(R.id.tv_type);
 edt_email=view.findViewById(R.id.edt_email);
 edt_note=view.findViewById(R.id.edt_note);
 bt_Send=view.findViewById(R.id.btn_send);
@@ -481,6 +491,65 @@ else {
             }
         });
 
+    }
+    private void get_cvImagetype() {
+        final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url).get_Inmagetype().enqueue(new Callback<ImageTypeModel>() {
+            @Override
+            public void onResponse(Call<ImageTypeModel> call, Response<ImageTypeModel> response) {
+                dialog.dismiss();
+                //  dataList.clear();
+                if (response.isSuccessful()) {
+                    updateImagetype(response.body());
+                } else {
+                    // recc.setVisibility(View.GONE);
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ImageTypeModel> call, Throwable t) {
+                try {
+                    Log.e("Error", t.getMessage());
+                    dialog.dismiss();
+                    Toast.makeText(activity,getString(R.string.something), Toast.LENGTH_SHORT).show();
+
+//error.setText(activity.getString(R.string.faild));
+                    //recc.setVisibility(View.GONE);
+                } catch (Exception e) {
+
+                }
+
+            }
+        });
+
+    }
+
+    private void updateImagetype(ImageTypeModel body) {
+        String type=getResources().getString(R.string.upload_image)+":";
+        if(body.getData()!=null&&body.getData().size()>0){
+        for (int i=0;i<body.getData().size();i++){
+        if(current_lang.equals("ar")){
+            type+=body.getData().get(i).getAr_title();
+        }
+        else {
+            type+=body.getData().get(i).getEn_title();
+
+        }
+        if(i<body.getData().size()-1){
+            type+=":";
+        }
+        }
+
+        tv_type.setText(type);
+        }
     }
 
     private void updatedata(AllInFo_Model body) {

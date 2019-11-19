@@ -4,6 +4,7 @@ package com.creativeshare.registerme.services;
 import com.creativeshare.registerme.models.AllInFo_Model;
 import com.creativeshare.registerme.models.AppDataModel;
 import com.creativeshare.registerme.models.BankDataModel;
+import com.creativeshare.registerme.models.ImageTypeModel;
 import com.creativeshare.registerme.models.NotificationDataModel;
 import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.models.Profile_Order_Model;
@@ -38,7 +39,8 @@ public interface Services {
 
     @GET("api/all_info")
     Call<AllInFo_Model> get_Info();
-
+    @GET("api/required_docs")
+    Call<ImageTypeModel> get_Inmagetype();
     @GET("api/aboutUs")
     Call<AppDataModel> getabout(
     );
