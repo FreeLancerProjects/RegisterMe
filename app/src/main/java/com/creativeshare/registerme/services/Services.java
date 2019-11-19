@@ -10,6 +10,8 @@ import com.creativeshare.registerme.models.Profile_Order_Model;
 import com.creativeshare.registerme.models.Slider_Model;
 import com.creativeshare.registerme.models.UserModel;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -95,7 +97,31 @@ public interface Services {
     Call<ResponseBody> Logout(@Field("id") String id
 
     );
+    @Multipart
+    @POST("api/create_resume")
+    Call<ResponseBody> createcv
+            (@Part("user_id") RequestBody user_id,
+             @Part("email") RequestBody email,
+             @Part("notes") RequestBody notes,
+             @Part("qualification_id_fk") RequestBody qualification_id_fk,
+             @Part("hand_graduation_id_fk") RequestBody hand_graduation_id_fk,
+             @Part("skills_id") RequestBody skills_id,
+             @Part List<MultipartBody.Part> partimageInsideList
 
+//
+            );
+    @FormUrlEncoded
+    @POST("api/create_resume")
+    Call<ResponseBody> createcvwithouimage
+            (@Field("user_id") String user_id,
+             @Field("email") String email,
+             @Field("notes") String notes,
+             @Field("qualification_id_fk") String qualification_id_fk,
+             @Field("hand_graduation_id_fk") String hand_graduation_id_fk,
+             @Field("skills_id") String skills_id
+
+//
+            );
     @FormUrlEncoded
     @POST("api/my_orders")
     Call<Order_Model> getorders(

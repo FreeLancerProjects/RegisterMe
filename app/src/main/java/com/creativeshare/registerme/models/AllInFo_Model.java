@@ -11,13 +11,14 @@ public class AllInFo_Model implements Serializable {
         return data;
     }
 
-    public  class Data implements Serializable
+    public static class Data implements Serializable
         {
             private List<Quallifcation> quallifcation;
             private List<EmailTypes>emailTypes;
 private List<Gcompanies>Gcompanies;
 private List<Scompanies>Scompanies;
-
+private List<Skills> skills;
+private List<HandGraduations> handGraduations;
             public List<EmailTypes> getEmailTypes() {
                 return emailTypes;
             }
@@ -34,7 +35,15 @@ private List<Scompanies>Scompanies;
                 return quallifcation;
             }
 
-            public class Quallifcation implements Serializable
+            public List<Skills> getSkills() {
+                return skills;
+            }
+
+            public List<HandGraduations> getHandGraduations() {
+                return handGraduations;
+            }
+
+            public static class Quallifcation implements Serializable
             {
                 private int id;
                     private String ar_title;
@@ -43,6 +52,11 @@ private List<Scompanies>Scompanies;
                 private String available;
                 private String created_at;
                 private String updated_at;
+
+                public Quallifcation(String ar_title, String en_title) {
+                    this.ar_title = ar_title;
+                    this.en_title = en_title;
+                }
 
                 public int getId() {
                     return id;
@@ -147,6 +161,62 @@ private List<Scompanies>Scompanies;
 
                 public String getType() {
                     return type;
+                }
+
+                public String getAvailable() {
+                    return available;
+                }
+            }
+            public static class Skills implements Serializable
+            {
+                private int id;
+                    private String ar_title;
+                private String en_title;
+                private String available;
+
+                public Skills(String ar_title, String en_title) {
+                    this.ar_title = ar_title;
+                    this.en_title = en_title;
+                }
+
+                public int getId() {
+                    return id;
+                }
+
+                public String getAr_title() {
+                    return ar_title;
+                }
+
+                public String getEn_title() {
+                    return en_title;
+                }
+
+                public String getAvailable() {
+                    return available;
+                }
+            }
+             public static class HandGraduations implements Serializable
+            {
+                private int id;
+                private String ar_title;
+                private String en_title;
+                private String available;
+
+                public HandGraduations(String ar_title, String en_title) {
+                    this.ar_title = ar_title;
+                    this.en_title = en_title;
+                }
+
+                public int getId() {
+                    return id;
+                }
+
+                public String getAr_title() {
+                    return ar_title;
+                }
+
+                public String getEn_title() {
+                    return en_title;
                 }
 
                 public String getAvailable() {

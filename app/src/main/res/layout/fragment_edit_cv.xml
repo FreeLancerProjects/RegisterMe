@@ -24,6 +24,7 @@
             android:padding="10dp">
 
 
+
             <LinearLayout
 
                 android:layout_width="match_parent"
@@ -31,8 +32,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/linear_shape"
                 android:orientation="horizontal"
-
-                >
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="45dp"
@@ -62,14 +62,15 @@
 
 
             </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/linear_shape"
                 android:orientation="horizontal"
-
+                android:visibility="gone"
                 >
 
                 <ImageView
@@ -144,7 +145,7 @@
                     />
 
                 <EditText
-                    android:id="@+id/edt_residency_number"
+                    android:id="@+id/edt_email"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
@@ -152,11 +153,10 @@
                     android:layout_marginRight="8dp"
                     android:background="@color/white"
                     android:hint="@string/email"
+                    android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:inputType="number"
-                    />
+                    android:textSize="14sp" />
 
 
             </LinearLayout>
@@ -167,7 +167,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/linear_shape"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
 
 
                 <ImageView
@@ -231,7 +233,7 @@
 
 
                 <Spinner
-                    android:id="@+id/spinner_model"
+                    android:id="@+id/spinner_qualification"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -243,6 +245,7 @@
                 </Spinner>
 
             </LinearLayout>
+
             <LinearLayout
 
                 android:layout_width="match_parent"
@@ -277,7 +280,7 @@
                     />
 
                 <Spinner
-                    android:id="@+id/spinner_model2"
+                    android:id="@+id/spinner_hanfgraduate"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -289,6 +292,7 @@
                 </Spinner>
 
             </LinearLayout>
+
             <LinearLayout
 
                 android:layout_width="match_parent"
@@ -323,7 +327,7 @@
                     />
 
                 <Spinner
-                    android:id="@+id/spinner_model3"
+                    android:id="@+id/spinner_skill"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
@@ -357,22 +361,20 @@
                     />
 
                 <EditText
-                    android:id="@+id/edt_car_type"
+                    android:id="@+id/edt_note"
 
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:background="@color/white"
+                    android:gravity="top"
                     android:hint="@string/others"
+                    android:inputType="textMultiLine"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
-android:inputType="textMultiLine"
-                    android:gravity="top"
-                    />
+                    android:textSize="14sp" />
 
 
             </LinearLayout>
-
             <LinearLayout
 
                 android:layout_width="match_parent"
