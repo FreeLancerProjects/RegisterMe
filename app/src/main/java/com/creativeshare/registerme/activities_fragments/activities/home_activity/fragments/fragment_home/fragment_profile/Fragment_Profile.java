@@ -199,14 +199,6 @@ CreateImageAlertDialog();
         dialog.setView(view);
         dialog.show();
     }
-    private void CheckReadPermission()
-    {
-        if (ActivityCompat.checkSelfPermission(activity, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity, new String[]{READ_PERM}, IMG_REQ1);
-        } else {
-            SelectImage(IMG_REQ1);
-        }
-    }
 
     private void Check_CameraPermission()
     {
@@ -220,6 +212,15 @@ CreateImageAlertDialog();
         }
 
     }
+    private void CheckReadPermission()
+    {
+        if (ActivityCompat.checkSelfPermission(activity, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{READ_PERM}, IMG_REQ1);
+        } else {
+            SelectImage(IMG_REQ1);
+        }
+    }
+
     private void SelectImage(int img_req) {
 
         Intent intent = new Intent();

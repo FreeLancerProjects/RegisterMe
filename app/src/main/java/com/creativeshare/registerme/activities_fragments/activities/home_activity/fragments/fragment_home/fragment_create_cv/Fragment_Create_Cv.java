@@ -82,10 +82,10 @@ public class Fragment_Create_Cv extends Fragment {
 
     private RecyclerView recyclerView_images;
     private Spinner spinner_qualification, spinner_handgraduate, spinner_skill;
-    private EditText edt_email,edt_note;
+    private EditText edt_email, edt_note, edt_phone, edt_name;
     private TextView tv_type;
     private Button bt_Send;
-private int qulifid=0,skillid=0,qradutateid=0;
+    private int qulifid = 0, skillid = 0, qradutateid = 0;
     private String current_lang;
 
     @Nullable
@@ -114,10 +114,12 @@ private int qulifid=0,skillid=0,qradutateid=0;
         spinner_qualification = view.findViewById(R.id.spinner_qualification);
         spinner_handgraduate = view.findViewById(R.id.spinner_hanfgraduate);
         spinner_skill = view.findViewById(R.id.spinner_skill);
-        tv_type=view.findViewById(R.id.tv_type);
-edt_email=view.findViewById(R.id.edt_email);
-edt_note=view.findViewById(R.id.edt_note);
-bt_Send=view.findViewById(R.id.btn_send);
+        tv_type = view.findViewById(R.id.tv_type);
+        edt_email = view.findViewById(R.id.edt_email);
+        edt_phone = view.findViewById(R.id.edt_phone);
+        edt_name = view.findViewById(R.id.edt_name);
+        edt_note = view.findViewById(R.id.edt_note);
+        bt_Send = view.findViewById(R.id.btn_send);
         spinner_qulificatin_adapter = new Spinner_Qulificatin_Adapter(activity, quallifcationList);
         spinner_handGrafuation_adapter = new Spinner_HandGrafuation_Adapter(activity, handGraduationsList);
         spinner_skills_adapter = new Spinner_Skills_Adapter(activity, skillsList);
@@ -139,7 +141,7 @@ bt_Send=view.findViewById(R.id.btn_send);
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    qulifid =0 ;
+                    qulifid = 0;
                 } else {
                     qulifid = quallifcationList.get(position).getId();
                     // Move_Data_Model.setcityt(to_city);
@@ -157,7 +159,7 @@ bt_Send=view.findViewById(R.id.btn_send);
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    qradutateid =0 ;
+                    qradutateid = 0;
                 } else {
                     qradutateid = handGraduationsList.get(position).getId();
                     // Move_Data_Model.setcityt(to_city);
@@ -175,7 +177,7 @@ bt_Send=view.findViewById(R.id.btn_send);
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    skillid =0 ;
+                    skillid = 0;
                 } else {
                     skillid = skillsList.get(position).getId();
                     // Move_Data_Model.setcityt(to_city);
@@ -198,49 +200,48 @@ bt_Send=view.findViewById(R.id.btn_send);
     }
 
     private void checkdata() {
-        String email=edt_email.getText().toString();
-        String note=edt_note.getText().toString();
-        if(!TextUtils.isEmpty(email)&&!TextUtils.isEmpty(note)&& Patterns.EMAIL_ADDRESS.matcher(email).matches()&&qulifid!=0&&qradutateid!=0&&skillid!=0){
-if(uriList!=null&&uriList.size()>0){
- CreateCvWithImage(email,note);   
-}
-else {
-    CreateCvWithOutImage(email,note);
+        String email = edt_email.getText().toString();
+        String note = edt_note.getText().toString();
+        String name = edt_name.getText().toString();
+        String phone = edt_phone.getText().toString();
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != 0) {
+            if (uriList != null && uriList.size() > 0) {
+                CreateCvWithImage(email, note, name, phone);
+            } else {
+                CreateCvWithOutImage(email, note, name, phone);
 
-}
-        }
-        else {
+            }
+        } else {
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 edt_email.setError(getResources().getString(R.string.inv_email));
             }
-            if(TextUtils.isEmpty(email)){
+            if (TextUtils.isEmpty(email)) {
                 edt_email.setError(getResources().getString(R.string.field_req));
             }
-            if(TextUtils.isEmpty(note)){
+            if (TextUtils.isEmpty(note)) {
                 edt_note.setError(getResources().getString(R.string.field_req));
             }
-            if(qradutateid==0){
-                Toast.makeText(activity,getResources().getString(R.string.choose_handgradauted),Toast.LENGTH_LONG).show();
+            if (qradutateid == 0) {
+                Toast.makeText(activity, getResources().getString(R.string.choose_handgradauted), Toast.LENGTH_LONG).show();
             }
-            if(qulifid==0){
-                Toast.makeText(activity,getResources().getString(R.string.choose_qalified),Toast.LENGTH_LONG).show();
+            if (qulifid == 0) {
+                Toast.makeText(activity, getResources().getString(R.string.choose_qalified), Toast.LENGTH_LONG).show();
             }
-            if(skillid==0){
-                Toast.makeText(activity,getResources().getString(R.string.choose_Skill),Toast.LENGTH_LONG).show();
+            if (skillid == 0) {
+                Toast.makeText(activity, getResources().getString(R.string.choose_Skill), Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    private void CreateCvWithOutImage(String email, String note) {
+    private void CreateCvWithOutImage(String email, String note, String name, String phone) {
         final Dialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
 
 
-
         try {
             Api.getService(Tags.base_url)
-                    .createcvwithouimage(userModel.getUser().getId()+"", email,note,qulifid+"",qradutateid+"", skillid+"").enqueue(new Callback<ResponseBody>() {
+                    .createcvwithouimage(userModel.getUser().getId() + "", name, phone, email, note, qulifid + "", qradutateid + "", skillid + "").enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     dialog.dismiss();
@@ -255,7 +256,7 @@ else {
                         try {
 
                             Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                            Log.e("Error", response.toString()+" "+response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers()+" "+response.errorBody().toString());
+                            Log.e("Error", response.toString() + " " + response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers() + " " + response.errorBody().toString());
                         } catch (Exception e) {
 
 
@@ -280,24 +281,25 @@ else {
         }
     }
 
-    private void CreateCvWithImage(String email, String note) {
+    private void CreateCvWithImage(String email, String note, String name, String phone) {
         final Dialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
 
         RequestBody user_part = Common.getRequestBodyText(userModel.getUser().getId() + "");
-
+        RequestBody name_part = Common.getRequestBodyText(name);
+        RequestBody phone_part = Common.getRequestBodyText(phone);
         RequestBody email_part = Common.getRequestBodyText(email);
         RequestBody note_part = Common.getRequestBodyText(note);
-        RequestBody qualif_part = Common.getRequestBodyText(qulifid+"");
-        RequestBody graduate_part = Common.getRequestBodyText(qradutateid+"");
-        RequestBody skill_part = Common.getRequestBodyText(skillid+"");
+        RequestBody qualif_part = Common.getRequestBodyText(qulifid + "");
+        RequestBody graduate_part = Common.getRequestBodyText(qradutateid + "");
+        RequestBody skill_part = Common.getRequestBodyText(skillid + "");
 
 
         List<MultipartBody.Part> partimageList = getMultipartBodyList(uriList, "image[]");
         try {
             Api.getService(Tags.base_url)
-                    .createcv(user_part, email_part,note_part,qualif_part,graduate_part, skill_part,partimageList).enqueue(new Callback<ResponseBody>() {
+                    .createcv(user_part, name_part, phone_part, email_part, note_part, qualif_part, graduate_part, skill_part, partimageList).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     dialog.dismiss();
@@ -312,7 +314,7 @@ else {
                         try {
 
                             Toast.makeText(activity, getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                            Log.e("Error", response.toString()+" "+response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers()+" "+response.errorBody().toString());
+                            Log.e("Error", response.toString() + " " + response.code() + "" + response.message() + "" + response.errorBody() + response.raw() + response.body() + response.headers() + " " + response.errorBody().toString());
                         } catch (Exception e) {
 
 
@@ -453,6 +455,7 @@ else {
         galleryAdapter.notifyItemRemoved(adapterPosition);
 
     }
+
     private void get_cvinfo() {
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
@@ -461,9 +464,9 @@ else {
             @Override
             public void onResponse(Call<AllInFo_Model> call, Response<AllInFo_Model> response) {
                 dialog.dismiss();
-              //  dataList.clear();
+                //  dataList.clear();
                 if (response.isSuccessful()) {
-                 updatedata(response.body());
+                    updatedata(response.body());
                 } else {
                     // recc.setVisibility(View.GONE);
                     try {
@@ -480,7 +483,7 @@ else {
                 try {
                     Log.e("Error", t.getMessage());
                     dialog.dismiss();
-                    Toast.makeText(activity,getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
 
 //error.setText(activity.getString(R.string.faild));
                     //recc.setVisibility(View.GONE);
@@ -492,6 +495,7 @@ else {
         });
 
     }
+
     private void get_cvImagetype() {
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
@@ -519,7 +523,7 @@ else {
                 try {
                     Log.e("Error", t.getMessage());
                     dialog.dismiss();
-                    Toast.makeText(activity,getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
 
 //error.setText(activity.getString(R.string.faild));
                     //recc.setVisibility(View.GONE);
@@ -531,20 +535,21 @@ else {
         });
 
     }
+
     private void updatedata(AllInFo_Model body) {
-        if(body.getData().getHandGraduations()!=null&&body.getData().getHandGraduations().size()>0){
+        if (body.getData().getHandGraduations() != null && body.getData().getHandGraduations().size() > 0) {
             handGraduationsList.clear();
-            handGraduationsList.add(new AllInFo_Model.Data.HandGraduations("اختر","choose"));
+            handGraduationsList.add(new AllInFo_Model.Data.HandGraduations("اختر", "choose"));
             handGraduationsList.addAll(body.getData().getHandGraduations());
         }
-        if(body.getData().getQuallifcation()!=null&&body.getData().getQuallifcation().size()>0){
+        if (body.getData().getQuallifcation() != null && body.getData().getQuallifcation().size() > 0) {
             quallifcationList.clear();
-            quallifcationList.add(new AllInFo_Model.Data.Quallifcation("اختر","choose"));
+            quallifcationList.add(new AllInFo_Model.Data.Quallifcation("اختر", "choose"));
             quallifcationList.addAll(body.getData().getQuallifcation());
         }
-        if(body.getData().getSkills()!=null&&body.getData().getSkills().size()>0){
+        if (body.getData().getSkills() != null && body.getData().getSkills().size() > 0) {
             skillsList.clear();
-            skillsList.add(new AllInFo_Model.Data.Skills("اختر","choose"));
+            skillsList.add(new AllInFo_Model.Data.Skills("اختر", "choose"));
             skillsList.addAll(body.getData().getSkills());
         }
         spinner_skills_adapter.notifyDataSetChanged();
@@ -553,25 +558,23 @@ else {
     }
 
     private void updateImagetype(ImageTypeModel body) {
-        String type=getResources().getString(R.string.upload_image)+":";
-        if(body.getData()!=null&&body.getData().size()>0){
-        for (int i=0;i<body.getData().size();i++){
-        if(current_lang.equals("ar")){
-            type+=body.getData().get(i).getAr_title();
-        }
-        else {
-            type+=body.getData().get(i).getEn_title();
+        String type = getResources().getString(R.string.upload_image) + ":";
+        if (body.getData() != null && body.getData().size() > 0) {
+            for (int i = 0; i < body.getData().size(); i++) {
+                if (current_lang.equals("ar")) {
+                    type += body.getData().get(i).getAr_title();
+                } else {
+                    type += body.getData().get(i).getEn_title();
 
-        }
-        if(i<body.getData().size()-1){
-            type+=",";
-        }
-        }
+                }
+                if (i < body.getData().size() - 1) {
+                    type += ",";
+                }
+            }
 
-        tv_type.setText(type);
+            tv_type.setText(type);
         }
     }
-
 
 
 }

@@ -9,6 +9,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import com.creativeshare.registerme.R;
+import com.creativeshare.registerme.activities_fragments.activities.activity_video.Detials_Activity;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Home;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Main;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_MyOrders;
@@ -572,5 +573,13 @@ public class Home_Activity extends AppCompatActivity {
             fragment_myorders.getOrders();
         }
         DisplayFragmentMyorders();
+    }
+
+    public void displaycv(String cv) {
+        if(cv!=null){
+            Intent intent=new Intent(Home_Activity.this, Detials_Activity.class);
+            intent.putExtra("data",cv);
+            startActivity(intent);
+        }
     }
 }

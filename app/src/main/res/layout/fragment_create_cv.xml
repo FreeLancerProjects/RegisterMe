@@ -31,7 +31,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/linear_shape"
                 android:orientation="horizontal"
-                android:visibility="gone">
+               >
 
                 <ImageView
                     android:layout_width="45dp"
@@ -69,7 +69,6 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/linear_shape"
                 android:orientation="horizontal"
-android:visibility="gone"
                 >
 
                 <ImageView

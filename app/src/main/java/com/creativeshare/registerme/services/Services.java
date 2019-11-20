@@ -103,6 +103,8 @@ public interface Services {
     @POST("api/create_resume")
     Call<ResponseBody> createcv
             (@Part("user_id") RequestBody user_id,
+             @Part("cv_name") RequestBody name,
+             @Part("cv_phone") RequestBody phone,
              @Part("email") RequestBody email,
              @Part("notes") RequestBody notes,
              @Part("qualification_id_fk") RequestBody qualification_id_fk,
@@ -112,10 +114,27 @@ public interface Services {
 
 //
             );
+    @Multipart
+    @POST("api/update_resume")
+    Call<ResponseBody> updatecv
+            (@Part("user_id") RequestBody user_id,
+             @Part("cv_name") RequestBody name,
+             @Part("cv_phone") RequestBody phone,
+             @Part("email") RequestBody email,
+             @Part("notes") RequestBody notes,
+             @Part("qualification_id_fk") RequestBody qualification_id_fk,
+             @Part("hand_graduation_id_fk") RequestBody hand_graduation_id_fk,
+             @Part("skills_id") RequestBody skills_id,
+             @Part MultipartBody.Part partimageInside
+
+//
+            );
     @FormUrlEncoded
     @POST("api/create_resume")
     Call<ResponseBody> createcvwithouimage
             (@Field("user_id") String user_id,
+             @Field("cv_name") String name,
+             @Field("cv_phone") String phone,
              @Field("email") String email,
              @Field("notes") String notes,
              @Field("qualification_id_fk") String qualification_id_fk,

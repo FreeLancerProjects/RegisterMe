@@ -101,7 +101,14 @@ myHolder.tv_order_name.setText(data1.getEmail_name());
             String date = dateFormat.format(new Date(data1.getDate() * 1000));
             ((MyHolder) holder).tv_date.setText(date);
 
-
+myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(data.get(myHolder.getLayoutPosition()).getType().equals("1")){
+            activity.displaycv(data.get(myHolder.getLayoutPosition()).getCv());
+        }
+    }
+});
 
             //Log.e("msg",advertsing.getMain_image());
         } else {

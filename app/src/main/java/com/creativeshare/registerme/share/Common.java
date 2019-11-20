@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -320,13 +323,25 @@ public class Common {
         return part;
 
     }
+    public static MultipartBody.Part getMultiPartdoc(Context context, Uri uri, String partName)
+    {
+        File file =  getFileFromImagePath(getImagePath(context,uri));
+        RequestBody requestBody = getRequestBodyDoc(file);
+        MultipartBody.Part part  = MultipartBody.Part.createFormData(partName, SystemClock.uptimeMillis() +file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf(".")),requestBody);
 
+        return part;
+
+    }
     private static RequestBody getRequestBodyImage(File file)
     {
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"),file);
         return requestBody;
     }
-
+    private static RequestBody getRequestBodyDoc(File file)
+    {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"),file);
+        return requestBody;
+    }
     public static RequestBody getRequestBodyText(String data)
     {
         RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"),data);
