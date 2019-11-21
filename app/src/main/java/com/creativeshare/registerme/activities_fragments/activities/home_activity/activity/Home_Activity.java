@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -32,11 +33,13 @@ import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.remote.Api;
 import com.creativeshare.registerme.share.Common;
 import com.creativeshare.registerme.tags.Tags;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import io.paperdb.Paper;
 import okhttp3.ResponseBody;
@@ -80,7 +83,8 @@ public class Home_Activity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             //           CheckPermission();
-
+            Log.e("user", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhoneNumber());
+            FirebaseAuth.getInstance().getCurrentUser().delete();
             DisplayFragmentHome();
             DisplayFragmentMain();
         }
