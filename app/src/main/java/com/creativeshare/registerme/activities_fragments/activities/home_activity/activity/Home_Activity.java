@@ -3,6 +3,7 @@ package com.creativeshare.registerme.activities_fragments.activities.home_activi
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 
@@ -577,9 +578,15 @@ public class Home_Activity extends AppCompatActivity {
 
     public void displaycv(String cv) {
         if(cv!=null){
+            /*
             Intent intent=new Intent(Home_Activity.this, Detials_Activity.class);
             intent.putExtra("data",cv);
-            startActivity(intent);
+            startActivity(intent);*/
+            createIntent(Tags.IMAGE_URL+cv);
         }
+    }
+    private void createIntent(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 }

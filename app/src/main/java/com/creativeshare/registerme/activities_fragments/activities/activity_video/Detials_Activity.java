@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.language.Language_Helper;
 import com.creativeshare.registerme.preferences.Preferences;
+import com.creativeshare.registerme.tags.Tags;
 import com.hbb20.CountryCodePicker;
 
 import java.util.Locale;
@@ -67,7 +68,7 @@ finish();            }
      webView.getSettings().setJavaScriptEnabled(true);
     webView.getSettings().setPluginState(WebSettings.PluginState.ON);
   webView.getSettings().setBuiltInZoomControls(false);
- webView.loadUrl(videoPath);
+ webView.loadUrl(Tags.IMAGE_URL+videoPath);
        webView.setWebViewClient(new WebViewClient() {
                                              @Override
                                              public void onPageStarted(WebView view, String url, Bitmap favicon) {
