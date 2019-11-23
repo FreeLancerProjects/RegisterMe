@@ -209,6 +209,7 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
             {
                 m_phone=m_phone.replaceFirst("0","");
             }
+            m_phone=m_phone.replaceAll(" ","");
             sign_up(m_name, code, m_phone, m_email);
         } else {
             if(gender==0){
@@ -269,6 +270,12 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
 
                         } else if (response.code() == 422) {
                                 Common.CreateSignAlertDialog(activity,getString(R.string.email_exists));
+                            try {
+                                Log.e("Error_code",response.code()+"_"+response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
                         } else {
 
                             try {
