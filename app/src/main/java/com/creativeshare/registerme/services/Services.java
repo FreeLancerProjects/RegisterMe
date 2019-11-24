@@ -109,7 +109,7 @@ public interface Services {
              @Part("notes") RequestBody notes,
              @Part("qualification_id_fk") RequestBody qualification_id_fk,
              @Part("hand_graduation_id_fk") RequestBody hand_graduation_id_fk,
-             @Part("skills_id") RequestBody skills_id,
+             @Part("skills_id") List<RequestBody> skills_id,
              @Part List<MultipartBody.Part> partimageInsideList
 
 //
@@ -124,7 +124,7 @@ public interface Services {
              @Part("notes") RequestBody notes,
              @Part("qualification_id_fk") RequestBody qualification_id_fk,
              @Part("hand_graduation_id_fk") RequestBody hand_graduation_id_fk,
-             @Part("skills_id") RequestBody skills_id,
+             @Part("skills_id") List<RequestBody> skills_id,
              @Part MultipartBody.Part partimageInside
 
 //
@@ -139,7 +139,7 @@ public interface Services {
              @Field("notes") String notes,
              @Field("qualification_id_fk") String qualification_id_fk,
              @Field("hand_graduation_id_fk") String hand_graduation_id_fk,
-             @Field("skills_id") String skills_id
+             @Field("skills_id") List<Integer> skills_id
 
 //
             );

@@ -83,8 +83,11 @@ public class Home_Activity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             //           CheckPermission();
+            if(FirebaseAuth.getInstance().getCurrentUser()!=null){
             Log.e("user", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhoneNumber());
             FirebaseAuth.getInstance().getCurrentUser().delete();
+            FirebaseAuth.getInstance().signOut();
+            }
             DisplayFragmentHome();
             DisplayFragmentMain();
         }

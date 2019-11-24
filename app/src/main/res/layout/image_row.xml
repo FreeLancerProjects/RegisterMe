@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="wrap_content"
+<FrameLayout
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
+   android:padding="8dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/image"
@@ -12,7 +12,6 @@
             app:riv_corner_radius="5dp"
             app:riv_border_width="1dp"
             app:riv_border_color="@color/gray3"
-            url="@{url}"
             />
 
         <ImageView

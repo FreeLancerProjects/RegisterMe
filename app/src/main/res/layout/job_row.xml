@@ -8,6 +8,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
+    android:padding="8dp"
     >
     <androidx.cardview.widget.CardView
         android:layout_width="100dp"

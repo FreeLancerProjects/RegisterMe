@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +39,7 @@ import android.widget.Toast;
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
 import com.creativeshare.registerme.adapter.ImagesAdapter;
+import com.creativeshare.registerme.adapter.SkillAdapter;
 import com.creativeshare.registerme.adapter.Spinner_HandGrafuation_Adapter;
 import com.creativeshare.registerme.adapter.Spinner_Qulificatin_Adapter;
 import com.creativeshare.registerme.adapter.Spinner_Skills_Adapter;
@@ -78,14 +80,16 @@ public class Fragment_Create_Cv extends Fragment {
     private List<Uri> uriList;
     private List<AllInFo_Model.Data.Quallifcation> quallifcationList;
     private List<AllInFo_Model.Data.HandGraduations> handGraduationsList;
-    private List<AllInFo_Model.Data.Skills> skillsList;
+    private List<AllInFo_Model.Data.Skills> skillsList,skills;
 
-    private RecyclerView recyclerView_images;
+    private RecyclerView recyclerView_images,recyclerViewskil;
+private SkillAdapter skillAdapter;
     private Spinner spinner_qualification, spinner_handgraduate, spinner_skill;
     private EditText edt_email, edt_note, edt_phone, edt_name;
     private TextView tv_type;
     private Button bt_Send;
-    private int qulifid = 0, skillid = 0, qradutateid = 0;
+    private int qulifid = 0,  qradutateid = 0;
+    private List<Integer> skillid;
     private String current_lang;
 
     @Nullable
@@ -102,8 +106,10 @@ public class Fragment_Create_Cv extends Fragment {
     private void initView(View view) {
         quallifcationList = new ArrayList<>();
         handGraduationsList = new ArrayList<>();
+        skills=new ArrayList<>();
         skillsList = new ArrayList<>();
         uriList = new ArrayList<>();
+        skillid=new ArrayList<>();
         activity = (Home_Activity) getActivity();
         Paper.init(activity);
         current_lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
@@ -120,6 +126,17 @@ public class Fragment_Create_Cv extends Fragment {
         edt_name = view.findViewById(R.id.edt_name);
         edt_note = view.findViewById(R.id.edt_note);
         bt_Send = view.findViewById(R.id.btn_send);
+        recyclerViewskil=view.findViewById(R.id.recViewservice);
+        recyclerViewskil.setLayoutManager(new GridLayoutManager(activity,3));
+        skillAdapter=new SkillAdapter(skills,activity,this);
+        recyclerViewskil.setAdapter(skillAdapter);
+        if(userModel!=null){
+            if(userModel.getUser().getEmail()!=null){
+                edt_email.setText(userModel.getUser().getEmail());
+            }
+            edt_name.setText(userModel.getUser().getName());
+            edt_phone.setText(userModel.getUser().getPhone());
+        }
         spinner_qulificatin_adapter = new Spinner_Qulificatin_Adapter(activity, quallifcationList);
         spinner_handGrafuation_adapter = new Spinner_HandGrafuation_Adapter(activity, handGraduationsList);
         spinner_skills_adapter = new Spinner_Skills_Adapter(activity, skillsList);
@@ -176,10 +193,13 @@ public class Fragment_Create_Cv extends Fragment {
         spinner_skill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    skillid = 0;
-                } else {
-                    skillid = skillsList.get(position).getId();
+                if(position!=0) {
+                    if(notidisfound(position)){
+                    skillid.add( skillsList.get(position).getId());
+                    skills.add(skillsList.get(position));
+                    skillAdapter.notifyDataSetChanged();
+                    recyclerViewskil.setVisibility(View.VISIBLE);
+                    }
                     // Move_Data_Model.setcityt(to_city);
 
 
@@ -199,12 +219,21 @@ public class Fragment_Create_Cv extends Fragment {
         });
     }
 
+    private boolean notidisfound(int position) {
+        for(int i=0;i<skillid.size();i++){
+            if(skillsList.get(position).getId()==skillid.get(i)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void checkdata() {
         String email = edt_email.getText().toString();
         String note = edt_note.getText().toString();
         String name = edt_name.getText().toString();
         String phone = edt_phone.getText().toString();
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != 0) {
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != null&&skillid.size()>0) {
             if (uriList != null && uriList.size() > 0) {
                 CreateCvWithImage(email, note, name, phone);
             } else {
@@ -227,7 +256,7 @@ public class Fragment_Create_Cv extends Fragment {
             if (qulifid == 0) {
                 Toast.makeText(activity, getResources().getString(R.string.choose_qalified), Toast.LENGTH_LONG).show();
             }
-            if (skillid == 0) {
+            if (skillid == null||skillid.size()==0) {
                 Toast.makeText(activity, getResources().getString(R.string.choose_Skill), Toast.LENGTH_LONG).show();
             }
         }
@@ -241,7 +270,7 @@ public class Fragment_Create_Cv extends Fragment {
 
         try {
             Api.getService(Tags.base_url)
-                    .createcvwithouimage(userModel.getUser().getId() + "", name, phone, email, note, qulifid + "", qradutateid + "", skillid + "").enqueue(new Callback<ResponseBody>() {
+                    .createcvwithouimage(userModel.getUser().getId() + "", name, phone, email, note, qulifid + "", qradutateid + "", skillid ).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     dialog.dismiss();
@@ -293,7 +322,11 @@ public class Fragment_Create_Cv extends Fragment {
         RequestBody note_part = Common.getRequestBodyText(note);
         RequestBody qualif_part = Common.getRequestBodyText(qulifid + "");
         RequestBody graduate_part = Common.getRequestBodyText(qradutateid + "");
-        RequestBody skill_part = Common.getRequestBodyText(skillid + "");
+
+        List<RequestBody> skill_part = new ArrayList<>();
+        for(int i=0;i<skillid.size();i++){
+            skill_part.add(Common.getRequestBodyText(skillid.get(i)+""));
+        }
 
 
         List<MultipartBody.Part> partimageList = getMultipartBodyList(uriList, "image[]");
@@ -577,4 +610,9 @@ public class Fragment_Create_Cv extends Fragment {
     }
 
 
+    public void deletitem(int layoutPosition) {
+        skills.remove(layoutPosition);
+        skillid.remove(layoutPosition);
+        skillAdapter.notifyDataSetChanged();
+    }
 }

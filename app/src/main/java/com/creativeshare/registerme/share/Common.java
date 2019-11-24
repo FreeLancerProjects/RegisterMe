@@ -80,7 +80,7 @@ public class Common {
                 if (context instanceof Home_Activity)
                 {
                     Home_Activity activity = (Home_Activity) context;
-                //    activity.NavigateToSignInActivity(true);
+                  activity.NavigateToSignInActivity(true);
                 }
 
 
@@ -96,7 +96,7 @@ public class Common {
                 if (context instanceof Home_Activity)
                 {
                     Home_Activity activity = (Home_Activity) context;
-                  //  activity.NavigateToSignInActivity(false);
+                    activity.NavigateToSignInActivity(false);
 
                 }
             }

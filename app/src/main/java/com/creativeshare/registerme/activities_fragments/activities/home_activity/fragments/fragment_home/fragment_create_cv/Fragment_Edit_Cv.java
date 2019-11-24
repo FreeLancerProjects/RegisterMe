@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
+import com.creativeshare.registerme.adapter.SkillAdapter;
 import com.creativeshare.registerme.adapter.Spinner_HandGrafuation_Adapter;
 import com.creativeshare.registerme.adapter.Spinner_Qulificatin_Adapter;
 import com.creativeshare.registerme.adapter.Spinner_Skills_Adapter;
@@ -65,10 +68,12 @@ public class Fragment_Edit_Cv extends Fragment {
     private Spinner_Qulificatin_Adapter spinner_qulificatin_adapter;
     private Spinner_HandGrafuation_Adapter spinner_handGrafuation_adapter;
     private Spinner_Skills_Adapter spinner_skills_adapter;
+private RecyclerView recyclerViewskil;
+    private SkillAdapter skillAdapter;
 
     private List<AllInFo_Model.Data.Quallifcation> quallifcationList;
     private List<AllInFo_Model.Data.HandGraduations> handGraduationsList;
-    private List<AllInFo_Model.Data.Skills> skillsList;
+    private List<AllInFo_Model.Data.Skills> skillsList,skills;
     private final int File_REQ1 = 1;
     private Uri fileUri1 = null;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -79,8 +84,9 @@ public class Fragment_Edit_Cv extends Fragment {
     private ImageView image_upload;
     private RoundedImageView image_form;
     private TextView tv_name;
-    private int qulifid = 0, skillid = 0, qradutateid = 0;
+    private int qulifid = 0, qradutateid = 0;
     private List<ResolveInfo> matches;
+    private List<Integer> skillid;
 
     @Nullable
     @Override
@@ -97,6 +103,8 @@ public class Fragment_Edit_Cv extends Fragment {
         quallifcationList = new ArrayList<>();
         handGraduationsList = new ArrayList<>();
         skillsList = new ArrayList<>();
+        skills=new ArrayList<>();
+        skillid=new ArrayList<>();
         activity = (Home_Activity) getActivity();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
@@ -119,6 +127,10 @@ public class Fragment_Edit_Cv extends Fragment {
         spinner_qualification.setAdapter(spinner_qulificatin_adapter);
         spinner_handgraduate.setAdapter(spinner_handGrafuation_adapter);
         spinner_skill.setAdapter(spinner_skills_adapter);
+        recyclerViewskil=view.findViewById(R.id.recViewservice);
+        recyclerViewskil.setLayoutManager(new GridLayoutManager(activity,3));
+        skillAdapter=new SkillAdapter(skills,activity,this);
+        recyclerViewskil.setAdapter(skillAdapter);
         image_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,13 +182,23 @@ public class Fragment_Edit_Cv extends Fragment {
 
             }
         });
+        if(userModel!=null){
+            if(userModel.getUser().getEmail()!=null){
+                edt_email.setText(userModel.getUser().getEmail());
+            }
+            edt_name.setText(userModel.getUser().getName());
+            edt_phone.setText(userModel.getUser().getPhone());
+        }
         spinner_skill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    skillid = 0;
-                } else {
-                    skillid = skillsList.get(position).getId();
+                if(position!=0) {
+                    if(notidisfound(position)){
+                        skillid.add( skillsList.get(position).getId());
+                        skills.add(skillsList.get(position));
+                        skillAdapter.notifyDataSetChanged();
+                    recyclerViewskil.setVisibility(View.VISIBLE);
+                    }
                     // Move_Data_Model.setcityt(to_city);
 
 
@@ -209,7 +231,10 @@ public class Fragment_Edit_Cv extends Fragment {
         RequestBody note_part = Common.getRequestBodyText(note);
         RequestBody qualif_part = Common.getRequestBodyText(qulifid + "");
         RequestBody graduate_part = Common.getRequestBodyText(qradutateid + "");
-        RequestBody skill_part = Common.getRequestBodyText(skillid + "");
+        List<RequestBody> skill_part = new ArrayList<>();
+        for(int i=0;i<skillid.size();i++){
+            skill_part.add(Common.getRequestBodyText(skillid.get(i)+""));
+        }
         MultipartBody.Part image_part = Common.getMultiPartdoc(activity, Uri.parse(fileUri1.toString()), "cv");
         try {
             Api.getService(Tags.base_url)
@@ -258,7 +283,7 @@ public class Fragment_Edit_Cv extends Fragment {
         String note = edt_note.getText().toString();
         String name = edt_name.getText().toString();
         String phone = edt_phone.getText().toString();
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != 0 && fileUri1 != null) {
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != null&&skillid.size()>0 && fileUri1 != null) {
             CreateCvWithImage(email, note, name, phone);
         } else {
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -282,7 +307,7 @@ public class Fragment_Edit_Cv extends Fragment {
             if (qulifid == 0) {
                 Toast.makeText(activity, getResources().getString(R.string.choose_qalified), Toast.LENGTH_LONG).show();
             }
-            if (skillid == 0) {
+            if (skillid == null||skillid.size()==0) {
                 Toast.makeText(activity, getResources().getString(R.string.choose_Skill), Toast.LENGTH_LONG).show();
             }
             if (fileUri1 == null) {
@@ -417,6 +442,17 @@ public class Fragment_Edit_Cv extends Fragment {
         }
 
     }
-
-
+    private boolean notidisfound(int position) {
+        for(int i=0;i<skillid.size();i++){
+            if(skillsList.get(position).getId()==skillid.get(i)){
+                return false;
+            }
+        }
+        return true;
+    }
+    public void deletitem(int layoutPosition) {
+        skills.remove(layoutPosition);
+        skillid.remove(layoutPosition);
+        skillAdapter.notifyDataSetChanged();
+    }
 }
