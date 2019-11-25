@@ -154,14 +154,19 @@ dataList.clear();
                         ll_no_store.setVisibility(View.GONE);
                         dataList.addAll(response.body().getData().getGcompanies());
                         governmentJob_adapter.notifyDataSetChanged();
+                        bt_send.setVisibility(View.VISIBLE);
+
                     } else {
                         //    error.setText("No data Found");
                         // recc.setVisibility(View.GONE);
                         ll_no_store.setVisibility(View.VISIBLE);
+                        bt_send.setVisibility(View.GONE);
                     }
                 } else {
                     // recc.setVisibility(View.GONE);
                     ll_no_store.setVisibility(View.VISIBLE);
+                    bt_send.setVisibility(View.GONE);
+
                     try {
 
                         Log.e("Error_code", response.code() + "_" + response.errorBody().string());

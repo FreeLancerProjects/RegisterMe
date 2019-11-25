@@ -126,7 +126,7 @@
                 android:textColorHint="@color/gray4"
                 android:textSize="14sp"
                 android:singleLine="true"
-
+android:textCursorDrawable="@color/black"
                 />
 
 
@@ -184,6 +184,8 @@
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:singleLine="true"
+                    android:textColorHint="@color/gray4"
+                    android:textCursorDrawable="@color/black"
 
                     />
 
