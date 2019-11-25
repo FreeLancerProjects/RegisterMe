@@ -131,6 +131,8 @@ android:tint="@color/colorPrimary"
                         android:textColorHint="@color/gray4"
                         android:layout_gravity="center_vertical"
                         android:textSize="14sp"
+                        android:textCursorDrawable="@drawable/cursor_bg"
+
                         />
 
 
@@ -208,6 +210,8 @@ android:tint="@color/colorPrimary"
                         android:textColor="@color/black"
                         android:textColorHint="@color/gray4"
                         android:textSize="14sp"
+                        android:textCursorDrawable="@drawable/cursor_bg"
+
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/view2"
                         app:layout_constraintStart_toEndOf="@id/view"
@@ -280,6 +284,8 @@ android:tint="@color/colorPrimary"
                         android:textColorHint="@color/gray4"
                         android:layout_gravity="center_vertical"
                         android:textSize="14sp"
+                        android:textCursorDrawable="@drawable/cursor_bg"
+
                         />
 
 
