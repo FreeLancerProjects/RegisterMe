@@ -47,11 +47,12 @@ public class Fragment_Create_Email extends Fragment {
     private Home_Activity home_activity;
     private ImageView im_back;
     private Button btn_send;
-    private EditText edt_name,edt_password;
+    private EditText edt_name, edt_password;
     private String cuurent_language;
-    private int email_id=-1;
-private UserModel userModel;
-private Preferences preferences;
+    private int email_id = -1;
+    private UserModel userModel;
+    private Preferences preferences;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,15 +68,16 @@ private Preferences preferences;
         dataList = new ArrayList<>();
         Paper.init(home_activity);
         cuurent_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
-preferences=Preferences.getInstance();
-userModel=preferences.getUserData(home_activity);
+        preferences = Preferences.getInstance();
+
+        userModel = preferences.getUserData(home_activity);
         mail_adapter = new Mail_Adapter(dataList, home_activity, this);
         rec_job = view.findViewById(R.id.recView);
         im_back = view.findViewById(R.id.arrow);
-        edt_name =view.findViewById(R.id.edt_name);
+        edt_name = view.findViewById(R.id.edt_name);
         edt_password = view.findViewById(R.id.edt_password);
 
-        btn_send=view.findViewById(R.id.btn_send);
+        btn_send = view.findViewById(R.id.btn_send);
         if (cuurent_language.equals("en")) {
             im_back.setRotation(180.0f);
         }
@@ -97,51 +99,47 @@ userModel=preferences.getUserData(home_activity);
     }
 
     private void chechdata() {
-        String name=edt_name.getText().toString();
-        String pass=edt_password.getText().toString();
-        if(email_id!=-1&&!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pass)&&pass.length()>=6){
-         edt_name.setError(null);
-edt_password.setError(null);
-if(userModel!=null){
-Create_email(name,pass);}
-else {
-    Common.CreateUserNotSignInAlertDialog(home_activity);
-}
-        }
-        else {
-            if(email_id==-1){
-                Toast.makeText(home_activity,getResources().getString(R.string.choose_the_type_of_email_you_want),Toast.LENGTH_LONG).show();
+        String name = edt_name.getText().toString();
+        String pass = edt_password.getText().toString();
+        if (email_id != -1 && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(pass) && pass.length() >= 6) {
+            edt_name.setError(null);
+            edt_password.setError(null);
+            if (userModel != null) {
+                Create_email(name, pass);
+            } else {
+                Common.CreateUserNotSignInAlertDialog(home_activity);
             }
-            if(TextUtils.isEmpty(name)){
+        } else {
+            if (email_id == -1) {
+                Toast.makeText(home_activity, getResources().getString(R.string.choose_the_type_of_email_you_want), Toast.LENGTH_LONG).show();
+            }
+            if (TextUtils.isEmpty(name)) {
                 edt_name.setError(getResources().getString(R.string.field_req));
-            }
-            else {
+            } else {
                 edt_name.setError("");
             }
-            if(TextUtils.isEmpty(pass)){
+            if (TextUtils.isEmpty(pass)) {
                 edt_password.setError(getResources().getString(R.string.field_req));
-            }
-            else if(pass.length()<6){
+            } else if (pass.length() < 6) {
                 edt_password.setError(getResources().getString(R.string.pass_must_more_than_6_digit));
-            }
-            else {
+            } else {
                 edt_password.setError("");
             }
         }
     }
 
-    private void Create_email(String name,String pass) {
+    private void Create_email(String name, String pass) {
 
         final ProgressDialog dialog = Common.createProgressDialog(home_activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).create_email(name,pass,userModel.getUser().getId(),email_id).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).create_email(name, pass, userModel.getUser().getId(), email_id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(home_activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
+                    Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
                     home_activity.Displayorder();
 
                     // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
@@ -206,8 +204,8 @@ else {
             public void onFailure(Call<AllInFo_Model> call, Throwable t) {
                 try {
                     Log.e("Error", t.getMessage());
-dialog.dismiss();
-                    Toast.makeText(home_activity,getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    Toast.makeText(home_activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
 
 //error.setText(activity.getString(R.string.faild));
                     //recc.setVisibility(View.GONE);
@@ -222,6 +220,6 @@ dialog.dismiss();
 
 
     public void setid(int id) {
-        this.email_id=id;
+        this.email_id = id;
     }
 }

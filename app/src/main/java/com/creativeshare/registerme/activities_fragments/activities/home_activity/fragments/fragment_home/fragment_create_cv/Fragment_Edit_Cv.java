@@ -284,7 +284,12 @@ private RecyclerView recyclerViewskil;
         String name = edt_name.getText().toString();
         String phone = edt_phone.getText().toString();
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != null&&skillid.size()>0 && fileUri1 != null) {
-            CreateCvWithImage(email, note, name, phone);
+            if (userModel == null) {
+                Common.CreateUserNotSignInAlertDialog(activity);
+            } else {
+                CreateCvWithImage(email, note, name, phone);
+            }
+
         } else {
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 edt_email.setError(getResources().getString(R.string.inv_email));
