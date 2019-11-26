@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.SyncStateContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -44,7 +45,9 @@ import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.remote.Api;
 import com.creativeshare.registerme.share.Common;
 import com.creativeshare.registerme.tags.Tags;
-import com.google.android.gms.common.internal.Objects;
+import com.jaiselrahman.filepicker.activity.FilePickerActivity;
+import com.jaiselrahman.filepicker.config.Configurations;
+import com.jaiselrahman.filepicker.model.MediaFile;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.IOException;
@@ -68,7 +71,7 @@ public class Fragment_Edit_Cv extends Fragment {
     private Spinner_Qulificatin_Adapter spinner_qulificatin_adapter;
     private Spinner_HandGrafuation_Adapter spinner_handGrafuation_adapter;
     private Spinner_Skills_Adapter spinner_skills_adapter;
-private RecyclerView recyclerViewskil;
+    private RecyclerView recyclerViewskil;
     private SkillAdapter skillAdapter;
 
     private List<AllInFo_Model.Data.Quallifcation> quallifcationList;
@@ -197,7 +200,7 @@ private RecyclerView recyclerViewskil;
                         skillid.add( skillsList.get(position).getId());
                         skills.add(skillsList.get(position));
                         skillAdapter.notifyDataSetChanged();
-                    recyclerViewskil.setVisibility(View.VISIBLE);
+                        recyclerViewskil.setVisibility(View.VISIBLE);
                     }
                     // Move_Data_Model.setcityt(to_city);
 
@@ -390,28 +393,37 @@ private RecyclerView recyclerViewskil;
         if (ActivityCompat.checkSelfPermission(activity, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{READ_PERM}, File_REQ1);
         } else {
-            SelectImage(File_REQ1);
+            SelectFile(File_REQ1);
         }
     }
 
-    private void SelectImage(int img_req) {
+    private void SelectFile(int file_req) {
 
+/*
         Intent intent = new Intent();
 
-        if (img_req == File_REQ1) {
+        if (file_req == File_REQ1) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-                intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
                 intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
             } else {
-                intent.setAction(Intent.ACTION_PICK);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
 
             }
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setType("*/*");
-            startActivityForResult(intent, img_req);
+           // intent.putExtra("android.content.extra.SHOW_ADVANCED", true);
 
-        }
+         //   intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivityForResult(intent, file_req);*/
+        Intent intent = new Intent(activity, FilePickerActivity.class);
+        intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
+                .setCheckPermission(true)
+                .enableImageCapture(false).setShowImages(false).setShowAudios(false).setShowVideos(false)
+                .setMaxSelection(1)
+                .setSkipZeroSizeFiles(true).setShowFiles(true)
+                .build());
+        startActivityForResult(intent, file_req);
+
     }
 
 
@@ -421,7 +433,7 @@ private RecyclerView recyclerViewskil;
         if (requestCode == File_REQ1) {
 
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                SelectImage(File_REQ1);
+                SelectFile(File_REQ1);
             } else {
                 Toast.makeText(activity, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
             }
@@ -435,12 +447,19 @@ private RecyclerView recyclerViewskil;
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == File_REQ1 && resultCode == Activity.RESULT_OK && data != null) {
-            matches = activity.getPackageManager().queryIntentActivities(data, 0);
+            // matches = activity.getPackageManager().queryIntentActivities(data, 0);
+            ArrayList<MediaFile> files = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
+            for(int i=0;i<files.size();i++){
+                fileUri1=files.get(i).getUri();;
+                tv_name.setText(fileUri1.getLastPathSegment());
 
-            fileUri1 = data.getData();
+            }
             image_upload.setVisibility(View.GONE);
-            image_form.setImageDrawable(matches.get(0).loadIcon(activity.getPackageManager()));
-            tv_name.setText(matches.get(0).loadLabel(activity.getPackageManager()));
+            image_form.setImageDrawable(getResources().getDrawable(R.drawable.ic_document));
+            //   image_form.setImageDrawable(matches.get(0).loadIcon(activity.getPackageManager()));
+            //  tv_name.setText(fileUri1.get);
+            //String type = data.getType();
+            // Log.e("datass",type);
             // editImageProfile(userModel.getUser().getId()+"",fileUri1.toString());
 
 
