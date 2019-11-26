@@ -29,6 +29,7 @@ import com.creativeshare.registerme.activities_fragments.activities.home_activit
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragmnet_more.Fragment_Terms_Conditions;
 import com.creativeshare.registerme.activities_fragments.activities.sign_in_sign_up_activity.activity.Login_Activity;
 import com.creativeshare.registerme.language.Language_Helper;
+import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.remote.Api;
@@ -39,6 +40,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -99,6 +104,8 @@ public class Home_Activity extends AppCompatActivity {
 
         if (userModel != null) {
             updateToken();
+            EventBus.getDefault().register(this);
+
         }
         getdatafromintent();
 
@@ -117,7 +124,22 @@ public class Home_Activity extends AppCompatActivity {
                     },1000);        }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void ListenNotificationChange(Order_Model order_model)
+    {
+        if (fragment_myorders!=null&&fragment_myorders.isAdded()&&fragment_myorders.isVisible())
+        {
+            new Handler()
+                    .postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+fragment_myorders.getOrders();                        }
+                    },1);
+        }
 
+
+
+    }
     private void initView() {
         Paper.init(this);
         preferences = Preferences.getInstance();
@@ -659,5 +681,14 @@ public class Home_Activity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this))
+        {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

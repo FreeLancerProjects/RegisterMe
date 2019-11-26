@@ -24,12 +24,15 @@ import androidx.core.app.NotificationCompat;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
+import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.tags.Tags;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 import java.util.Random;
@@ -150,11 +153,17 @@ Log.e("type",map.get("notification_type"));
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-
+                final  Order_Model order_model=new Order_Model();
                 NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            //    Log.e("mange","mang");
                 if (manager != null) {
+
                     builder.setLargeIcon(bitmap);
+                    EventBus.getDefault().post(order_model);
+
                     manager.notify(new Random().nextInt(200), builder.build());
+                  //  Log.e("mange","mang");
+
                 }
 
             }
@@ -230,9 +239,11 @@ Log.e("type",map.get("notification_type"));
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                final   Order_Model order_model=new Order_Model();
+
                 if (manager != null) {
                     builder.setLargeIcon(bitmap);
-                    //EventBus.getDefault().post(beDriverModel);
+                    EventBus.getDefault().post(order_model);
                     manager.createNotificationChannel(channel);
                     manager.notify(new Random().nextInt(200), builder.build());
                 }
