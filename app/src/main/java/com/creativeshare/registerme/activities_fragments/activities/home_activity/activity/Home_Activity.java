@@ -107,8 +107,14 @@ public class Home_Activity extends AppCompatActivity {
     private void getdatafromintent() {
         if(getIntent().hasExtra("not")){
 
-            DisplayFragmentMyorders();
-        }
+            new Handler()
+                    .postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            DisplayFragmentMyorders();
+
+                        }
+                    },1000);        }
     }
 
 

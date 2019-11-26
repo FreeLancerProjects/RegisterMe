@@ -34,7 +34,7 @@ import com.squareup.picasso.Target;
 import java.util.Map;
 import java.util.Random;
 
-import static com.jaiselrahman.filepicker.activity.FilePickerActivity.TAG;
+import static com.makeramen.roundedimageview.RoundedImageView.TAG;
 
 
 public class FireBaseMessaging extends FirebaseMessagingService {
@@ -126,7 +126,7 @@ Log.e("type",map.get("notification_type"));
     private void sendNotification_VersionOld( String content, String sound_path) {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSound(Uri.parse(sound_path), AudioManager.STREAM_NOTIFICATION);
-        builder.setSmallIcon(R.drawable.ic_notification);
+        builder.setSmallIcon(R.drawable.ic_nav_notification);
       //  builder.setContentTitle(title);
 
         Intent intent = new Intent(this, Home_Activity.class);
@@ -174,7 +174,7 @@ Log.e("type",map.get("notification_type"));
                     @Override
                     public void run() {
 
-                        Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
+                        Picasso.with(FireBaseMessaging.this).load(R.drawable.ic_nav_notification).into(target);
 
 
 
@@ -205,7 +205,7 @@ Log.e("type",map.get("notification_type"));
         builder.setSmallIcon(R.drawable.ic_nav_notification);
       //  builder.setContentTitle(title);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.logo);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_nav_notification);
         builder.setLargeIcon(bitmap);
         Intent intent = new Intent(this, Home_Activity.class);
         intent.putExtra("not",true);
@@ -256,7 +256,7 @@ Log.e("type",map.get("notification_type"));
                     @Override
                     public void run() {
 
-                        Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
+                        Picasso.with(FireBaseMessaging.this).load(R.drawable.ic_nav_notification).into(target);
 
                     }
                 }, 1);
