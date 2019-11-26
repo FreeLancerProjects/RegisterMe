@@ -261,6 +261,31 @@ android:weightSum="3.5"
 
 
         />
+    <TextView
+        android:id="@+id/tvt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tvP"
+        app:layout_constraintTop_toBottomOf="@id/tvP"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:text="@string/order_satus"
+        />
+    <TextView
+        android:id="@+id/tvtype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/tvt"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/tvP"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+
+
+        />
     <Button
         android:id="@+id/btnDetails"
         android:layout_width="wrap_content"

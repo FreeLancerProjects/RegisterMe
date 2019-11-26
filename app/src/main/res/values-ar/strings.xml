@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">سجلنى</string>
-
+    <string name="map_api_key">AIzaSyCbc2Y5AIwZ8uUeHRUXiozGN3CnpjKT0oI</string>
     <string name="cancel">إلغاء</string>
     <string name="suc"> تم بنجاح !</string>
     <string name="field_req">الحقل مطلوب</string>
@@ -65,6 +65,8 @@
     <string name="Edit_cv">تطوير السيره الذاتيه</string>
     <string name="name">الاسم بالكامل</string>
     <string name="email">البريد الالكترونى</string>
+    <string name="emailjob">انشاء بريد الكتورنى</string>
+
     <string name="experience">الخبره</string>
     <string name="qualification">المؤهل</string>
     <string name="Hand_graduation">التخرج</string>
@@ -72,9 +74,11 @@
     <string name="others">اخرى</string>
     <string name="create_email">انشاء بريد الكترونى</string>
     <string name="jobs">وظائف</string>
+    <string name="job">تقديم وظيفه</string>
+
     <string name="enter_the_name_you_want_to_become_your_email">ادخل الاسم الذى تريد ان يصبح ايميلك</string>
     <string name="choose_the_type_of_email_you_want">اختر نوع الايميل الذى تريد</string>
-    <string name="enter_job_link">ادخل لينك الوظيفه</string>
+    <string name="enter_job_link">ادخل رابط الوظيفه</string>
     <string name="no_jobs_to_display">لا يوجد وظائف لعرضها</string>
     <string name="applay_for_job">قدم على وظيفه</string>
     <string name="private_sector">قطاع خاص</string>

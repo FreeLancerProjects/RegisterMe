@@ -73,6 +73,17 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             final MyHolder myHolder = (MyHolder) holder;
             final Order_Model.Data data1 = data.get(position);
           myHolder.tv_order_num.setText(data1.getId()+"");
+          if(data1.getType()==1){
+              ((MyHolder) holder).tvtype.setText(activity.getResources().getString(R.string.cv));
+          }
+          else if(data1.getType()==2){
+              ((MyHolder) holder).tvtype.setText(activity.getResources().getString(R.string.emailjob));
+
+          }
+          else if(data1.getType()==3){
+              ((MyHolder) holder).tvtype.setText(activity.getResources().getString(R.string.job));
+
+          }
           String status="";
           if(data1.getStatus()==0){
               status=activity.getString(R.string.new_order);
@@ -126,7 +137,7 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        private TextView tv_order_num, tv_satus,tv_date;
+        private TextView tv_order_num, tv_satus,tv_date,tvtype;
 private ImageView imnew,imdistrub,imrecive,imcomplete;
 
         public MyHolder(View itemView) {
@@ -134,6 +145,7 @@ private ImageView imnew,imdistrub,imrecive,imcomplete;
             tv_order_num = itemView.findViewById(R.id.tvOrderNumber);
             tv_satus = itemView.findViewById(R.id.tvstatus);
         tv_date=itemView.findViewById(R.id.tv_date);
+        tvtype=itemView.findViewById(R.id.tvtype);
 imnew=itemView.findViewById(R.id.image1);
             imdistrub=itemView.findViewById(R.id.image2);
             imrecive=itemView.findViewById(R.id.image3);

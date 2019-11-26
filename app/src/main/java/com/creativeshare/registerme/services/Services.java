@@ -26,6 +26,14 @@ import retrofit2.http.Part;
 
 public interface Services {
     @FormUrlEncoded
+    @POST("api/fireBase_token")
+    Call<ResponseBody> updateToken(
+            @Field("user_id") int user_id,
+            @Field("phone_token") String phone_token,
+
+            @Field("software_type") int software_type
+    );
+    @FormUrlEncoded
     @POST("api/contact_us")
     Call<ResponseBody> contact_us(@Field("name") String name,
                                   @Field("email") String email,
