@@ -1,5 +1,6 @@
 package com.creativeshare.registerme.activities_fragments.activities.home_activity.activity;
 
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -136,7 +137,9 @@ public class Home_Activity extends AppCompatActivity {
 fragment_myorders.getOrders();                        }
                     },1);
         }
-
+      else {
+          DisplayFragmentMyorders();
+        }
 
 
     }

@@ -129,7 +129,8 @@ Log.e("type",map.get("notification_type"));
     private void sendNotification_VersionOld( String content, String sound_path) {
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSound(Uri.parse(sound_path), AudioManager.STREAM_NOTIFICATION);
-        builder.setSmallIcon(R.drawable.ic_nav_notification);
+        builder.setSmallIcon(R.drawable.logonot);
+        builder.setAutoCancel(true);
       //  builder.setContentTitle(title);
 
         Intent intent = new Intent(this, Home_Activity.class);
@@ -148,6 +149,7 @@ Log.e("type",map.get("notification_type"));
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (manager != null) {
             manager.notify(12352, builder.build());
+
         }
         final Target target = new Target() {
             @Override
@@ -183,7 +185,7 @@ Log.e("type",map.get("notification_type"));
                     @Override
                     public void run() {
 
-                        Picasso.with(FireBaseMessaging.this).load(R.drawable.ic_nav_notification).into(target);
+                        Picasso.with(FireBaseMessaging.this).load(R.drawable.logonot).into(target);
 
 
 
@@ -211,10 +213,12 @@ Log.e("type",map.get("notification_type"));
         );
         builder.setChannelId(CHANNEL_ID);
         builder.setSound(Uri.parse(sound_path), AudioManager.STREAM_NOTIFICATION);
-        builder.setSmallIcon(R.drawable.ic_nav_notification);
-      //  builder.setContentTitle(title);
+        builder.setSmallIcon(R.drawable.logonot);
+        builder.setAutoCancel(true);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_nav_notification);
+        //  builder.setContentTitle(title);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.logonot);
         builder.setLargeIcon(bitmap);
         Intent intent = new Intent(this, Home_Activity.class);
         intent.putExtra("not",true);
@@ -267,7 +271,7 @@ Log.e("type",map.get("notification_type"));
                     @Override
                     public void run() {
 
-                        Picasso.with(FireBaseMessaging.this).load(R.drawable.ic_nav_notification).into(target);
+                        Picasso.with(FireBaseMessaging.this).load(R.drawable.logonot).into(target);
 
                     }
                 }, 1);
