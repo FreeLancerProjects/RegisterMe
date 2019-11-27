@@ -77,6 +77,7 @@ private UserModel userModel;
                 if(phoneAuthCredential.getSmsCode()!=null){
                     vercode=phoneAuthCredential.getSmsCode();
                       verificationCodeEditText.setText(vercode);
+                      Log.e("code",vercode);
                     verfiycode(vercode);}
 
 
@@ -268,7 +269,9 @@ if(TextUtils.isEmpty(vercode)){
     verificationCodeEditText.setError(getResources().getString(R.string.field_req));
 }
 else {
+    Log.e("code",vercode);
     verfiycode(vercode);
+
 }
             }
         });

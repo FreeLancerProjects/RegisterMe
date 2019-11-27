@@ -113,8 +113,8 @@
     <string name="my_cv">السير الذاتيه</string>
     <string name="my_emails">ايميلاتى</string>
     <string name="my_jobs">وظائفى</string>
-    <string name="no_cv_found">No Cv Found</string>
-    <string name="choose_handgradauted">Choose HandGraduattion</string>
-    <string name="choose_qalified">Choose QualiFicatin</string>
-    <string name="choose_Skill">Choose Skill</string>
+    <string name="no_cv_found">لا يوجد سيره ذاتيه</string>
+    <string name="choose_handgradauted">اختر شهادة التخرج</string>
+    <string name="choose_qalified">اختر المؤهل</string>
+    <string name="choose_Skill">اختر المهارات</string>
 </resources>
