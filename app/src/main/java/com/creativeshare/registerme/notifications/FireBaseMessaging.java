@@ -97,10 +97,13 @@ Log.e("type",map.get("notification_type"));
      if(not_type.equals("order"))
         {
 
-            int to_id = Integer.parseInt(map.get("adv_owner"));
            // String title = map.get("title");
-            String content = map.get("text");
-
+            String content;
+            if(getlang().equals("ar")){
+                content = map.get("ar_text");}
+            else {
+                content = map.get("en_text");
+            }
             sendNotification_VersionNew(content,sound_Path);
         }
 
@@ -118,9 +121,12 @@ Log.e("type",map.get("notification_type"));
 
      if(not_type.equals("order"))
         {
-
-            String content = map.get("text");
-
+            String content;
+            if(getlang().equals("ar")){
+            content = map.get("ar_text");}
+else {
+    content = map.get("en_text");
+}
             sendNotification_VersionOld(content,sound_Path);
         }
 
@@ -278,4 +284,7 @@ Log.e("type",map.get("notification_type"));
 
     }
 
+    private String getlang() {
+        return preferences.getLanguage(this);
+    }
 }
