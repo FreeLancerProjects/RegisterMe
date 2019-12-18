@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -58,6 +59,8 @@ public class Login_Activity extends AppCompatActivity {
      private VerificationCodeEditText verificationCodeEditText;
     private ProgressDialog dialo;
 private UserModel userModel;
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
+
     private void authn() {
 
         mAuth= FirebaseAuth.getInstance();
@@ -65,8 +68,9 @@ private UserModel userModel;
 
             @Override
             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                super.onCodeSent(s, forceResendingToken);
+             //  super.onCodeSent(s, forceResendingToken);
                 id=s;
+                mResendToken=forceResendingToken;
                 Log.e("authid",id);
             }
 
@@ -75,10 +79,8 @@ private UserModel userModel;
 //                Log.e("code",phoneAuthCredential.getSmsCode());
 //phoneAuthCredential.getProvider();
                 if(phoneAuthCredential.getSmsCode()!=null){
-                    vercode=phoneAuthCredential.getSmsCode();
-                      verificationCodeEditText.setText(vercode);
-                      Log.e("code",vercode);
-                    verfiycode(vercode);}
+                    verificationCodeEditText.setText(phoneAuthCredential.getSmsCode());
+                 siginwithcredental(phoneAuthCredential);}
 
 
             }
@@ -87,20 +89,22 @@ private UserModel userModel;
             public void onVerificationFailed(@NonNull FirebaseException e) {
                 Log.e("llll",e.getMessage());
             }
+
+
         };
 
     }
     private void verfiycode(String code) {
-        dialo = Common.createProgressDialog(this,getString(R.string.wait));
-        dialog.setCancelable(false);
-        dialog.show();
+
         if(id!=null){
         PhoneAuthCredential credential=PhoneAuthProvider.getCredential(id,code);
         siginwithcredental(credential);}
     }
 
     private void siginwithcredental(PhoneAuthCredential credential) {
-
+        dialo = Common.createProgressDialog(this,getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
         mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -121,7 +125,12 @@ private UserModel userModel;
         dialog.show();
         this.userModel=userModel;
         Log.e("kkk",phone_code+phone);
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(phone_code+phone,59, TimeUnit.SECONDS, TaskExecutors.MAIN_THREAD,  mCallbacks);
+        final Runnable mUpdateResults = new Runnable() {
+            public void run() {
+                PhoneAuthProvider.getInstance().verifyPhoneNumber(phone_code+phone,10, TimeUnit.SECONDS, TaskExecutors.MAIN_THREAD,  mCallbacks);
+            }
+        };
+        mUpdateResults.run();
 
     }
     @Override
