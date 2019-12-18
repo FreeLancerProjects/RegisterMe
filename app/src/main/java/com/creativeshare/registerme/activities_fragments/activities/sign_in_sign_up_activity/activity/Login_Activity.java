@@ -56,9 +56,9 @@ public class Login_Activity extends AppCompatActivity {
     private String vercode;
     private FirebaseAuth mAuth;
     private Dialog dialog;
-     private VerificationCodeEditText verificationCodeEditText;
+    private VerificationCodeEditText verificationCodeEditText;
     private ProgressDialog dialo;
-private UserModel userModel;
+    private UserModel userModel;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
 
     private void authn() {
@@ -68,7 +68,7 @@ private UserModel userModel;
 
             @Override
             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-             //  super.onCodeSent(s, forceResendingToken);
+                //  super.onCodeSent(s, forceResendingToken);
                 id=s;
                 mResendToken=forceResendingToken;
                 Log.e("authid",id);
@@ -80,7 +80,7 @@ private UserModel userModel;
 //phoneAuthCredential.getProvider();
                 if(phoneAuthCredential.getSmsCode()!=null){
                     verificationCodeEditText.setText(phoneAuthCredential.getSmsCode());
-                 siginwithcredental(phoneAuthCredential);}
+                    siginwithcredental(phoneAuthCredential);}
 
 
             }
@@ -97,8 +97,8 @@ private UserModel userModel;
     private void verfiycode(String code) {
 
         if(id!=null){
-        PhoneAuthCredential credential=PhoneAuthProvider.getCredential(id,code);
-        siginwithcredental(credential);}
+            PhoneAuthCredential credential=PhoneAuthProvider.getCredential(id,code);
+            siginwithcredental(credential);}
     }
 
     private void siginwithcredental(PhoneAuthCredential credential) {
@@ -108,14 +108,14 @@ private UserModel userModel;
         mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-         dialo.dismiss();
-         dialog.dismiss();
-         if(task.isSuccessful()){
-             preferences = Preferences.getInstance();
-             preferences.create_update_userdata(Login_Activity.this,userModel);
-             // activity.NavigateToHomeActivity();
-             NavigateToHomeActivity();
-         }
+                dialo.dismiss();
+                dialog.dismiss();
+                if(task.isSuccessful()){
+                    preferences = Preferences.getInstance();
+                    preferences.create_update_userdata(Login_Activity.this,userModel);
+                    // activity.NavigateToHomeActivity();
+                    NavigateToHomeActivity();
+                }
 
             }
         });
@@ -157,15 +157,15 @@ private UserModel userModel;
                 {
                     NavigateToHomeActivity();
                 }else
-                    {
-                        DisplayFragmentLogin();
+                {
+                    DisplayFragmentLogin();
 
-                    }
+                }
 
             }else
-                {
-                   DisplayFragmentLanguage();
-                }
+            {
+                DisplayFragmentLanguage();
+            }
 
         }
 
@@ -267,21 +267,21 @@ private UserModel userModel;
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.custom_dialog_login);
         LinearLayout ll = dialog.findViewById(R.id.ll);
-verificationCodeEditText=dialog.findViewById(R.id.edt_ver);
+        verificationCodeEditText=dialog.findViewById(R.id.edt_ver);
         ll.setBackgroundResource(R.drawable.custom_bg_login);
         Button confirm=dialog.findViewById(R.id.btn_confirm);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-vercode=verificationCodeEditText.getText().toString();
-if(TextUtils.isEmpty(vercode)){
-    verificationCodeEditText.setError(getResources().getString(R.string.field_req));
-}
-else {
-    Log.e("code",vercode);
-    verfiycode(vercode);
+                vercode=verificationCodeEditText.getText().toString();
+                if(TextUtils.isEmpty(vercode)){
+                    verificationCodeEditText.setError(getResources().getString(R.string.field_req));
+                }
+                else {
+                    Log.e("code",vercode);
+                    verfiycode(vercode);
 
-}
+                }
             }
         });
     }
