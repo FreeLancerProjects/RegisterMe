@@ -60,6 +60,7 @@ public class Login_Activity extends AppCompatActivity {
     private ProgressDialog dialo;
     private UserModel userModel;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
+    private Runnable mUpdateResults;
 
     private void authn() {
 
@@ -75,12 +76,16 @@ public class Login_Activity extends AppCompatActivity {
             }
 
             @Override
-            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-//                Log.e("code",phoneAuthCredential.getSmsCode());
+            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) { ;
 //phoneAuthCredential.getProvider();
+
                 if(phoneAuthCredential.getSmsCode()!=null){
                     verificationCodeEditText.setText(phoneAuthCredential.getSmsCode());
                     siginwithcredental(phoneAuthCredential);}
+                else {
+                    siginwithcredental(phoneAuthCredential);
+                }
+
 
 
             }
@@ -90,7 +95,14 @@ public class Login_Activity extends AppCompatActivity {
                 Log.e("llll",e.getMessage());
             }
 
+            @Override
+            public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
+             //   super.onCodeAutoRetrievalTimeOut(s);
+                Log.e("data",s);
+                mUpdateResults.run();
 
+
+            }
         };
 
     }
@@ -98,6 +110,7 @@ public class Login_Activity extends AppCompatActivity {
 
         if(id!=null){
             PhoneAuthCredential credential=PhoneAuthProvider.getCredential(id,code);
+
             siginwithcredental(credential);}
     }
 
@@ -114,6 +127,9 @@ public class Login_Activity extends AppCompatActivity {
                     preferences = Preferences.getInstance();
                     preferences.create_update_userdata(Login_Activity.this,userModel);
                     // activity.NavigateToHomeActivity();
+                  //  mAuth.signOut();
+
+                    mAuth.signOut();
                     NavigateToHomeActivity();
                 }
 
@@ -125,7 +141,7 @@ public class Login_Activity extends AppCompatActivity {
         dialog.show();
         this.userModel=userModel;
         Log.e("kkk",phone_code+phone);
-        final Runnable mUpdateResults = new Runnable() {
+     mUpdateResults = new Runnable() {
             public void run() {
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(phone_code+phone,10, TimeUnit.SECONDS, TaskExecutors.MAIN_THREAD,  mCallbacks);
             }
