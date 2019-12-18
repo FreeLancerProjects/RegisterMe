@@ -7,6 +7,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -122,7 +123,8 @@ Log.e("type",map.get("notification_type"));
      if(not_type.equals("order"))
         {
             String content;
-            if(getlang().equals("ar")){
+
+            if(Resources.getSystem().getConfiguration().locale.getLanguage().equals("ar")){
             content = map.get("ar_text");}
 else {
     content = map.get("en_text");
