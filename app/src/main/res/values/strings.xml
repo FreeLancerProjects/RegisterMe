@@ -43,7 +43,7 @@
     <string name="language_setting">language setting</string>
     <string name="terms_of_use">terms of use</string>
     <string name="about">about us</string>
-    <string name="contact_us">contact us</string>
+    <string name="contact_us">Complaints</string>
     <string name="bank_account">bank account</string>
     <string name="logout">logout</string>
     <string name="terms_and_conditions">Terms and Conditions</string>
@@ -119,4 +119,5 @@
     <string name="choose_handgradauted">Choose HandGraduattion</string>
     <string name="choose_qalified">Choose QualiFicatin</string>
     <string name="choose_Skill">Choose Skill</string>
+    <string name="complaint">Complaint</string>
 </resources>
