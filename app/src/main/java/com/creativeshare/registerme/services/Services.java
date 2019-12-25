@@ -30,7 +30,6 @@ public interface Services {
     Call<ResponseBody> updateToken(
             @Field("user_id") int user_id,
             @Field("phone_token") String phone_token,
-
             @Field("software_type") int software_type
     );
     @FormUrlEncoded
@@ -39,7 +38,6 @@ public interface Services {
                                   @Field("email") String email,
                                   @Field("message") String message,
                                   @Field("subject") String subject
-
     );
 
     @GET("api/all_slider")

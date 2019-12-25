@@ -130,6 +130,10 @@ public class Home_Activity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ListenNotificationChange(Order_Model order_model)
     {
+
+        if(fragment_profile!=null&&fragment_profile.isAdded()){
+            fragment_profile.updatedata();
+        }
         if (fragment_myorders!=null&&fragment_myorders.isAdded()&&fragment_myorders.isVisible())
         {
             new Handler()
@@ -293,6 +297,8 @@ fragment_myorders.getOrders();                        }
         }
         if (fragment_profile.isAdded()) {
             fragmentManager.beginTransaction().show(fragment_profile).commit();
+            fragment_profile.updatedata();
+
         } else {
             fragmentManager.beginTransaction().add(R.id.fragment_main_child, fragment_profile, "fragment_profile").addToBackStack("fragment_profile").commit();
 

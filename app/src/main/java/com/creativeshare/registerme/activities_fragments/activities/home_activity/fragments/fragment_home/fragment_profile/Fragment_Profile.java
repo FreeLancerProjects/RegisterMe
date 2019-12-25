@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Create_Cv;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Edit_Cv;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_jobs.Fragment_Jobs;
 import com.creativeshare.registerme.adapter.ViewPagerAdapter;
 import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
@@ -374,4 +376,40 @@ CreateImageAlertDialog();
     }
 
 
+
+    public void updatedata() {
+if(fragmentList!=null){
+    if(fragmentList.get(0)!=null){
+        new Handler()
+                .postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+        Fragment_MyCv fragment_myCv= (Fragment_MyCv) fragmentList.get(0);
+        fragment_myCv.getOrders();
+                    }
+                }, 1);
+    }
+    if(fragmentList.get(1)!=null){
+        new Handler()
+                .postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+        Fragment_MyEmails fragment_myEmails=(Fragment_MyEmails)fragmentList.get(1);
+        fragment_myEmails.getOrders();
+                    }
+                }, 1);
+
+    }
+    if(fragmentList.get(2)!=null){
+        new Handler()
+                .postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+        Fragment_MyJobs fragment_jobs=(Fragment_MyJobs)fragmentList.get(2);
+        fragment_jobs.getOrders();
+                    }
+                }, 1);
+    }
+}
+    }
 }
