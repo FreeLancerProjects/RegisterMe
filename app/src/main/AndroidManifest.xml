@@ -44,7 +44,10 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <activity android:name="com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity">
+        <activity android:name="com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            >
 
         </activity>
         <activity
