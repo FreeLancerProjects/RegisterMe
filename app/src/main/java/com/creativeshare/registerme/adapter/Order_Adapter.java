@@ -3,6 +3,7 @@ package com.creativeshare.registerme.adapter;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (holder instanceof MyHolder) {
 
             final MyHolder myHolder = (MyHolder) holder;
-            final Order_Model.Data data1 = data.get(position);
+             Order_Model.Data data1 = data.get(position);
           myHolder.tv_order_num.setText(data1.getId()+"");
           if(data1.getType()==1){
               ((MyHolder) holder).tvtype.setText(activity.getResources().getString(R.string.cv));

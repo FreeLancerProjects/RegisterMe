@@ -287,6 +287,8 @@ public class Fragment_Edit_Cv extends Fragment {
         String name = edt_name.getText().toString();
         String phone = edt_phone.getText().toString();
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != null&&skillid.size()>0 && fileUri1 != null) {
+            Common.CloseKeyBoard(activity,edt_phone);
+
             if (userModel == null) {
                 Common.CreateUserNotSignInAlertDialog(activity);
             } else {

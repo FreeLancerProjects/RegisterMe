@@ -95,7 +95,7 @@ else {
 }
 else {
     Picasso.with(context).load(Uri.parse(Tags.IMAGE_URL+data1.getEmail_type_logo())).placeholder(R.drawable.ic_email3).fit().into(myHolder.im_order);
-myHolder.tv_order_name.setText(data1.getEmail_name()+"\n"+activity.getResources().getString(R.string.user_password)+":"+data1.getEmail_password());
+myHolder.tv_order_name.setText(activity.getResources().getString(R.string.email)+":"+data1.getEmail_name()+"\n"+activity.getResources().getString(R.string.user_password)+":"+data1.getEmail_password());
 }
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
             String date = dateFormat.format(new Date(data1.getDate() * 1000));

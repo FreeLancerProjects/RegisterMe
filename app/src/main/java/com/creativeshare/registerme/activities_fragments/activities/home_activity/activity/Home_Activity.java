@@ -131,7 +131,7 @@ public class Home_Activity extends AppCompatActivity {
     public void ListenNotificationChange(Order_Model order_model)
     {
 
-        if(fragment_profile!=null&&fragment_profile.isAdded()){
+        if(fragment_profile!=null&&fragment_profile.isAdded()&&fragment_profile.isVisible()){
             fragment_profile.updatedata();
         }
         if (fragment_myorders!=null&&fragment_myorders.isAdded()&&fragment_myorders.isVisible())
@@ -144,7 +144,17 @@ fragment_myorders.getOrders();                        }
                     },1);
         }
       else {
-          DisplayFragmentMyorders();
+            new Handler()
+                    .postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(fragment_myorders!=null){
+                            fragment_myorders.getOrders();
+                            }
+
+                            DisplayFragmentMyorders();
+                        }
+                    },1);
         }
 
 

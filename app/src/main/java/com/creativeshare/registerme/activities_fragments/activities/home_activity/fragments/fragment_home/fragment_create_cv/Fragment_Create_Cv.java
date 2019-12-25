@@ -235,6 +235,7 @@ private SkillAdapter skillAdapter;
         String phone = edt_phone.getText().toString();
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != null&&skillid.size()>0) {
             if (uriList != null && uriList.size() > 0) {
+                Common.CloseKeyBoard(activity,edt_phone);
                 if (userModel == null) {
                     Common.CreateUserNotSignInAlertDialog(activity);
                 } else {

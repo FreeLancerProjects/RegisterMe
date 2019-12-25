@@ -99,6 +99,9 @@ private Preferences preferences;
         //   Common.CloseKeyBoard(homeActivity, edt_name);
 
         // rec_sent.setVisibility(View.GONE);
+        dataList.clear();
+        order_adapter.notifyDataSetChanged();
+
         progBar.setVisibility(View.VISIBLE);
         Api.getService(Tags.base_url)
                 .getorders(userModel.getUser().getId())
@@ -107,7 +110,6 @@ private Preferences preferences;
                     public void onResponse(Call<Order_Model> call, Response<Order_Model> response) {
                         progBar.setVisibility(View.GONE);
                         if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
-                            dataList.clear();
                             dataList.addAll(response.body().getData());
                             if (response.body().getData().size() > 0) {
                                 // rec_sent.setVisibility(View.VISIBLE);

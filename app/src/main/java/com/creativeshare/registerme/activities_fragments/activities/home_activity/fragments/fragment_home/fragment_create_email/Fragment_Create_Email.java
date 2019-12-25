@@ -104,6 +104,8 @@ public class Fragment_Create_Email extends Fragment {
         if (email_id != -1 && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(pass) && pass.length() >= 6) {
             edt_name.setError(null);
             edt_password.setError(null);
+            Common.CloseKeyBoard(home_activity,edt_name);
+
             if (userModel != null) {
                 Create_email(name, pass);
             } else {
