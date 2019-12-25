@@ -99,7 +99,7 @@ public class Login_Activity extends AppCompatActivity {
             public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
              //   super.onCodeAutoRetrievalTimeOut(s);
                 Log.e("data",s);
-                mUpdateResults.run();
+             //   mUpdateResults.run();
 
 
             }
