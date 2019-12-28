@@ -84,21 +84,26 @@ public interface Services {
             @Field("user_id") int user_id,
             @Field("type_id_fk") int type_id_fk);
 
-    @FormUrlEncoded
+    @Multipart
     @POST("api/job_order_link")
     Call<ResponseBody> send_link(
 
+            @Part("user_id") RequestBody user_id,
+            @Part("lik_job") RequestBody lik_job,
+            @Part MultipartBody.Part partimageInsideList
 
-            @Field("user_id") int user_id,
-            @Field("lik_job") String lik_job);
+    );
 
-    @FormUrlEncoded
+    @Multipart
     @POST("api/job_order_company")
     Call<ResponseBody> send_company(
 
 
-            @Field("user_id") int user_id,
-            @Field("campany_id_fk") int campany_id_fk);
+            @Part("user_id") RequestBody user_id,
+            @Part("campany_id_fk") RequestBody campany_id_fk,
+            @Part MultipartBody.Part partimageInsideList
+
+    );
 
     @FormUrlEncoded
     @POST("api/logout")
