@@ -99,6 +99,7 @@ private Preferences preferences;
         //   Common.CloseKeyBoard(homeActivity, edt_name);
 
         // rec_sent.setVisibility(View.GONE);
+
         dataList.clear();
         order_adapter.notifyDataSetChanged();
 

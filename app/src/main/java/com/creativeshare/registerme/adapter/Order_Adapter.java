@@ -85,7 +85,13 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
               ((MyHolder) holder).tvtype.setText(activity.getResources().getString(R.string.job));
 
           }
-          String status="";
+            myHolder.imnew.setImageResource(R.drawable.un_checked_circle);
+
+            myHolder.imdistrub.setImageResource(R.drawable.un_checked_circle);
+            myHolder.imrecive.setImageResource(R.drawable.un_checked_circle);
+            myHolder.imcomplete.setImageResource(R.drawable.un_checked_circle);
+
+            String status="";
           if(data1.getStatus()==0){
               status=activity.getString(R.string.new_order);
               myHolder.imnew.setImageResource(R.drawable.ic_checked_circle);
@@ -124,7 +130,7 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
 
-            //Log.e("msg",advertsing.getMain_image());
+            Log.e("msg",data1.getStatus()+" "+data1.getId());
         } else {
             LoadMoreHolder loadMoreHolder = (LoadMoreHolder) holder;
             loadMoreHolder.progBar.setIndeterminate(true);
