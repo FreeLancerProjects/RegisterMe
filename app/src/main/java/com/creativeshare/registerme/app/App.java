@@ -3,12 +3,14 @@ package com.creativeshare.registerme.app;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.multidex.MultiDexApplication;
+
 import com.creativeshare.registerme.language.Language_Helper;
 import com.creativeshare.registerme.preferences.Preferences;
 import com.google.firebase.FirebaseApp;
 
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     @Override
     protected void attachBaseContext(Context base) {

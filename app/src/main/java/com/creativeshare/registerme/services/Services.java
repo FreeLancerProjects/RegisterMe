@@ -8,6 +8,7 @@ import com.creativeshare.registerme.models.ImageTypeModel;
 import com.creativeshare.registerme.models.NotificationDataModel;
 import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.models.Profile_Order_Model;
+import com.creativeshare.registerme.models.ServicePriceModel;
 import com.creativeshare.registerme.models.Slider_Model;
 import com.creativeshare.registerme.models.UserModel;
 
@@ -198,6 +199,13 @@ public interface Services {
             @Field("gender") String gender,
 
             @Field("software_type") int software_type
+
+
+
+    );
+    @GET("api/get_service_price")
+    Call<ServicePriceModel> getserviceprice(
+
 
 
 

@@ -15,7 +15,6 @@ import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Create_Cv;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_cv.Fragment_Edit_Cv;
 import com.creativeshare.registerme.models.AllInFo_Model;
-import com.creativeshare.registerme.models.BankDataModel;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,14 +24,14 @@ import io.paperdb.Paper;
 
 public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.MyHolder> {
 
-    private List<AllInFo_Model.Data.Skills> bankDataModelList;
+    private List<AllInFo_Model.Data.Skills> skillsList;
     private Context context;
     private String current_language;
     private Fragment fragment;
     private Fragment_Edit_Cv fragment_edit_cv;
     private Fragment_Create_Cv fragment_create_cv;
-    public SkillAdapter(List<AllInFo_Model.Data.Skills> bankDataModelList, Context context, Fragment fragment) {
-        this.bankDataModelList = bankDataModelList;
+    public SkillAdapter(List<AllInFo_Model.Data.Skills> skillsList, Context context, Fragment fragment) {
+        this.skillsList = skillsList;
         this.context = context;
         Paper.init(context);
         current_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
@@ -50,8 +49,8 @@ this.fragment=fragment;
     @Override
     public void onBindViewHolder(@NonNull final MyHolder holder, int position) {
 
-        AllInFo_Model.Data.Skills bankModel = bankDataModelList.get(position);
-        holder.BindData(bankModel);
+        AllInFo_Model.Data.Skills skills = skillsList.get(position);
+        holder.BindData(skills);
 holder.image_delete.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -70,7 +69,7 @@ holder.image_delete.setOnClickListener(new View.OnClickListener() {
 
     @Override
     public int getItemCount() {
-        return bankDataModelList.size();
+        return skillsList.size();
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
@@ -86,11 +85,11 @@ image_delete=itemView.findViewById(R.id.image_delete);
 
         }
 
-        public void BindData(AllInFo_Model.Data.Skills bankModel) {
+        public void BindData(AllInFo_Model.Data.Skills skills) {
 if(current_language.equals("ar")){
-            tv_title.setText(bankModel.getAr_title());}
+            tv_title.setText(skills.getAr_title());}
 else {
-    tv_title.setText(bankModel.getEn_title());
+    tv_title.setText(skills.getEn_title());
 }
            // tv_account_iban.setText(bankModel.getIban());
 

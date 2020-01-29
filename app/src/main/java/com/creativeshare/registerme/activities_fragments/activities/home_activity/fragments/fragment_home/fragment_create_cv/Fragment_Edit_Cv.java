@@ -134,6 +134,7 @@ public class Fragment_Edit_Cv extends Fragment {
         recyclerViewskil.setLayoutManager(new GridLayoutManager(activity,3));
         skillAdapter=new SkillAdapter(skills,activity,this);
         recyclerViewskil.setAdapter(skillAdapter);
+
         image_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
