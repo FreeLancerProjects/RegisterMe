@@ -11,9 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -69,22 +67,27 @@ public class Login_Activity extends AppCompatActivity {
 
             @Override
             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                //  super.onCodeSent(s, forceResendingToken);
+                  super.onCodeSent(s, forceResendingToken);
                 id=s;
                 mResendToken=forceResendingToken;
-                Log.e("authid",id);
+         //       Log.e("authid",id);
             }
 
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) { ;
 //phoneAuthCredential.getProvider();
+try {
+    if(phoneAuthCredential.getSmsCode()!=null){
+        verificationCodeEditText.setText(phoneAuthCredential.getSmsCode());
+        siginwithcredental(phoneAuthCredential);}
+    else {
+        siginwithcredental(phoneAuthCredential);
+    }
+}
+catch (Exception e){
 
-                if(phoneAuthCredential.getSmsCode()!=null){
-                    verificationCodeEditText.setText(phoneAuthCredential.getSmsCode());
-                    siginwithcredental(phoneAuthCredential);}
-                else {
-                    siginwithcredental(phoneAuthCredential);
-                }
+}
+
 
 
 
@@ -97,9 +100,9 @@ public class Login_Activity extends AppCompatActivity {
 
             @Override
             public void onCodeAutoRetrievalTimeOut(@NonNull String s) {
-             //   super.onCodeAutoRetrievalTimeOut(s);
+                //   super.onCodeAutoRetrievalTimeOut(s);
                 Log.e("data",s);
-             //   mUpdateResults.run();
+                //   mUpdateResults.run();
 
 
             }
@@ -127,7 +130,7 @@ public class Login_Activity extends AppCompatActivity {
                     preferences = Preferences.getInstance();
                     preferences.create_update_userdata(Login_Activity.this,userModel);
                     // activity.NavigateToHomeActivity();
-                  //  mAuth.signOut();
+                    //  mAuth.signOut();
 
                     mAuth.signOut();
                     NavigateToHomeActivity();
@@ -141,7 +144,7 @@ public class Login_Activity extends AppCompatActivity {
         dialog.show();
         this.userModel=userModel;
         Log.e("kkk",phone_code+phone);
-     mUpdateResults = new Runnable() {
+        mUpdateResults = new Runnable() {
             public void run() {
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(phone_code+phone,10, TimeUnit.SECONDS, TaskExecutors.MAIN_THREAD,  mCallbacks);
             }

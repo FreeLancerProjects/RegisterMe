@@ -2,12 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    dexOptions {
-        preDexLibraries = false
-        javaMaxHeapSize "4g"
-    }
+
     compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.creativeshare.registerme"
         minSdkVersion 16
@@ -94,5 +91,4 @@ dependencies {
         exclude group:'xpp3', module:'xpp3'
     })
     implementation project(":telrlibrary-release")
-implementation 'com.android.support:multidex:1.0.3'
 }
