@@ -90,5 +90,6 @@ dependencies {
         exclude group:'stax', module:'stax-api'
         exclude group:'xpp3', module:'xpp3'
     })
+    implementation  'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     implementation project(":telrlibrary-release")
 }
