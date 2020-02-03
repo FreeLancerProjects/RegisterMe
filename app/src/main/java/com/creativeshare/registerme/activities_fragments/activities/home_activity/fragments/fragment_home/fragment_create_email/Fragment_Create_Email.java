@@ -1,8 +1,10 @@
 package com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_email;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -128,7 +130,7 @@ public class Fragment_Create_Email extends Fragment {
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.example.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
     private MobileRequest getMobileRequest() {
         MobileRequest mobile = new MobileRequest();
@@ -169,7 +171,7 @@ public class Fragment_Create_Email extends Fragment {
         Name name = new Name();
         name.setFirst(userModel.getUser().getName());                          // Forename : the minimum required details for a transaction to be processed
         name.setLast(userModel.getUser().getName());                          // Surname : the minimum required details for a transaction to be processed
-        name.setTitle("Mr");                           // Title
+        name.setTitle(userModel.getUser().getName());                           // Title
         billing.setName(name);
         billing.setEmail(EMAIL);                 // TODO: Insert your email here : the minimum required details for a transaction to be processed.
         billing.setPhone(userModel.getUser().getPhone());                // Phone number, required if enabled in your merchant dashboard.
@@ -359,5 +361,19 @@ sendMessage();
 
     public void setid(int id) {
         this.email_id = id;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+
+Log.e("kvnnvjvb",data.getStringExtra("text"));
+
+
+
+
+
+        }
     }
 }

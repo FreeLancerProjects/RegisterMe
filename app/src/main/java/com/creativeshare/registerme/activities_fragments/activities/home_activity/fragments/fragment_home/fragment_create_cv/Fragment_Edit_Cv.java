@@ -84,7 +84,7 @@ public class Fragment_Edit_Cv extends Fragment {
     private List<AllInFo_Model.Data.Quallifcation> quallifcationList;
     private List<AllInFo_Model.Data.HandGraduations> handGraduationsList;
     private List<AllInFo_Model.Data.Skills> skillsList,skills;
-    private final int File_REQ1 = 1;
+    private final int File_REQ1 = 2;
     private Uri fileUri1 = null;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     //private RecyclerView recyclerView_images;
@@ -353,7 +353,7 @@ sendMessage();
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.example.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
     private MobileRequest getMobileRequest() {
         MobileRequest mobile = new MobileRequest();
@@ -596,6 +596,15 @@ sendMessage();
             //String type = data.getType();
             // Log.e("datass",type);
             // editImageProfile(userModel.getUser().getId()+"",fileUri1.toString());
+
+
+        }
+        else  if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+
+            Log.e("kvnnvjvb",data.getStringExtra("text"));
+
+
+
 
 
         }

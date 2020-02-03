@@ -72,7 +72,7 @@ private LinearLayout ll_no_store;
     private int company_id=-1;
     private Preferences preferences;
     private UserModel userModel;
-    private final int File_REQ1 = 1;
+    private final int File_REQ1 = 2;
     private Uri fileUri1 = null;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
     private ServicePriceModel servicepricemodel;
@@ -126,7 +126,7 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.example.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
     private MobileRequest getMobileRequest() {
         MobileRequest mobile = new MobileRequest();
@@ -419,6 +419,15 @@ dataList.clear();
             // Log.e("datass",type);
             // editImageProfile(userModel.getUser().getId()+"",fileUri1.toString());
             Company_odere();
+
+        }
+        else  if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+
+            Log.e("kvnnvjvb",data.getStringExtra("text"));
+
+
+
+
 
         }
 

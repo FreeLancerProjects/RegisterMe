@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class SuccessTransationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_successtransaction);
+        SetResulltOk();
     }
 
     @Override
@@ -54,19 +56,31 @@ public class SuccessTransationActivity extends Activity {
             Log.d("hany", status.getAuth().getTranref());
             status.getAuth().getCardfirst6(); // The first 6 digits of the card number used in the transaction, only for version 2 is submitted in Tran -> Version
 
-            setTransactionDetails(status.getAuth().getTranref(), status.getAuth().getCardlast4());
+//            setTransactionDetails(status.getAuth().getTranref(), status.getAuth().getCardlast4());
         }
     }
 
-    private void setTransactionDetails(String ref, String last4) {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("telr", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("ref", ref);
-        editor.putString("last4", last4);
-        editor.commit();
-    }
+//    private void setTransactionDetails(String ref, String last4) {
+//        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("telr", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPref.edit();
+//        editor.putString("ref", ref);
+//        editor.putString("last4", last4);
+//        editor.commit();
+//    }
 
     public void closeWindow(View view){
         this.finish();
     }
+   void SetResulltOk(){
+       new Handler()
+               .postDelayed(new Runnable() {
+                   @Override
+                   public void run() {
+                       Intent data = new Intent();
+                       data.putExtra("text", getResources().getString(R.string.suc));
+                       setResult(RESULT_OK, data);
+                   }
+               },1000);
+   }
+
 }

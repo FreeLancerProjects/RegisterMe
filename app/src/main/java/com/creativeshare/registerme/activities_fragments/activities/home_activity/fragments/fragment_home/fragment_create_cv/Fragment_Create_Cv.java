@@ -493,6 +493,15 @@ sendMessage();
 
             }
         }
+        else  if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+
+            Log.e("kvnnvjvb",data.getStringExtra("text"));
+
+
+
+
+
+        }
     }
 
 
@@ -647,7 +656,7 @@ sendMessage();
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.example.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
     private MobileRequest getMobileRequest() {
         MobileRequest mobile = new MobileRequest();
@@ -760,4 +769,5 @@ sendMessage();
         skillid.remove(layoutPosition);
         skillAdapter.notifyDataSetChanged();
     }
+
 }

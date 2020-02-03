@@ -3,6 +3,7 @@ package com.creativeshare.registerme.activities_fragments.activities.activity_pa
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class FailedTransationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_failedtransaction);
+        SetResulltOk();
     }
 
     @Override
@@ -66,5 +68,16 @@ public class FailedTransationActivity extends Activity {
 
     public void closeWindow(View view){
         this.finish();
+    }
+    void SetResulltOk(){
+        new Handler()
+                .postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent data = new Intent();
+                        data.putExtra("text", getResources().getString(R.string.failed));
+                        setResult(RESULT_OK, data);
+                    }
+                },1000);
     }
 }
