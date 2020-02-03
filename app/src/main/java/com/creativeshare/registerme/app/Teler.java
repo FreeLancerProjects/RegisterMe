@@ -1,12 +1,14 @@
 package com.creativeshare.registerme.app;
 
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.telr.mobile.sdk.TelrApplication;
 
-public  class  Teler extends TelrApplication {
+public  class  Teler extends TelrApplication  {
 
 
     private static Context context;
@@ -15,10 +17,16 @@ public  class  Teler extends TelrApplication {
         super.onCreate();
         Log.d("Demo","Context Started....");
         Teler.context = getApplicationContext();
-        FirebaseApp.initializeApp(this);
+//         teler=new Teler();
+//         teler.getContext();
+
+
+
 
     }
 
-    public  Context getContext(){
+    public  static Context getContext(){
+
+
         return Teler.context;
     }}

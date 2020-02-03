@@ -23,7 +23,7 @@ public class SuccessTransationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_successtransaction);
-        SetResulltOk();
+      SetResulltOk();
     }
 
     @Override
@@ -79,6 +79,7 @@ public class SuccessTransationActivity extends Activity {
                        Intent data = new Intent();
                        data.putExtra("text", getResources().getString(R.string.suc));
                        setResult(RESULT_OK, data);
+                       finish();
                    }
                },1000);
    }

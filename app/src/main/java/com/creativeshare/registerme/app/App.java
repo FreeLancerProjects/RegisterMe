@@ -1,7 +1,11 @@
 package com.creativeshare.registerme.app;
 
+import android.app.IntentService;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.multidex.MultiDexApplication;
 
 import com.creativeshare.registerme.language.Language_Helper;
@@ -12,7 +16,7 @@ import com.telr.mobile.sdk.TelrApplication;
 
 public class App extends  MultiDexApplication{
 
-    private Teler teler;
+//    private Teler teler;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -23,11 +27,10 @@ public class App extends  MultiDexApplication{
     public void onCreate() {
         super.onCreate();
         FirebaseApp.initializeApp(this);
-         teler=new Teler();
-         teler.getContext();
+        Intent intent=new Intent(getApplicationContext(),Teler.class);
+        startService(intent);
+  //startActivity(intent);
+
     }
 
-
-
-
-}
+   }
