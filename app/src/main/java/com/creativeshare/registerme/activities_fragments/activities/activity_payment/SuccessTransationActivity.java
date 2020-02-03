@@ -72,16 +72,12 @@ public class SuccessTransationActivity extends Activity {
         this.finish();
     }
    void SetResulltOk(){
-       new Handler()
-               .postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
+
                        Intent data = new Intent();
                        data.putExtra("text", getResources().getString(R.string.suc));
                        setResult(RESULT_OK, data);
-                       finish();
-                   }
-               },1000);
+                       this.finish();
+
    }
 
 }
