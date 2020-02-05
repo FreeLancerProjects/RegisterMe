@@ -210,4 +210,9 @@ public interface Services {
 
 
     );
+    @FormUrlEncoded
+    @POST("api/pay_order")
+    Call<ResponseBody> setpaid(@Field("order_id") int order_id,
+                                  @Field("is_payed") int is_payed
+    );
 }

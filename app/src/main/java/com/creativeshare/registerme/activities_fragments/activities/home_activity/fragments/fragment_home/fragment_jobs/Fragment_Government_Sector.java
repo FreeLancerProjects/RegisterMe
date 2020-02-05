@@ -47,6 +47,9 @@ import com.telr.mobile.sdk.entity.request.payment.MobileRequest;
 import com.telr.mobile.sdk.entity.request.payment.Name;
 import com.telr.mobile.sdk.entity.request.payment.Tran;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -80,6 +83,8 @@ private LinearLayout ll_no_store;
     public static final String STORE_ID = "22865";    // TODO: Insert your Store ID here
     public static final String EMAIL= "al-waafi8567@hotmail.com";
     public static final boolean isSecurityEnabled = false;
+    private int order_id;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -114,7 +119,22 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
             }
         });
     }
-    public void sendMessage(){
+    public void sendMessage(ResponseBody body){
+        JSONObject obj = null;
+
+        try {
+            String re=body.string();
+            Log.e("data",re);
+            obj = new JSONObject(re);
+            // Log.e("data",obj.stri);
+            order_id=obj.getInt("id");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("data",e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(activity, WebviewActivity.class);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
@@ -122,8 +142,8 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
 
 
         intent.putExtra(WebviewActivity.EXTRA_MESSAGE, getMobileRequest());
-        intent.putExtra(WebviewActivity.SUCCESS_ACTIVTY_CLASS_NAME, "com.example.SuccessTransationActivity");
-        intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.example.FailedTransationActivity");
+        intent.putExtra(WebviewActivity.SUCCESS_ACTIVTY_CLASS_NAME, "com.creativeshare.registerme.activities_fragments.activities.activity_payment.SuccessTransationActivity");
+        intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.creativeshare.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
         startActivityForResult(intent,1);
@@ -263,7 +283,7 @@ CheckReadPermission();            }
 
                   //  Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
                    // activity.Displayorder();
-                    sendMessage();
+                    sendMessage(response.body());
                 } else {
                     Common.CreateSignAlertDialog(activity, getString(R.string.failed));
 
@@ -431,6 +451,55 @@ dataList.clear();
 
         }
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("gggggg",preferences.Ispaid(activity)+"");
+        if(order_id!=0){
+            if(preferences.Ispaid(activity)){
+                paid(1);
+            }
+            else {
+                paid(0);
+            }}
+    }
+    private void paid(int i) {
+
+        final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url).setpaid(order_id,i).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
+                    activity.Displayorder();
+                    // Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
+
+                } else {
+                    Common.CreateSignAlertDialog(activity, getString(R.string.failed));
+
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                try {
+                    dialog.dismiss();
+                    Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    Log.e("Error", t.getMessage());
+                } catch (Exception e) {
+                }
+            }
+        });
     }
 
 }

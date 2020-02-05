@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.creativeshare.registerme.R;
+import com.creativeshare.registerme.preferences.Preferences;
 import com.telr.mobile.sdk.activty.WebviewActivity;
 import com.telr.mobile.sdk.entity.response.status.StatusResponse;
 
@@ -15,12 +16,12 @@ import com.telr.mobile.sdk.entity.response.status.StatusResponse;
 public class FailedTransationActivity extends Activity {
 
     private TextView mTextView;
-
+private Preferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_failedtransaction);
-        SetResulltOk();
+      //  SetResulltOk();
     }
 
     @Override
@@ -29,7 +30,8 @@ public class FailedTransationActivity extends Activity {
         Intent intent = getIntent();
         Object object = intent.getParcelableExtra(WebviewActivity.PAYMENT_RESPONSE);
         TextView textView = (TextView) findViewById(R.id.text_payment_result2);
-
+preferences=Preferences.getInstance();
+preferences.setIspaid(this,false);
         if(object instanceof StatusResponse) {
             StatusResponse status = (StatusResponse) object;
             textView.setText(textView.getText() + " : " + status.getTrace() + " \n" + status.getAuth().getMessage());

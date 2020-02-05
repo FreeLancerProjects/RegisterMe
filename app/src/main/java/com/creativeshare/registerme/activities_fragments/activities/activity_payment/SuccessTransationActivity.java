@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.creativeshare.registerme.R;
+import com.creativeshare.registerme.preferences.Preferences;
 import com.telr.mobile.sdk.activty.WebviewActivity;
 import com.telr.mobile.sdk.entity.response.status.StatusResponse;
 
@@ -18,22 +19,25 @@ import com.telr.mobile.sdk.entity.response.status.StatusResponse;
 public class SuccessTransationActivity extends Activity {
 
     private TextView mTextView;
+    private Preferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_successtransaction);
-      SetResulltOk();
+    //  SetResulltOk();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+     //   Log.e("hhhhhhh","lllllll");
         Intent intent = getIntent();
         StatusResponse status = (StatusResponse) intent.getParcelableExtra(WebviewActivity.PAYMENT_RESPONSE);
         TextView textView = (TextView)findViewById(R.id.text_payment_result);
         textView.setText(textView.getText() +" : " + status.getTrace());
-
+        preferences= Preferences.getInstance();
+        preferences.setIspaid(this,true);
         if(status.getAuth()!= null) {
             status.getAuth().getStatus();   // Authorisation status. A indicates an authorised transaction. H also indicates an authorised transaction, but where the transaction has been placed on hold. Any other value indicates that the request could not be processed.
             status.getAuth().getAvs();      /* Result of the AVS check:

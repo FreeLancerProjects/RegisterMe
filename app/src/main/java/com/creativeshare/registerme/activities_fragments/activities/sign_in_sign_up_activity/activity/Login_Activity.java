@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -54,7 +55,7 @@ public class Login_Activity extends AppCompatActivity {
     private String vercode;
     private FirebaseAuth mAuth;
     private Dialog dialog;
-    private VerificationCodeEditText verificationCodeEditText;
+    private EditText verificationCodeEditText;
     private ProgressDialog dialo;
     private UserModel userModel;
     private PhoneAuthProvider.ForceResendingToken mResendToken;

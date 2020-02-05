@@ -1,10 +1,8 @@
 package com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_create_email;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -40,6 +38,9 @@ import com.telr.mobile.sdk.entity.request.payment.MobileRequest;
 import com.telr.mobile.sdk.entity.request.payment.Name;
 import com.telr.mobile.sdk.entity.request.payment.Tran;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -73,6 +74,7 @@ public class Fragment_Create_Email extends Fragment {
 
 
     public static final boolean isSecurityEnabled = false;
+    private int order_id;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -118,7 +120,22 @@ public class Fragment_Create_Email extends Fragment {
         rec_job.setAdapter(mail_adapter);
 
     }
-    public void sendMessage(){
+    public void sendMessage(ResponseBody body){
+        JSONObject obj = null;
+
+        try {
+            String re=body.string();
+            Log.e("data",re);
+            obj = new JSONObject(re);
+            // Log.e("data",obj.stri);
+            order_id=obj.getInt("id");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("data",e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(home_activity, WebviewActivity.class);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
@@ -126,8 +143,8 @@ public class Fragment_Create_Email extends Fragment {
 
 
         intent.putExtra(WebviewActivity.EXTRA_MESSAGE, getMobileRequest());
-        intent.putExtra(WebviewActivity.SUCCESS_ACTIVTY_CLASS_NAME, "com.example.SuccessTransationActivity");
-        intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.example.FailedTransationActivity");
+        intent.putExtra(WebviewActivity.SUCCESS_ACTIVTY_CLASS_NAME, "com.creativeshare.registerme.activities_fragments.activities.activity_payment.SuccessTransationActivity");
+        intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.creativeshare.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
         startActivityForResult(intent,1);
@@ -281,7 +298,7 @@ public class Fragment_Create_Email extends Fragment {
                 if (response.isSuccessful()) {
                     Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
                     //home_activity.Displayorder();
-sendMessage();
+sendMessage(response.body());
                     // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
 
                 } else {
@@ -376,4 +393,55 @@ Log.e("kvnnvjvb",data.getStringExtra("text"));
 
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("gggggg",preferences.Ispaid(home_activity)+""+order_id);
+        if(order_id!=0){
+        if(preferences.Ispaid(home_activity)){
+            paid(1);
+        }
+        else {
+            paid(0);
+        }}
+    }
+    private void paid(int i) {
+
+        final ProgressDialog dialog = Common.createProgressDialog(home_activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
+        Api.getService(Tags.base_url).setpaid(order_id,i).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
+                    home_activity.Displayorder();
+                    // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
+
+                } else {
+                    Common.CreateSignAlertDialog(home_activity, getString(R.string.failed));
+
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                try {
+                    dialog.dismiss();
+                    Toast.makeText(home_activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    Log.e("Error", t.getMessage());
+                } catch (Exception e) {
+                }
+            }
+        });
+    }
+
 }

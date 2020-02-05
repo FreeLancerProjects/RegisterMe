@@ -37,21 +37,22 @@
         android:gravity="center"
         />
 
-    <com.jkb.vcedittext.VerificationCodeEditText
+    <EditText
         android:id="@+id/edt_ver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:textColor="@color/colorAccent"
         android:textSize="17sp"
-        app:bottomLineHeight="2dp"
-        app:bottomLineNormalColor="@color/colorAccent"
-        app:bottomLineSelectedColor="@color/colorAccent"
-        app:figures="6"
-        app:selectedBackgroundColor="@color/white"
-        app:verCodeMargin="10dp"
+       android:background="@color/colorPrimary"
         android:layout_marginTop="15dp"
-
+        android:gravity="center"
+android:textStyle="bold"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
         />
         <Button
             android:id="@+id/btn_confirm"

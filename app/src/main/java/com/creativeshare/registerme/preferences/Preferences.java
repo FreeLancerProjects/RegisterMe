@@ -88,5 +88,17 @@ public class Preferences {
         String session = preferences.getString("state", Tags.session_logout);
         return session;
     }
+    public void setIspaid(Context context,boolean status)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("paid_status", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean("paid",status);
+        editor.apply();
+    }
 
+    public boolean Ispaid(Context context)
+    {
+        SharedPreferences preferences = context.getSharedPreferences("paid_status", Context.MODE_PRIVATE);
+        return preferences.getBoolean("paid",false);
+    }
 }
