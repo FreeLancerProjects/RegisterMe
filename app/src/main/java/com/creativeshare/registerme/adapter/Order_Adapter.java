@@ -130,7 +130,7 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
 
-            Log.e("msg",data1.getStatus()+" "+data1.getId());
+//            Log.e("msg",data1.getStatus()+" "+data1.getId());
         } else {
             LoadMoreHolder loadMoreHolder = (LoadMoreHolder) holder;
             loadMoreHolder.progBar.setIndeterminate(true);
