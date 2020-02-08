@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.aditya.filebrowser.Constants;
+import com.aditya.filebrowser.FileChooser;
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
 import com.creativeshare.registerme.models.ServicePriceModel;
@@ -30,9 +33,10 @@ import com.creativeshare.registerme.preferences.Preferences;
 import com.creativeshare.registerme.remote.Api;
 import com.creativeshare.registerme.share.Common;
 import com.creativeshare.registerme.tags.Tags;
-import com.jaiselrahman.filepicker.activity.FilePickerActivity;
 import com.jaiselrahman.filepicker.config.Configurations;
 import com.jaiselrahman.filepicker.model.MediaFile;
+import com.nononsenseapps.filepicker.FilePickerActivity;
+import com.nononsenseapps.filepicker.Utils;
 import com.telr.mobile.sdk.activty.WebviewActivity;
 import com.telr.mobile.sdk.entity.request.payment.Address;
 import com.telr.mobile.sdk.entity.request.payment.App;
@@ -47,7 +51,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import io.paperdb.Paper;
 import okhttp3.MultipartBody;
@@ -142,7 +148,7 @@ activity =(Home_Activity)getActivity();
         app.setSdk("123");
         mobile.setApp(app);
         Tran tran = new Tran();
-        tran.setTest("1");                              // Test mode : Test mode of zero indicates a live transaction. If this is set to any other value the transaction will be treated as a test.
+        tran.setTest("0");                              // Test mode : Test mode of zero indicates a live transaction. If this is set to any other value the transaction will be treated as a test.
         tran.setType("auth");                           /* Transaction type
                                                             'auth'   : Seek authorisation from the card issuer for the amount specified. If authorised, the funds will be reserved but will not be debited until such time as a corresponding capture command is made. This is sometimes known as pre-authorisation.
                                                             'sale'   : Immediate purchase request. This has the same effect as would be had by performing an auth transaction followed by a capture transaction for the full amount. No additional capture stage is required.
@@ -256,7 +262,7 @@ CheckReadPermission();
     }
 
     private void Send_link(String link) {
-
+Log.e("kkkkkk",fileUri1.toString());
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
@@ -327,14 +333,17 @@ CheckReadPermission();
          //   intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivityForResult(intent, file_req);*/
-        Intent intent = new Intent(activity, FilePickerActivity.class);
-        intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
-                .setCheckPermission(true)
-                .enableImageCapture(false).setShowImages(false).setShowAudios(false).setShowVideos(false)
-                .setMaxSelection(1)
-                .setSkipZeroSizeFiles(true).setShowFiles(true)
-                .build());
-        startActivityForResult(intent, file_req);
+//        Intent intent = new Intent(activity, FilePickerActivity.class);
+//        intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
+//                .setCheckPermission(true)
+//                .enableImageCapture(false).setShowImages(true).setShowAudios(false).setShowVideos(false)
+//                .setMaxSelection(1).setSuffixes("pdf").enableImageCapture(true)
+//                .setSkipZeroSizeFiles(true).setShowFiles(true)
+//                .build());
+//        startActivityForResult(intent, file_req);
+        Intent i2 = new Intent(activity, FileChooser.class);
+        i2.putExtra(Constants.SELECTION_MODE, Constants.SELECTION_MODES.SINGLE_SELECTION.ordinal());
+        startActivityForResult(i2, File_REQ1);
 
     }
 
@@ -360,13 +369,15 @@ CheckReadPermission();
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == File_REQ1 && resultCode == Activity.RESULT_OK && data != null) {
             // matches = activity.getPackageManager().queryIntentActivities(data, 0);
-            ArrayList<MediaFile> files = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
-            for(int i=0;i<files.size();i++){
-                fileUri1=files.get(i).getUri();;
-            //    tv_name.setText(fileUri1.getLastPathSegment());
+//            List<Uri> files = Utils.getSelectedFilesFromResult(data);
+//            for(int i=0;i<files.size();i++){
+//                fileUri1=files.get(i);;
+//            //    tv_name.setText(fileUri1.getLastPathSegment());
+//
+//            }
+           fileUri1 = data.getData();
 
-            }
-         //   image_upload.setVisibility(View.GONE);
+            //   image_upload.setVisibility(View.GONE);
         //    image_form.setImageDrawable(getResources().getDrawable(R.drawable.ic_document));
             //   image_form.setImageDrawable(matches.get(0).loadIcon(activity.getPackageManager()));
             //  tv_name.setText(fileUri1.get);
@@ -411,8 +422,11 @@ CheckReadPermission();
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
-                    activity.Displayorder();
+                    if(i==1){
+                        Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();}
+                    else {
+                        Toast.makeText(activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
+                    }                      activity.Displayorder();
                     // Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
 
                 } else {

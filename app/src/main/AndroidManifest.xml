@@ -31,6 +31,7 @@
         tools:targetApi="m"
 
         >
+
         <activity
             android:name=".activities_fragments.activities.activity_payment.SuccessTransationActivity"
             android:label="@string/title_activity_result">

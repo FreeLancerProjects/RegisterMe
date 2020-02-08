@@ -161,7 +161,7 @@ public class Fragment_Create_Email extends Fragment {
         app.setSdk("123");
         mobile.setApp(app);
         Tran tran = new Tran();
-        tran.setTest("1");                              // Test mode : Test mode of zero indicates a live transaction. If this is set to any other value the transaction will be treated as a test.
+        tran.setTest("0");                              // Test mode : Test mode of zero indicates a live transaction. If this is set to any other value the transaction will be treated as a test.
         tran.setType("auth");                           /* Transaction type
                                                             'auth'   : Seek authorisation from the card issuer for the amount specified. If authorised, the funds will be reserved but will not be debited until such time as a corresponding capture command is made. This is sometimes known as pre-authorisation.
                                                             'sale'   : Immediate purchase request. This has the same effect as would be had by performing an auth transaction followed by a capture transaction for the full amount. No additional capture stage is required.
@@ -417,7 +417,11 @@ Log.e("kvnnvjvb",data.getStringExtra("text"));
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
+                    if(i==1){
+                    Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();}
+                    else {
+                        Toast.makeText(home_activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
+                    }
                     home_activity.Displayorder();
                     // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
 

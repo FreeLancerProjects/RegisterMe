@@ -26,6 +26,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aditya.filebrowser.Constants;
+import com.aditya.filebrowser.FileChooser;
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
 import com.creativeshare.registerme.adapter.Government_Job_Adapter;
@@ -160,7 +162,7 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
         app.setSdk("123");
         mobile.setApp(app);
         Tran tran = new Tran();
-        tran.setTest("1");                              // Test mode : Test mode of zero indicates a live transaction. If this is set to any other value the transaction will be treated as a test.
+        tran.setTest("0");                              // Test mode : Test mode of zero indicates a live transaction. If this is set to any other value the transaction will be treated as a test.
         tran.setType("auth");                           /* Transaction type
                                                             'auth'   : Seek authorisation from the card issuer for the amount specified. If authorised, the funds will be reserved but will not be debited until such time as a corresponding capture command is made. This is sometimes known as pre-authorisation.
                                                             'sale'   : Immediate purchase request. This has the same effect as would be had by performing an auth transaction followed by a capture transaction for the full amount. No additional capture stage is required.
@@ -392,15 +394,10 @@ dataList.clear();
          //   intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivityForResult(intent, file_req);*/
-        Intent intent = new Intent(activity, FilePickerActivity.class);
-        intent.putExtra(FilePickerActivity.CONFIGS, new Configurations.Builder()
-                .setCheckPermission(true)
-                .enableImageCapture(false).setShowImages(false).setShowAudios(false).setShowVideos(false)
-                .setMaxSelection(1)
-                .setSkipZeroSizeFiles(true).setShowFiles(true)
-                .build());
-        startActivityForResult(intent, file_req);
-
+//
+        Intent i2 = new Intent(activity, FileChooser.class);
+        i2.putExtra(Constants.SELECTION_MODE, Constants.SELECTION_MODES.SINGLE_SELECTION.ordinal());
+        startActivityForResult(i2, File_REQ1);
     }
 
 
@@ -425,12 +422,12 @@ dataList.clear();
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == File_REQ1 && resultCode == Activity.RESULT_OK && data != null) {
             // matches = activity.getPackageManager().queryIntentActivities(data, 0);
-            ArrayList<MediaFile> files = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
-            for(int i=0;i<files.size();i++){
-                fileUri1=files.get(i).getUri();;
-                //    tv_name.setText(fileUri1.getLastPathSegment());
-
-            }
+//            ArrayList<MediaFile> files = data.getParcelableArrayListExtra(FilePickerActivity.MEDIA_FILES);
+//            for(int i=0;i<files.size();i++){
+//                fileUri1=files.get(i).getUri();;
+//                //    tv_name.setText(fileUri1.getLastPathSegment());
+//
+//            }
             //   image_upload.setVisibility(View.GONE);
             //    image_form.setImageDrawable(getResources().getDrawable(R.drawable.ic_document));
             //   image_form.setImageDrawable(matches.get(0).loadIcon(activity.getPackageManager()));
@@ -438,6 +435,8 @@ dataList.clear();
             //String type = data.getType();
             // Log.e("datass",type);
             // editImageProfile(userModel.getUser().getId()+"",fileUri1.toString());
+            fileUri1 = data.getData();
+
             Company_odere();
 
         }
@@ -475,7 +474,11 @@ dataList.clear();
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
+                    if(i==1){
+                        Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();}
+                    else {
+                        Toast.makeText(activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
+                    }
                     activity.Displayorder();
                     // Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
 
