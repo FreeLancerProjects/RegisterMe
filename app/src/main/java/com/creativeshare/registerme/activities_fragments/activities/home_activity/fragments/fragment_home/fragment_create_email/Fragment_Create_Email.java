@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -72,7 +73,7 @@ public class Fragment_Create_Email extends Fragment {
     public static final String STORE_ID = "22865";    // TODO: Insert your Store ID here
     public static final String EMAIL= "al-waafi8567@hotmail.com";     // TODO: Insert the customer email here
 
-
+private TextView tv_price;
     public static final boolean isSecurityEnabled = false;
     private int order_id;
     @Nullable
@@ -92,7 +93,7 @@ public class Fragment_Create_Email extends Fragment {
         Paper.init(home_activity);
         cuurent_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         preferences = Preferences.getInstance();
-
+        tv_price=view.findViewById(R.id.tv_price);
         userModel = preferences.getUserData(home_activity);
         mail_adapter = new Mail_Adapter(dataList, home_activity, this);
         rec_job = view.findViewById(R.id.recView);
@@ -252,6 +253,7 @@ public class Fragment_Create_Email extends Fragment {
 
     private void updatesrvice(ServicePriceModel body) {
         this.servicepricemodel=body;
+        tv_price.setText(home_activity.getResources().getString(R.string.price)+servicepricemodel.getCreate_email());
     }
     private void chechdata() {
         String name = edt_name.getText().toString();

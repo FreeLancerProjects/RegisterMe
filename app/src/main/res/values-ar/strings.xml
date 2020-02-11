@@ -120,4 +120,10 @@
     <string name="complaint">شكوى</string>
     <string name="image">صوره</string>
     <string name="order_sent">لقد تم ارسال طلبك لكن يجب الدفع اولا</string>
+    <string name="accept">اقبل</string>
+    <string name="accept_terms_conditions">اقبل الشروط والاحكام اولا</string>
+    <string name="price">سعر الخدمه : </string>
+    <string name="do_you_want_add_image">هل تريد ارفاق صوره</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
 </resources>

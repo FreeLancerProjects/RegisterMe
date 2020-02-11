@@ -4,6 +4,7 @@ package com.creativeshare.registerme.activities_fragments.activities.sign_in_sig
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +29,7 @@ import androidx.fragment.app.Fragment;
 
 
 import com.creativeshare.registerme.R;
+import com.creativeshare.registerme.activities_fragments.activities.activity_terms.TermsActivity;
 import com.creativeshare.registerme.activities_fragments.activities.sign_in_sign_up_activity.activity.Login_Activity;
 import com.creativeshare.registerme.models.UserModel;
 import com.creativeshare.registerme.preferences.Preferences;
@@ -72,7 +75,9 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
     private int gender=1;
     private Preferences preferences;
 
-
+    private int isAcceptTerms = 0;
+private CheckBox checkbox;
+private TextView tvTerms;
     public static Fragment_Signup newInstance() {
         return new Fragment_Signup();
     }
@@ -105,7 +110,8 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
         edt_email = view.findViewById(R.id.edt_email);
         segmentedButtonGroup=view.findViewById(R.id.segmentGroup);
         btn_sign_up = view.findViewById(R.id.btn_sign_up);
-
+        checkbox=view.findViewById(R.id.checkbox);
+        tvTerms=view.findViewById(R.id.tvTerms);
         CreateCountryDialog();
 
         image_back.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +132,14 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkData();
+                if(checkbox.isChecked()){
+                    isAcceptTerms=1;
+                }
+                if(isAcceptTerms==1){
+                checkData();}
+                else {
+                    Toast.makeText(activity,activity.getResources().getString(R.string.accept_terms_conditions),Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -141,8 +154,37 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
         }
     }
 });
-    }
+        checkbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (checkbox.isChecked()) {
+                    isAcceptTerms = 1;
 
+                    navigateToTermsActivity();
+                } else {
+                    isAcceptTerms = 0;
+                    //signUpModel.setIsAcceptTerms(isAcceptTerms);
+
+                }
+            }
+        });
+
+    tvTerms.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            isAcceptTerms = 1;
+
+
+            navigateToTermsActivity();
+        }
+    });
+    }
+    private void navigateToTermsActivity() {
+
+        Intent intent = new Intent(activity, TermsActivity.class);
+        startActivity(intent);
+
+    }
     private void CreateCountryDialog() {
         CountryPicker.Builder builder = new CountryPicker.Builder()
                 .canSearch(true)

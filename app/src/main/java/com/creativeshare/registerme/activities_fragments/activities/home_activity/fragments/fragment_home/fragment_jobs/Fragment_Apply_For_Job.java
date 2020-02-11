@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.TextUtils;
@@ -16,10 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -80,6 +84,7 @@ private Button bt_send;
     public static final String EMAIL= "al-waafi8567@hotmail.com";
     public static final boolean isSecurityEnabled = false;
     private int order_id;
+    private TextView tv_price;
 
     @Nullable
     @Override
@@ -98,6 +103,7 @@ activity =(Home_Activity)getActivity();
         userModel=preferences.getUserData(activity);
         edt_link=view.findViewById(R.id.edt_link);
         bt_send=view.findViewById(R.id.btn_send);
+        tv_price=view.findViewById(R.id.tv_price);
         bt_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,13 +245,15 @@ activity =(Home_Activity)getActivity();
 
     private void updatesrvice(ServicePriceModel body) {
         this.servicepricemodel=body;
+        tv_price.setText(activity.getResources().getString(R.string.price)+servicepricemodel.getApply_job());
+
     }
     private void chechdata() {
       link=edt_link.getText().toString();
         if(!TextUtils.isEmpty(link)){
             edt_link.setError(null);
             if(userModel!=null){
-CheckReadPermission();
+CreateUserNotSignInAlertDialog(activity);
             }
             else {
                 Common.CreateUserNotSignInAlertDialog(activity);
@@ -303,7 +311,45 @@ Log.e("kkkkkk",fileUri1.toString());
             }
         });
     }
+    private void Send_linkwithoutimage(String link) {
+        Log.e("kkkkkk",fileUri1.toString());
+        final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
+        dialog.setCancelable(false);
+        dialog.show();
 
+
+        Api.getService(Tags.base_url).send_link_without_image(userModel.getUser().getId()+"",link).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                dialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
+                    sendMessage(response.body());
+//                    activity.Displayorder();
+
+                } else {
+                    Common.CreateSignAlertDialog(activity, getString(R.string.failed));
+
+                    try {
+                        Log.e("Error_code", response.code() + "_" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                try {
+                    dialog.dismiss();
+                    Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    Log.e("Error", t.getMessage());
+                } catch (Exception e) {
+                }
+            }
+        });
+    }
     public static Fragment_Apply_For_Job newInstance() {
         return new Fragment_Apply_For_Job();
     }
@@ -311,10 +357,51 @@ Log.e("kkkkkk",fileUri1.toString());
         if (ActivityCompat.checkSelfPermission(activity, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{READ_PERM}, File_REQ1);
         } else {
-            SelectFile(File_REQ1);
+            select_photo(File_REQ1);
         }
     }
+    public  void CreateUserNotSignInAlertDialog(final Context context)
+    {
 
+
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setCancelable(true)
+                .create();
+
+
+        View view = LayoutInflater.from(context).inflate(R.layout.question_dialog,null);
+        Button btn_sign_in = view.findViewById(R.id.btn_sign_in);
+        Button btn_cancel = view.findViewById(R.id.btn_cancel);
+
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        btn_sign_in.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+
+
+                    CheckReadPermission();
+
+
+
+            }
+        });
+
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Send_linkwithoutimage(link);
+            }
+        });
+
+        dialog.getWindow().getAttributes().windowAnimations= R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setView(view);
+        dialog.show();
+    }
     private void SelectFile(int file_req) {
 
 /*
@@ -346,22 +433,25 @@ Log.e("kkkkkk",fileUri1.toString());
         startActivityForResult(i2, File_REQ1);
 
     }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == File_REQ1) {
-
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                SelectFile(File_REQ1);
-            } else {
-                Toast.makeText(activity, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+    private void select_photo(int img1) {
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            if (img1 == 2) {
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            }
+        } else {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+            if (img1 == 2) {
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             }
 
         }
-
-
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.setType("image/*");
+        startActivityForResult(intent, img1);
     }
 
     @Override
@@ -375,10 +465,10 @@ Log.e("kkkkkk",fileUri1.toString());
 //            //    tv_name.setText(fileUri1.getLastPathSegment());
 //
 //            }
-           fileUri1 = data.getData();
+            fileUri1 = data.getData();
 
             //   image_upload.setVisibility(View.GONE);
-        //    image_form.setImageDrawable(getResources().getDrawable(R.drawable.ic_document));
+            //    image_form.setImageDrawable(getResources().getDrawable(R.drawable.ic_document));
             //   image_form.setImageDrawable(matches.get(0).loadIcon(activity.getPackageManager()));
             //  tv_name.setText(fileUri1.get);
             //String type = data.getType();
@@ -399,6 +489,23 @@ Log.e("kkkkkk",fileUri1.toString());
         }
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == File_REQ1) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                select_photo(File_REQ1);
+            } else {
+                Toast.makeText(activity, getString(R.string.perm_image_denied), Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+
+    }
+
+
     @Override
     public void onResume() {
         super.onResume();

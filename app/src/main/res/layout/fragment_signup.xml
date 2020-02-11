@@ -410,6 +410,37 @@ android:tint="@color/colorPrimary"
                         />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginLeft="25dp"
+                    android:orientation="horizontal"
+
+                    >
+                    <CheckBox
+                        android:id="@+id/checkbox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:buttonTint="@color/colorPrimary"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp"
+                        android:text="@string/accept"
+
+                        />
+                    <TextView
+                        android:id="@+id/tvTerms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/terms_and_conditions"
+                        />
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/btn_sign_up"
                     android:layout_width="170dp"

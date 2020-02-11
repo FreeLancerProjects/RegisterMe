@@ -122,4 +122,10 @@
     <string name="complaint">Complaint</string>
     <string name="image">Image</string>
     <string name="order_sent">Order Sent But You Must Pay First</string>
+    <string name="accept">Accept</string>
+    <string name="accept_terms_conditions">Accept Terms And Conditions</string>
+    <string name="price">Price Of Service</string>
+    <string name="do_you_want_add_image">Do You Want Add Image</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

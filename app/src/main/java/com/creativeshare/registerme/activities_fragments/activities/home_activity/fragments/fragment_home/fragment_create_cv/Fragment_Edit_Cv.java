@@ -98,6 +98,7 @@ public class Fragment_Edit_Cv extends Fragment {
     private Button bt_Send;
     private ImageView image_upload;
     private RoundedImageView image_form;
+    private TextView tv_price;
     private TextView tv_name;
     private int qulifid = 0, qradutateid = 0;
     private List<ResolveInfo> matches;
@@ -143,6 +144,7 @@ public class Fragment_Edit_Cv extends Fragment {
         edt_phone = view.findViewById(R.id.edt_phone);
         edt_name = view.findViewById(R.id.edt_name);
         bt_Send = view.findViewById(R.id.btn_send);
+        tv_price=view.findViewById(R.id.tv_price);
         image_upload = view.findViewById(R.id.icon_form);
         image_form = view.findViewById(R.id.image_form);
         spinner_qulificatin_adapter = new Spinner_Qulificatin_Adapter(activity, quallifcationList);
@@ -479,6 +481,8 @@ sendMessage(response.body());
 
     private void updatesrvice(ServicePriceModel body) {
         this.servicepricemodel=body;
+        tv_price.setText(activity.getResources().getString(R.string.price)+servicepricemodel.getCreate_cv());
+
     }
     private void get_cvinfo() {
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));

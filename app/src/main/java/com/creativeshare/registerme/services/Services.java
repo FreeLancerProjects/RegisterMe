@@ -33,6 +33,7 @@ public interface Services {
             @Field("phone_token") String phone_token,
             @Field("software_type") int software_type
     );
+
     @FormUrlEncoded
     @POST("api/contact_us")
     Call<ResponseBody> contact_us(@Field("name") String name,
@@ -46,8 +47,10 @@ public interface Services {
 
     @GET("api/all_info")
     Call<AllInFo_Model> get_Info();
+
     @GET("api/required_docs")
     Call<ImageTypeModel> get_Inmagetype();
+
     @GET("api/aboutUs")
     Call<AppDataModel> getabout(
     );
@@ -94,7 +97,12 @@ public interface Services {
             @Part MultipartBody.Part partimageInsideList
 
     );
+    @FormUrlEncoded
+    @POST("api/job_order_link")
+    Call<ResponseBody> send_link_without_image(
 
+            @Field("user_id") String user_id,
+            @Field("lik_job") String lik_job);
     @Multipart
     @POST("api/job_order_company")
     Call<ResponseBody> send_company(
@@ -107,10 +115,19 @@ public interface Services {
     );
 
     @FormUrlEncoded
+    @POST("api/job_order_company")
+    Call<ResponseBody> send_company(@Field("user_id") String user_id,
+                                    @Field("campany_id_fk") String campany_id_fk
+
+
+    );
+
+    @FormUrlEncoded
     @POST("api/logout")
     Call<ResponseBody> Logout(@Field("id") String id
 
     );
+
     @Multipart
     @POST("api/create_resume")
     Call<ResponseBody> createcv
@@ -126,6 +143,7 @@ public interface Services {
 
 //
             );
+
     @Multipart
     @POST("api/update_resume")
     Call<ResponseBody> updatecv
@@ -141,6 +159,7 @@ public interface Services {
 
 //
             );
+
     @FormUrlEncoded
     @POST("api/create_resume")
     Call<ResponseBody> createcvwithouimage
@@ -155,6 +174,7 @@ public interface Services {
 
 //
             );
+
     @FormUrlEncoded
     @POST("api/my_orders")
     Call<Order_Model> getorders(
@@ -188,6 +208,7 @@ public interface Services {
     @POST("api/user_image")
     Call<UserModel> editUserImage(@Part("user_id") RequestBody user_id,
                                   @Part MultipartBody.Part image);
+
     @FormUrlEncoded
     @POST("api/update_profile")
     Call<UserModel> updateprofile(
@@ -201,18 +222,17 @@ public interface Services {
             @Field("software_type") int software_type
 
 
-
     );
+
     @GET("api/get_service_price")
     Call<ServicePriceModel> getserviceprice(
 
 
-
-
     );
+
     @FormUrlEncoded
     @POST("api/pay_order")
     Call<ResponseBody> setpaid(@Field("order_id") int order_id,
-                                  @Field("is_payed") int is_payed
+                               @Field("is_payed") int is_payed
     );
 }

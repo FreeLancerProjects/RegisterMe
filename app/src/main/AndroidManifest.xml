@@ -81,6 +81,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
+            android:name=".activities_fragments.activities.activity_terms.TermsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
             android:name="com.creativeshare.registerme.activities_fragments.activities.activity_splash.Splash_Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden">

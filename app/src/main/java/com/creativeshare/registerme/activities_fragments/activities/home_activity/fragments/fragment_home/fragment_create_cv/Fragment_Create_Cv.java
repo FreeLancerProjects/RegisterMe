@@ -98,6 +98,7 @@ public class Fragment_Create_Cv extends Fragment {
 private SkillAdapter skillAdapter;
     private Spinner spinner_qualification, spinner_handgraduate, spinner_skill;
     private EditText edt_email, edt_note, edt_phone, edt_name;
+    private TextView tv_price;
     private TextView tv_type;
     private Button bt_Send;
     private int qulifid = 0,  qradutateid = 0;
@@ -141,6 +142,7 @@ private SkillAdapter skillAdapter;
         spinner_qualification = view.findViewById(R.id.spinner_qualification);
         spinner_handgraduate = view.findViewById(R.id.spinner_hanfgraduate);
         spinner_skill = view.findViewById(R.id.spinner_skill);
+        tv_price=view.findViewById(R.id.tv_price);
         tv_type = view.findViewById(R.id.tv_type);
         edt_email = view.findViewById(R.id.edt_email);
         edt_phone = view.findViewById(R.id.edt_phone);
@@ -780,6 +782,8 @@ sendMessage(response.body());
 
     private void updatesrvice(ServicePriceModel body) {
         this.servicepricemodel=body;
+        tv_price.setText(activity.getResources().getString(R.string.price)+servicepricemodel.getCreate_cv());
+
     }
 
 
