@@ -188,12 +188,13 @@ public class Fragment_MyEmails extends Fragment {
                         if (response.isSuccessful()&&response.body()!=null) {
 
                             //  home_activity.sendverficationcode(m_phone,code.replace("00","+"),response.body());
+                            Toast.makeText(home_activity,home_activity.getResources().getString(R.string.suc),Toast.LENGTH_LONG).show();
 
                         } else if (response.code() == 404) {
-                            Common.CreateSignAlertDialog(home_activity,getString(R.string.user_not_found));
+                           // Common.CreateSignAlertDialog(home_activity,getString(R.string.user_not_found));
                         } else {
-                            Common.CreateSignAlertDialog(home_activity,getString(R.string.inc_phone_pas));
-
+                            //Common.CreateSignAlertDialog(home_activity,getString(R.string.inc_phone_pas));
+Log.e("llll",orders.getId()+"");
                             try {
                                 Log.e("Error_code",response.code()+"_"+response.errorBody().string());
                             } catch (IOException e) {
