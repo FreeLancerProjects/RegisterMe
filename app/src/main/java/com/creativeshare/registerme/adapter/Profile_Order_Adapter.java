@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_profile.Fragment_MyCv;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_profile.Fragment_MyEmails;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragment_profile.Fragment_MyJobs;
 import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.models.Profile_Order_Model;
 import com.creativeshare.registerme.tags.Tags;
@@ -39,7 +42,9 @@ public class Profile_Order_Adapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Home_Activity activity;
     private Fragment fragment;
     private String current_lang;
-
+private Fragment_MyJobs fragment_myJobs;
+private Fragment_MyCv fragment_myCv;
+private Fragment_MyEmails fragment_myEmails;
     public Profile_Order_Adapter(List<Profile_Order_Model.Orders> data, Context context, Fragment fragment) {
 
         this.data = data;
@@ -101,11 +106,30 @@ myHolder.tv_order_name.setText(activity.getResources().getString(R.string.email)
             String date = dateFormat.format(new Date(data1.getDate() * 1000));
             ((MyHolder) holder).tv_date.setText(date);
 
-myHolder.itemView.setOnClickListener(new View.OnClickListener() {
+myHolder.im_order.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
         if(data.get(myHolder.getLayoutPosition()).getType().equals("1")){
             activity.displaycv(data.get(myHolder.getLayoutPosition()).getCv());
+        }
+    }
+});
+myHolder.tv_rate.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        if(fragment instanceof  Fragment_MyEmails){
+            fragment_myEmails=(Fragment_MyEmails)fragment;
+            fragment_myEmails.rate(data.get(myHolder.getLayoutPosition()));
+        }
+        else if(fragment instanceof  Fragment_MyCv){
+            fragment_myCv=(Fragment_MyCv)fragment;
+            fragment_myCv.rate(data.get(myHolder.getLayoutPosition()));
+
+        }
+        else if(fragment instanceof  Fragment_MyJobs){
+            fragment_myJobs=(Fragment_MyJobs)fragment;
+            fragment_myJobs.rate(data.get(myHolder.getLayoutPosition()));
+
         }
     }
 });
@@ -124,12 +148,13 @@ myHolder.itemView.setOnClickListener(new View.OnClickListener() {
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {
-        private TextView tv_order_name,tv_date;
+        private TextView tv_order_name,tv_date,tv_rate;
 private RoundedImageView im_order;
         public MyHolder(View itemView) {
             super(itemView);
             tv_order_name = itemView.findViewById(R.id.tvname);
         tv_date=itemView.findViewById(R.id.tv_date);
+        tv_rate=itemView.findViewById(R.id.tvrate);
 im_order=itemView.findViewById(R.id.im_order);
 
 

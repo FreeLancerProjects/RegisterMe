@@ -14,7 +14,7 @@
         android:gravity="center"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:text="@string/notifications"
+        android:text="@string/ratig"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -28,18 +28,24 @@
         android:layout_marginBottom="20dp"
         android:background="@color/colorPrimary" />
 
-    <TextView
-        android:id="@+id/tv_msg"
-        android:layout_width="match_parent"
+    <com.iarcuschin.simpleratingbar.SimpleRatingBar
+        android:id="@+id/rateBar"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="17sp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        app:srb_borderColor="@color/colorPrimary"
+        app:srb_drawBorderEnabled="true"
+        app:srb_fillColor="@color/colorPrimary"
+        app:srb_numberOfStars="5"
+        app:srb_starBackgroundColor="@color/white"
+        app:srb_starBorderWidth="1"
+        app:srb_starSize="10dp"
+        app:srb_starsSeparation="10dp"
+        app:srb_stepSize=".5"
+        android:padding="5dp"
+        />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

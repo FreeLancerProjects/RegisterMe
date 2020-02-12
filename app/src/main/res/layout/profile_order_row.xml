@@ -54,6 +54,19 @@
 
 
 
+                <TextView
+                    android:id="@+id/tvrate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/rate"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/im_order"
+                    app:layout_constraintTop_toBottomOf="@+id/tvname"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
 
 
 

@@ -126,4 +126,6 @@
     <string name="do_you_want_add_image">هل تريد ارفاق صوره</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
+    <string name="ratig">تقييم</string>
+    <string name="rate">تقييم الشركه</string>
 </resources>

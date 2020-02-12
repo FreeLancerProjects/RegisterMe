@@ -235,4 +235,11 @@ public interface Services {
     Call<ResponseBody> setpaid(@Field("order_id") int order_id,
                                @Field("is_payed") int is_payed
     );
+    @FormUrlEncoded
+    @POST("api/rate")
+    Call<ResponseBody> rate(@Field("user_id_fk") String user_id_fk,
+                               @Field("employee_id_fk") String employee_id_fk,
+                            @Field("rate") String rate
+
+    );
 }

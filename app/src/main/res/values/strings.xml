@@ -128,4 +128,6 @@
     <string name="do_you_want_add_image">Do You Want Add Image</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ratig">Ratig</string>
+    <string name="rate">Rate Company</string>
 </resources>
