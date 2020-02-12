@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
-import com.creativeshare.registerme.adapter.Order_Adapter;
 import com.creativeshare.registerme.adapter.Profile_Order_Adapter;
 import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.models.Profile_Order_Model;

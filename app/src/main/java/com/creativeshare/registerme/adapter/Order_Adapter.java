@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.creativeshare.registerme.R;
 import com.creativeshare.registerme.activities_fragments.activities.home_activity.activity.Home_Activity;
+import com.creativeshare.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_MyOrders;
 import com.creativeshare.registerme.models.Order_Model;
 import com.creativeshare.registerme.tags.Tags;
 import com.squareup.picasso.Picasso;
@@ -39,7 +41,7 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Home_Activity activity;
     private Fragment fragment;
     private String current_lang;
-
+private Fragment_MyOrders fragment_myOrders;
     public Order_Adapter(List<Order_Model.Data> data, Context context, Fragment fragment) {
 
         this.data = data;
@@ -49,7 +51,7 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         Paper.init(activity);
         current_lang = Paper.book().read("lang", Locale.getDefault().getLanguage());
 
-
+this.fragment_myOrders=(Fragment_MyOrders)fragment;
     }
 
     @NonNull
@@ -128,8 +130,15 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             String date = dateFormat.format(new Date(data1.getDate() * 1000));
             ((MyHolder) holder).tv_date.setText(date);
 
-
-
+if(data1.getStatus()!=-1){
+    myHolder.bt_pay.setVisibility(View.GONE);
+}
+myHolder.bt_pay.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        fragment_myOrders.pay(myHolder.getLayoutPosition());
+    }
+});
 //            Log.e("msg",data1.getStatus()+" "+data1.getId());
         } else {
             LoadMoreHolder loadMoreHolder = (LoadMoreHolder) holder;
@@ -146,7 +155,7 @@ public class Order_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public class MyHolder extends RecyclerView.ViewHolder {
         private TextView tv_order_num, tv_satus,tv_date,tvtype;
 private ImageView imnew,imdistrub,imrecive,imcomplete;
-
+private Button bt_pay;
         public MyHolder(View itemView) {
             super(itemView);
             tv_order_num = itemView.findViewById(R.id.tvOrderNumber);
@@ -157,7 +166,7 @@ imnew=itemView.findViewById(R.id.image1);
             imdistrub=itemView.findViewById(R.id.image2);
             imrecive=itemView.findViewById(R.id.image3);
             imcomplete=itemView.findViewById(R.id.image4);
-
+bt_pay=itemView.findViewById(R.id.btnDetails);
         }
 
     }
