@@ -131,7 +131,7 @@ this.fragment_myOrders=(Fragment_MyOrders)fragment;
             ((MyHolder) holder).tv_date.setText(date);
 
 if(data1.getStatus()!=-1){
-    myHolder.bt_pay.setVisibility(View.GONE);
+    myHolder.bt_pay.setVisibility(View.INVISIBLE);
 }
 myHolder.bt_pay.setOnClickListener(new View.OnClickListener() {
     @Override

@@ -319,7 +319,7 @@ sendMessage();
     @Override
     public void onResume() {
         super.onResume();
-      //  Log.e("gggggg",preferences.Ispaid(home_activity)+""+order_id);
+        Log.e("gggggg",preferences.Ispaid(activity)+""+order_id);
         if(order_id!=0){
             if(preferences.Ispaid(activity)){
                 paid(1);
