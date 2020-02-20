@@ -32,8 +32,8 @@
     <string name="camera">camera</string>
     <string name="gallery">gallery</string>
     <string name="upload_image">upload image</string>
-    <string name="female">female</string>
-    <string name="male">male</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
     <string name="select_language">select language</string>
     <string name="select">select </string>
 

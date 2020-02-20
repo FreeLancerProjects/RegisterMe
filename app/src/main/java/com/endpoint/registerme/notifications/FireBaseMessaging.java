@@ -152,11 +152,11 @@ else {
         builder.setContentText(content);
 
 
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+       /* NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (manager != null) {
             manager.notify(12352, builder.build());
 
-        }
+        }*/
         final Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -169,7 +169,7 @@ else {
                     builder.setLargeIcon(bitmap);
                     EventBus.getDefault().post(order_model);
 
-                    manager.notify(new Random().nextInt(200), builder.build());
+                    manager.notify(96699, builder.build());
                   //  Log.e("mange","mang");
 
                 }
@@ -239,11 +239,11 @@ else {
         builder.setContentText(content);
 
 
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+       /* NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         if (manager != null) {
             manager.createNotificationChannel(channel);
             manager.notify(12352, builder.build());
-        }
+        }*/
 
         final Target target = new Target() {
             @Override
@@ -255,7 +255,7 @@ else {
                     builder.setLargeIcon(bitmap);
                     EventBus.getDefault().post(order_model);
                     manager.createNotificationChannel(channel);
-                    manager.notify(new Random().nextInt(200), builder.build());
+                    manager.notify(96699, builder.build());
                 }
 
             }

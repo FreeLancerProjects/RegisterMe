@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,19 +50,21 @@ public class Fragment_Signup extends Fragment implements OnCountryPickerListener
 
     private ImageView image_back, image_phone_code;
     private EditText edt_name, edt_phone, edt_email;
-    private SegmentedButtonGroup segmentedButtonGroup;
     private TextView tv_code;
     private Button btn_sign_up;
     private CountryPicker picker;
     private Login_Activity activity;
     private String current_language;
     private String code = "";
-    private int gender=1;
+    private int gender = 1;
+    private RadioButton rbMale, rbFemale;
+
     private Preferences preferences;
 
     private int isAcceptTerms = 0;
-private CheckBox checkbox;
-private TextView tvTerms;
+    private CheckBox checkbox;
+    private TextView tvTerms;
+
     public static Fragment_Signup newInstance() {
         return new Fragment_Signup();
     }
@@ -92,10 +95,12 @@ private TextView tvTerms;
         edt_phone = view.findViewById(R.id.edt_phone);
         tv_code = view.findViewById(R.id.tv_code);
         edt_email = view.findViewById(R.id.edt_email);
-        segmentedButtonGroup=view.findViewById(R.id.segmentGroup);
+        rbMale = view.findViewById(R.id.rbMale);
+        rbFemale = view.findViewById(R.id.rbFemale);
+
         btn_sign_up = view.findViewById(R.id.btn_sign_up);
-        checkbox=view.findViewById(R.id.checkbox);
-        tvTerms=view.findViewById(R.id.tvTerms);
+        checkbox = view.findViewById(R.id.checkbox);
+        tvTerms = view.findViewById(R.id.tvTerms);
         CreateCountryDialog();
 
         image_back.setOnClickListener(new View.OnClickListener() {
@@ -116,28 +121,25 @@ private TextView tvTerms;
         btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(checkbox.isChecked()){
-                    isAcceptTerms=1;
+                if (checkbox.isChecked()) {
+                    isAcceptTerms = 1;
                 }
-                if(isAcceptTerms==1){
-                checkData();}
-                else {
-                    Toast.makeText(activity,activity.getResources().getString(R.string.accept_terms_conditions),Toast.LENGTH_LONG).show();
+                if (isAcceptTerms == 1) {
+                    checkData();
+                } else {
+                    Toast.makeText(activity, activity.getResources().getString(R.string.accept_terms_conditions), Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClickedButtonListener() {
-    @Override
-    public void onClickedButton(int position) {
-        if(position==0){
-            gender=1;
-        }
-        else if(position==1){
-            gender=2;
-        }
-    }
-});
+        rbMale.setOnClickListener(v -> {
+            gender = 1;
+        });
+
+        rbFemale.setOnClickListener(v -> {
+            gender = 2;
+        });
+
         checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -153,22 +155,24 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
             }
         });
 
-    tvTerms.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            isAcceptTerms = 1;
+        tvTerms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isAcceptTerms = 1;
 
 
-            navigateToTermsActivity();
-        }
-    });
+                navigateToTermsActivity();
+            }
+        });
     }
+
     private void navigateToTermsActivity() {
 
         Intent intent = new Intent(activity, TermsActivity.class);
         startActivity(intent);
 
     }
+
     private void CreateCountryDialog() {
         CountryPicker.Builder builder = new CountryPicker.Builder()
                 .canSearch(true)
@@ -218,12 +222,12 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
 
         if (!TextUtils.isEmpty(m_name) &&
                 !TextUtils.isEmpty(m_phone) &&
-               // !TextUtils.isEmpty(m_email) &&
+                // !TextUtils.isEmpty(m_email) &&
                 //Patterns.EMAIL_ADDRESS.matcher(m_email).matches() &&
-                ( TextUtils.isEmpty(m_email)||(!TextUtils.isEmpty(m_email) &&
-                        Patterns.EMAIL_ADDRESS.matcher(m_email).matches()))&&
-        !TextUtils.isEmpty(code)
-                &&gender!=0
+                (TextUtils.isEmpty(m_email) || (!TextUtils.isEmpty(m_email) &&
+                        Patterns.EMAIL_ADDRESS.matcher(m_email).matches())) &&
+                !TextUtils.isEmpty(code)
+                && gender != 0
 
         ) {
             Common.CloseKeyBoard(activity, edt_name);
@@ -231,15 +235,14 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
             edt_phone.setError(null);
             edt_email.setError(null);
             //edt_password.setError(null);
-            if (m_phone.startsWith("0"))
-            {
-                m_phone=m_phone.replaceFirst("0","");
+            if (m_phone.startsWith("0")) {
+                m_phone = m_phone.replaceFirst("0", "");
             }
-            m_phone=m_phone.replaceAll(" ","");
+            m_phone = m_phone.replaceAll(" ", "");
             sign_up(m_name, code, m_phone, m_email);
         } else {
-            if(gender==0){
-                Toast.makeText(activity,activity.getResources().getString(R.string.choose_gender),Toast.LENGTH_LONG).show();
+            if (gender == 0) {
+                Toast.makeText(activity, activity.getResources().getString(R.string.choose_gender), Toast.LENGTH_LONG).show();
             }
             if (TextUtils.isEmpty(m_name)) {
                 edt_name.setError(getString(R.string.field_req));
@@ -257,15 +260,13 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
             }
 
 
-           if (!TextUtils.isEmpty(m_email)&&!Patterns.EMAIL_ADDRESS.matcher(m_email).matches()) {
+            if (!TextUtils.isEmpty(m_email) && !Patterns.EMAIL_ADDRESS.matcher(m_email).matches()) {
                 edt_email.setError(getString(R.string.inv_email));
 
             } else {
                 edt_email.setError(null);
 
             }
-
-
 
 
             if (TextUtils.isEmpty(code)) {
@@ -281,23 +282,23 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
 
     private void sign_up(String m_name, String code, String m_phone, String m_email) {
 
-        final ProgressDialog dialog = Common.createProgressDialog(activity,getString(R.string.wait));
+        final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-       Api.getService(Tags.base_url)
-                .Signup(m_name,m_phone,code.replace("+","00"),m_email,gender)
+        Api.getService(Tags.base_url)
+                .Signup(m_name, m_phone, code.replace("+", "00"), m_email, gender)
                 .enqueue(new Callback<UserModel>() {
                     @Override
                     public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                         dialog.dismiss();
-                        if (response.isSuccessful()&&response.body()!=null) {
-                            activity.sendverficationcode(m_phone,code.replace("00","+"),response.body());
-                       //    activity.CreateSignAlertDialog();
+                        if (response.isSuccessful() && response.body() != null) {
+                            activity.sendverficationcode(m_phone, code.replace("00", "+"), response.body());
+                            //    activity.CreateSignAlertDialog();
 
                         } else if (response.code() == 422) {
-                                Common.CreateSignAlertDialog(activity,getString(R.string.email_exists));
+                            Common.CreateSignAlertDialog(activity, getString(R.string.email_exists));
                             try {
-                                Log.e("Error_code",response.code()+"_"+response.errorBody().string());
+                                Log.e("Error_code", response.code() + "_" + response.errorBody().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -305,7 +306,7 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
                         } else {
 
                             try {
-                                Log.e("Error_code",response.code()+"_"+response.errorBody().string());
+                                Log.e("Error_code", response.code() + "_" + response.errorBody().string());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -316,15 +317,13 @@ segmentedButtonGroup.setOnClickedButtonListener(new SegmentedButtonGroup.OnClick
                     public void onFailure(Call<UserModel> call, Throwable t) {
                         try {
                             dialog.dismiss();
-                            Toast.makeText(activity,getString(R.string.something), Toast.LENGTH_SHORT).show();
-                            Log.e("Error",t.getMessage());
+                            Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
+                            Log.e("Error", t.getMessage());
                         } catch (Exception e) {
                         }
                     }
                 });
     }
-
-
 
 
 }

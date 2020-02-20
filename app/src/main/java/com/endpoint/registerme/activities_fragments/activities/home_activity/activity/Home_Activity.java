@@ -1,5 +1,6 @@
 package com.endpoint.registerme.activities_fragments.activities.home_activity.activity;
 
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+
 import com.endpoint.registerme.R;
 import com.endpoint.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Home;
 import com.endpoint.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.Fragment_Main;
@@ -92,8 +94,8 @@ public class Home_Activity extends AppCompatActivity {
         initView();
         if (savedInstanceState == null) {
             //           CheckPermission();
-            if(FirebaseAuth.getInstance().getCurrentUser()!=null){
-            Log.e("user", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhoneNumber());
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Log.e("user", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhoneNumber());
                 FirebaseAuth.getInstance().getCurrentUser().delete();
 
                 FirebaseAuth.getInstance().signOut();
@@ -113,8 +115,13 @@ public class Home_Activity extends AppCompatActivity {
     }
 
     private void getdatafromintent() {
-        if(getIntent().hasExtra("not")){
+        if (getIntent().hasExtra("not")) {
 
+            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+
+                notificationManager.cancel(96699);
+            }
             new Handler()
                     .postDelayed(new Runnable() {
                         @Override
@@ -122,48 +129,48 @@ public class Home_Activity extends AppCompatActivity {
                             DisplayFragmentMyorders();
 
                         }
-                    },1000);        }
+                    }, 1000);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void ListenNotificationChange(Order_Model order_model)
-    {
+    public void ListenNotificationChange(Order_Model order_model) {
 
-        if(fragment_profile!=null&&fragment_profile.isAdded()&&fragment_profile.isVisible()){
+        if (fragment_profile != null && fragment_profile.isAdded() && fragment_profile.isVisible()) {
             fragment_profile.updatedata();
         }
-        if (fragment_myorders!=null&&fragment_myorders.isAdded()&&fragment_myorders.isVisible())
-        {
+        if (fragment_myorders != null && fragment_myorders.isAdded() && fragment_myorders.isVisible()) {
             new Handler()
                     .postDelayed(new Runnable() {
                         @Override
                         public void run() {
-fragment_myorders.getOrders();                        }
-                    },1);
-        }
-      else {
-            new Handler()
-                    .postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(fragment_myorders!=null){
                             fragment_myorders.getOrders();
+                        }
+                    }, 1);
+        } else {
+            new Handler()
+                    .postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (fragment_myorders != null) {
+                                fragment_myorders.getOrders();
                             }
 
                             DisplayFragmentMyorders();
                         }
-                    },1);
+                    }, 1);
         }
 
 
     }
+
     private void initView() {
         Paper.init(this);
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(this);
         cuurent_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         fragmentManager = this.getSupportFragmentManager();
-   //     String visitTime = preferences.getVisitTime(this);
+        //     String visitTime = preferences.getVisitTime(this);
         Calendar calendar = Calendar.getInstance();
         long timeNow = calendar.getTimeInMillis();
 
@@ -191,22 +198,23 @@ fragment_myorders.getOrders();                        }
         }
 
     }
-  /*  public void DisplayFragmentMap() {
-        fragment_count += 1;
 
-        fragment_map = Fragment_Map.newInstance();
+    /*  public void DisplayFragmentMap() {
+          fragment_count += 1;
+
+          fragment_map = Fragment_Map.newInstance();
 
 
-        if (fragment_map.isAdded()) {
-            fragmentManager.beginTransaction().show(fragment_map).commit();
+          if (fragment_map.isAdded()) {
+              fragmentManager.beginTransaction().show(fragment_map).commit();
 
-        } else {
-            fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_map, "fragment_map").addToBackStack("fragment_map").commit();
+          } else {
+              fragmentManager.beginTransaction().add(R.id.fragment_app_container, fragment_map, "fragment_map").addToBackStack("fragment_map").commit();
 
-        }
+          }
 
-    }
-*/
+      }
+  */
     public void DisplayFragmentMain() {
         if (fragment_main == null) {
             fragment_main = Fragment_Main.newInstance();
@@ -260,6 +268,7 @@ fragment_myorders.getOrders();                        }
             fragment_home.updateBottomNavigationPosition(1);
         }
     }
+
     public void DisplayFragmentNotifications() {
         if (fragment_notification == null) {
             fragment_notification = Fragment_Notification.newInstance();
@@ -348,7 +357,6 @@ fragment_myorders.getOrders();                        }
     }
 
 
-
     public void DisplayFragmentEditprofile() {
         fragment_count += 1;
 
@@ -367,7 +375,6 @@ fragment_myorders.getOrders();                        }
     }
 
 
-
     public void DisplayFragmentTerms_Condition() {
 
         fragment_count += 1;
@@ -383,7 +390,6 @@ fragment_myorders.getOrders();                        }
 
 
     }
-
 
 
     public void DisplayFragmentabout() {
@@ -433,9 +439,10 @@ fragment_myorders.getOrders();                        }
         }
 
     }
+
     public void DisplayFragmentCreateEmail() {
         fragment_count += 1;
-            fragment_create_email = Fragment_Create_Email.newInstance();
+        fragment_create_email = Fragment_Create_Email.newInstance();
 
 
         if (fragment_create_email.isAdded()) {
@@ -447,6 +454,7 @@ fragment_myorders.getOrders();                        }
         }
 
     }
+
     public void DisplayFragmentCreateEditCv() {
         fragment_count += 1;
         fragment_create_edit_cv = Fragment_Create_Edit_Cv.newInstance();
@@ -461,6 +469,7 @@ fragment_myorders.getOrders();                        }
         }
 
     }
+
     public void DisplayFragmentJobs() {
         fragment_count += 1;
         fragment_jobs = Fragment_Jobs.newInstance();
@@ -475,6 +484,7 @@ fragment_myorders.getOrders();                        }
         }
 
     }
+
     public void onBackPressed() {
         Back();
     }
@@ -602,15 +612,11 @@ fragment_myorders.getOrders();                        }
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         dialog.dismiss();
                         if (response.isSuccessful()) {
-                            /*new Handler()
-                                    .postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                                            manager.cancelAll();
-                                        }
-                                    },1);
-                            userSingleTone.clear(ClientHomeActivity.this);*/
+                            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                            if (notificationManager!=null){
+
+                                notificationManager.cancel(96699);
+                            }
                             preferences.create_update_userdata(Home_Activity.this, null);
                             preferences.create_update_session(Home_Activity.this, Tags.session_logout);
                             Intent intent = new Intent(Home_Activity.this, Login_Activity.class);
@@ -637,25 +643,27 @@ fragment_myorders.getOrders();                        }
 
     public void Displayorder() {
         Back();
-        if(fragment_myorders!=null&&fragment_myorders.isAdded()){
+        if (fragment_myorders != null && fragment_myorders.isAdded()) {
             fragment_myorders.getOrders();
         }
         DisplayFragmentMyorders();
     }
 
     public void displaycv(String cv) {
-        if(cv!=null){
+        if (cv != null) {
             /*
             Intent intent=new Intent(Home_Activity.this, Detials_Activity.class);
             intent.putExtra("data",cv);
             startActivity(intent);*/
-            createIntent(Tags.IMAGE_URL+cv);
+            createIntent(Tags.IMAGE_URL + cv);
         }
     }
+
     private void createIntent(String url) {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
     }
+
     private void updateToken() {
         FirebaseInstanceId.getInstance()
                 .getInstanceId()
@@ -666,7 +674,7 @@ fragment_myorders.getOrders();                        }
                             String token = task.getResult().getToken();
                             //Log.e("s",token);
                             Api.getService(Tags.base_url)
-                                    .updateToken(userModel.getUser().getId(), token,1)
+                                    .updateToken(userModel.getUser().getId(), token, 1)
                                     .enqueue(new Callback<ResponseBody>() {
                                         @Override
                                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -677,10 +685,9 @@ fragment_myorders.getOrders();                        }
                                                 } catch (Exception e) {
                                                     //  e.printStackTrace();
                                                 }
-                                            }
-                                            else {
+                                            } else {
                                                 try {
-                                                    Log.e("error",response.code()+"_"+response.errorBody().string());
+                                                    Log.e("error", response.code() + "_" + response.errorBody().string());
                                                 } catch (IOException e) {
                                                     e.printStackTrace();
                                                 }
@@ -705,8 +712,7 @@ fragment_myorders.getOrders();                        }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (EventBus.getDefault().isRegistered(this))
-        {
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
     }

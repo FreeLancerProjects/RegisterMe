@@ -17,7 +17,7 @@
 
 
     <application
-        android:name="com.endpoint.registerme.app.Teler"
+        android:name=".app.Teler"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -33,18 +33,18 @@
         >
 
         <activity
-            android:name="com.endpoint.registerme.activities_fragments.activities.activity_payment.SuccessTransationActivity"
+            android:name=".activities_fragments.activities.activity_payment.SuccessTransationActivity"
             android:label="@string/title_activity_result">
 
         </activity>
         <activity
-            android:name="com.endpoint.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity"
+            android:name=".activities_fragments.activities.activity_payment.FailedTransationActivity"
             android:label="@string/title_activity_result">
 
         </activity>
 
         <service
-            android:name="com.endpoint.registerme.notifications.FireBaseMessaging"
+            android:name=".notifications.FireBaseMessaging"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -67,25 +67,25 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.endpoint.registerme.activities_fragments.activities.home_activity.activity.Home_Activity"
+            android:name=".activities_fragments.activities.home_activity.activity.Home_Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden">
 
         </activity>
         <activity
-            android:name="com.endpoint.registerme.activities_fragments.activities.sign_in_sign_up_activity.activity.Login_Activity"
+            android:name=".activities_fragments.activities.sign_in_sign_up_activity.activity.Login_Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.endpoint.registerme.activities_fragments.activities.activity_video.Detials_Activity"
+            android:name=".activities_fragments.activities.activity_video.Detials_Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.endpoint.registerme.activities_fragments.activities.activity_terms.TermsActivity"
+            android:name=".activities_fragments.activities.activity_terms.TermsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
-            android:name="com.endpoint.registerme.activities_fragments.activities.activity_splash.Splash_Activity"
+            android:name=".activities_fragments.activities.activity_splash.Splash_Activity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>

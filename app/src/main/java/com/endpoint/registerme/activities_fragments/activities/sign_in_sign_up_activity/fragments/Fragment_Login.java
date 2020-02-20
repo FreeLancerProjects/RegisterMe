@@ -91,6 +91,7 @@ public class Fragment_Login extends Fragment  implements OnCountryPickerListener
             public void onClick(View v) {
                 Intent intent = new Intent(activity, Home_Activity.class);
                 startActivity(intent);
+                activity.finish();
             }
         });
         image_phone_code.setOnClickListener(new View.OnClickListener() {

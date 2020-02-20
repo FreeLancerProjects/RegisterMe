@@ -94,7 +94,15 @@ public class Fragment_Profile extends Fragment {
     private void updateprofile(UserModel userModel) {
         this.userModel = userModel;
         tv_name.setText(userModel.getUser().getName());
-        tv_phone.setText(userModel.getUser().getPhone());
+        if (cuurent_language.equals("ar"))
+        {
+            tv_phone.setText(userModel.getUser().getPhone_code()+userModel.getUser().getPhone()+"+");
+
+        }else
+            {
+                tv_phone.setText("+"+userModel.getUser().getPhone_code()+userModel.getUser().getPhone());
+
+            }
         Picasso.with(activity).load(Uri.parse(Tags.IMAGE_URL + userModel.getUser().getImage())).placeholder(R.drawable.ic_user).fit().into(im_user);
 
     }
@@ -102,6 +110,7 @@ public class Fragment_Profile extends Fragment {
     private void intitview(View view) {
         activity = (Home_Activity) getActivity();
         Paper.init(activity);
+        cuurent_language = Paper.book().read("lang");
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
         tv_name = view.findViewById(R.id.tv_name);
