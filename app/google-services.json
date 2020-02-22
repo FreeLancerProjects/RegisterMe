@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:926659682565:android:77c7703963eb753472976c",
         "android_client_info": {
-          "package_name": "com.creativeshare.roses"
+          "package_name": "com.endpoint.roses"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "926659682565-fulaikglkvk05cdbj9tl7qki56i9l1rg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.creativeshare.roses",
+            "package_name": "com.endpoint.roses",
             "certificate_hash": "554eebb2d2756bf34aa3ed972b45440efb7eae32"
           }
         },

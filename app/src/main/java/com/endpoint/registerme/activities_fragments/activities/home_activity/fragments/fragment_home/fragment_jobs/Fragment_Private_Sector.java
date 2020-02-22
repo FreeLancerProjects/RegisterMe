@@ -149,8 +149,8 @@ bt_send.setOnClickListener(new View.OnClickListener() {
 
 
         intent.putExtra(WebviewActivity.EXTRA_MESSAGE, getMobileRequest());
-        intent.putExtra(WebviewActivity.SUCCESS_ACTIVTY_CLASS_NAME, "com.creativeshare.registerme.activities_fragments.activities.activity_payment.SuccessTransationActivity");
-        intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.creativeshare.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
+        intent.putExtra(WebviewActivity.SUCCESS_ACTIVTY_CLASS_NAME, "com.endpoint.registerme.activities_fragments.activities.activity_payment.SuccessTransationActivity");
+        intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.endpoint.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
         startActivityForResult(intent,1);
@@ -160,7 +160,7 @@ bt_send.setOnClickListener(new View.OnClickListener() {
         mobile.setStore(STORE_ID);                       // Store ID
         mobile.setKey(KEY);                              // Authentication Key : The Authentication Key will be supplied by Telr as part of the Mobile API setup process after you request that this integration type is enabled for your account. This should not be stored permanently within the App.
         App app = new App();
-        app.setId("com.creativeshare.registerme");                          // Application installation ID
+        app.setId("com.endpoint.registerme");                          // Application installation ID
         app.setName("applying for a job");                    // Application name
         app.setUser(userModel.getUser().getName());                           // Application user ID : Your reference for the customer/user that is running the App. This should relate to their account within your systems.
         app.setVersion("0.0.1");                         // Application version
