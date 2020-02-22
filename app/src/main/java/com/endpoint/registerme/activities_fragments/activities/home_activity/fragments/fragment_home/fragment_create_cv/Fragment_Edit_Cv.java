@@ -388,7 +388,7 @@ sendMessage(response.body());
         mobile.setApp(app);
         Tran tran = new Tran();
         tran.setTest("0");                              // Test mode : Test mode of zero indicates a live transaction. If this is set to any other value the transaction will be treated as a test.
-        tran.setType("auth");                           /* Transaction type
+        tran.setType("sale");                           /* Transaction type
                                                             'auth'   : Seek authorisation from the card issuer for the amount specified. If authorised, the funds will be reserved but will not be debited until such time as a corresponding capture command is made. This is sometimes known as pre-authorisation.
                                                             'sale'   : Immediate purchase request. This has the same effect as would be had by performing an auth transaction followed by a capture transaction for the full amount. No additional capture stage is required.
                                                             'verify' : Confirm that the card details given are valid. No funds are reserved or taken from the card.
