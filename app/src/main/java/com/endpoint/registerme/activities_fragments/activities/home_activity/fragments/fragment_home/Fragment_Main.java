@@ -106,7 +106,7 @@ private List<Slider_Model.Data>dataList;
             public void onResponse(Call<Slider_Model> call, Response<Slider_Model> response) {
                 progBarAds.setVisibility(View.GONE);
                 if (response.isSuccessful()) {
-                    if (response.body().getData().size() > 0) {
+                    if (response.body()!=null&&response.body().getData()!=null&&response.body().getData().size() > 0) {
                         NUM_PAGES = response.body().getData().size();
                         slidingImage__adapter = new SlidingImage_Adapter(activity, response.body().getData());
                         mPager.setAdapter(slidingImage__adapter);
