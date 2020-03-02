@@ -85,7 +85,7 @@ public class Fragment_Edit_Cv extends Fragment {
 
     private List<AllInFo_Model.Data.Quallifcation> quallifcationList;
     private List<AllInFo_Model.Data.HandGraduations> handGraduationsList;
-    private List<AllInFo_Model.Data.Skills> skillsList,skills;
+    private List<AllInFo_Model.Data.Skills> skillsList, skills;
     private final int File_REQ1 = 2;
     private Uri fileUri1 = null;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -103,7 +103,7 @@ public class Fragment_Edit_Cv extends Fragment {
     private ServicePriceModel servicepricemodel;
     public static final String KEY = "gQq9M^TFrFs~FJPr";        // TODO: Insert your Key here
     public static final String STORE_ID = "22865";    // TODO: Insert your Store ID here
-    public static final String EMAIL= "al-waafi8567@hotmail.com";     // TODO: Insert the customer email here
+    public static final String EMAIL = "al-waafi8567@hotmail.com";     // TODO: Insert the customer email here
 
 
     public static final boolean isSecurityEnabled = false;
@@ -125,8 +125,8 @@ public class Fragment_Edit_Cv extends Fragment {
         quallifcationList = new ArrayList<>();
         handGraduationsList = new ArrayList<>();
         skillsList = new ArrayList<>();
-        skills=new ArrayList<>();
-        skillid=new ArrayList<>();
+        skills = new ArrayList<>();
+        skillid = new ArrayList<>();
         activity = (Home_Activity) getActivity();
         preferences = Preferences.getInstance();
         userModel = preferences.getUserData(activity);
@@ -141,7 +141,7 @@ public class Fragment_Edit_Cv extends Fragment {
         edt_phone = view.findViewById(R.id.edt_phone);
         edt_name = view.findViewById(R.id.edt_name);
         bt_Send = view.findViewById(R.id.btn_send);
-        tv_price=view.findViewById(R.id.tv_price);
+        tv_price = view.findViewById(R.id.tv_price);
         image_upload = view.findViewById(R.id.icon_form);
         image_form = view.findViewById(R.id.image_form);
         spinner_qulificatin_adapter = new Spinner_Qulificatin_Adapter(activity, quallifcationList);
@@ -150,9 +150,9 @@ public class Fragment_Edit_Cv extends Fragment {
         spinner_qualification.setAdapter(spinner_qulificatin_adapter);
         spinner_handgraduate.setAdapter(spinner_handGrafuation_adapter);
         spinner_skill.setAdapter(spinner_skills_adapter);
-        recyclerViewskil=view.findViewById(R.id.recViewservice);
-        recyclerViewskil.setLayoutManager(new GridLayoutManager(activity,3));
-        skillAdapter=new SkillAdapter(skills,activity,this);
+        recyclerViewskil = view.findViewById(R.id.recViewservice);
+        recyclerViewskil.setLayoutManager(new GridLayoutManager(activity, 3));
+        skillAdapter = new SkillAdapter(skills, activity, this);
         recyclerViewskil.setAdapter(skillAdapter);
 
         image_upload.setOnClickListener(new View.OnClickListener() {
@@ -206,8 +206,8 @@ public class Fragment_Edit_Cv extends Fragment {
 
             }
         });
-        if(userModel!=null){
-            if(userModel.getUser().getEmail()!=null){
+        if (userModel != null) {
+            if (userModel.getUser().getEmail() != null) {
                 edt_email.setText(userModel.getUser().getEmail());
             }
             edt_name.setText(userModel.getUser().getName());
@@ -216,9 +216,9 @@ public class Fragment_Edit_Cv extends Fragment {
         spinner_skill.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position!=0) {
-                    if(notidisfound(position)){
-                        skillid.add( skillsList.get(position).getId());
+                if (position != 0) {
+                    if (notidisfound(position)) {
+                        skillid.add(skillsList.get(position).getId());
                         skills.add(skillsList.get(position));
                         skillAdapter.notifyDataSetChanged();
                         recyclerViewskil.setVisibility(View.VISIBLE);
@@ -256,8 +256,8 @@ public class Fragment_Edit_Cv extends Fragment {
         RequestBody qualif_part = Common.getRequestBodyText(qulifid + "");
         RequestBody graduate_part = Common.getRequestBodyText(qradutateid + "");
         List<RequestBody> skill_part = new ArrayList<>();
-        for(int i=0;i<skillid.size();i++){
-            skill_part.add(Common.getRequestBodyText(skillid.get(i)+""));
+        for (int i = 0; i < skillid.size(); i++) {
+            skill_part.add(Common.getRequestBodyText(skillid.get(i) + ""));
         }
         MultipartBody.Part image_part = Common.getMultiPartdoc(activity, Uri.parse(fileUri1.toString()), "cv");
         try {
@@ -269,8 +269,8 @@ public class Fragment_Edit_Cv extends Fragment {
                     if (response.isSuccessful()) {
                         // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
                         Toast.makeText(activity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
-                      //  activity.Displayorder();
-sendMessage(response.body());
+                        //  activity.Displayorder();
+                        sendMessage(response.body());
                         //  adsActivity.finish(response.body().getId_advertisement());
 
                     } else {
@@ -307,8 +307,8 @@ sendMessage(response.body());
         String note = edt_note.getText().toString();
         String name = edt_name.getText().toString();
         String phone = edt_phone.getText().toString();
-        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != null&&skillid.size()>0 && fileUri1 != null) {
-            Common.CloseKeyBoard(activity,edt_phone);
+        if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(note) && Patterns.EMAIL_ADDRESS.matcher(email).matches() && qulifid != 0 && qradutateid != 0 && skillid != null && skillid.size() > 0 && fileUri1 != null) {
+            Common.CloseKeyBoard(activity, edt_phone);
 
             if (userModel == null) {
                 Common.CreateUserNotSignInAlertDialog(activity);
@@ -338,7 +338,7 @@ sendMessage(response.body());
             if (qulifid == 0) {
                 Toast.makeText(activity, getResources().getString(R.string.choose_qalified), Toast.LENGTH_LONG).show();
             }
-            if (skillid == null||skillid.size()==0) {
+            if (skillid == null || skillid.size() == 0) {
                 Toast.makeText(activity, getResources().getString(R.string.choose_Skill), Toast.LENGTH_LONG).show();
             }
             if (fileUri1 == null) {
@@ -346,19 +346,20 @@ sendMessage(response.body());
             }
         }
     }
-    public void sendMessage(ResponseBody body){
+
+    public void sendMessage(ResponseBody body) {
         JSONObject obj = null;
 
         try {
-            String re=body.string();
-            Log.e("data",re);
+            String re = body.string();
+            Log.e("data", re);
             obj = new JSONObject(re);
             // Log.e("data",obj.stri);
-            order_id=obj.getInt("id");
+            order_id = obj.getInt("id");
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e("data",e.getMessage());
+            Log.e("data", e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -373,8 +374,9 @@ sendMessage(response.body());
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.endpoint.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
+
     private MobileRequest getMobileRequest() {
         MobileRequest mobile = new MobileRequest();
         mobile.setStore(STORE_ID);                       // Store ID
@@ -434,8 +436,6 @@ sendMessage(response.body());
         }*/
 
 
-
-
         Api.getService(Tags.base_url).getserviceprice().enqueue(new Callback<ServicePriceModel>() {
             @Override
             public void onResponse(Call<ServicePriceModel> call, Response<ServicePriceModel> response) {
@@ -447,7 +447,7 @@ sendMessage(response.body());
 
                     // edt_pass.setText("");
                     //  updateprofile();
-                    updatesrvice(response. body());
+                    updatesrvice(response.body());
                 } else {
 
                     try {
@@ -466,8 +466,7 @@ sendMessage(response.body());
                 try {
                     //  Toast.makeText(homeActivity, getString(R.string.something), Toast.LENGTH_SHORT).show();
                     Log.e("Error", t.getMessage());
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -477,10 +476,11 @@ sendMessage(response.body());
     }
 
     private void updatesrvice(ServicePriceModel body) {
-        this.servicepricemodel=body;
-        tv_price.setText(activity.getResources().getString(R.string.price)+servicepricemodel.getCreate_cv());
+        this.servicepricemodel = body;
+        tv_price.setText(activity.getResources().getString(R.string.price) + servicepricemodel.getCreate_cv());
 
     }
+
     private void get_cvinfo() {
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
@@ -619,59 +619,60 @@ sendMessage(response.body());
             // editImageProfile(userModel.getUser().getId()+"",fileUri1.toString());
 
 
-        }
-        else  if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+        } else if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
 
-            Log.e("kvnnvjvb",data.getStringExtra("text"));
-
-
-
+            Log.e("kvnnvjvb", data.getStringExtra("text"));
 
 
         }
 
     }
+
     private boolean notidisfound(int position) {
-        for(int i=0;i<skillid.size();i++){
-            if(skillsList.get(position).getId()==skillid.get(i)){
+        for (int i = 0; i < skillid.size(); i++) {
+            if (skillsList.get(position).getId() == skillid.get(i)) {
                 return false;
             }
         }
         return true;
     }
+
     public void deletitem(int layoutPosition) {
         skills.remove(layoutPosition);
         skillid.remove(layoutPosition);
         skillAdapter.notifyDataSetChanged();
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("gggggg",preferences.Ispaid(activity)+"");
-        if(order_id!=0){
-            if(preferences.Ispaid(activity)){
+        Log.e("gggggg", preferences.Ispaid(activity) + "");
+        if (order_id != 0) {
+            if (preferences.Ispaid(activity)) {
                 paid(1);
-            }
-            else {
+            } else {
                 paid(0);
-            }}
+            }
+        }
     }
+
     private void paid(int i) {
 
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).setpaid(order_id,i).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).setpaid(order_id, i).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if(i==1){
-                        Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();}
-                    else {
+                    if (i == 1) {
+                        Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
+                    } else {
                         Toast.makeText(activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
-                    }                   activity.Displayorder();
+                    }
+                    activity.Displayorder();
                     // Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
 
                 } else {

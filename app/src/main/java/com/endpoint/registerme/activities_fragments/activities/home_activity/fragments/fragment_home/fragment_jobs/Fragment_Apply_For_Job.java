@@ -61,11 +61,11 @@ import retrofit2.Response;
 
 
 public class Fragment_Apply_For_Job extends Fragment {
-private UserModel userModel;
-private Preferences preferences;
-private Home_Activity activity;
-private EditText edt_link;
-private Button bt_send;
+    private UserModel userModel;
+    private Preferences preferences;
+    private Home_Activity activity;
+    private EditText edt_link;
+    private Button bt_send;
     private final int File_REQ1 = 2;
     private Uri fileUri1 = null;
     private final String READ_PERM = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -73,7 +73,7 @@ private Button bt_send;
     private ServicePriceModel servicepricemodel;
     public static final String KEY = "gQq9M^TFrFs~FJPr";        // TODO: Insert your Key here
     public static final String STORE_ID = "22865";    // TODO: Insert your Store ID here
-    public static final String EMAIL= "al-waafi8567@hotmail.com";
+    public static final String EMAIL = "al-waafi8567@hotmail.com";
     public static final boolean isSecurityEnabled = false;
     private int order_id;
     private TextView tv_price;
@@ -89,13 +89,13 @@ private Button bt_send;
     }
 
     private void initView(View view) {
-activity =(Home_Activity)getActivity();
+        activity = (Home_Activity) getActivity();
         Paper.init(activity);
-        preferences= Preferences.getInstance();
-        userModel=preferences.getUserData(activity);
-        edt_link=view.findViewById(R.id.edt_link);
-        bt_send=view.findViewById(R.id.btn_send);
-        tv_price=view.findViewById(R.id.tv_price);
+        preferences = Preferences.getInstance();
+        userModel = preferences.getUserData(activity);
+        edt_link = view.findViewById(R.id.edt_link);
+        bt_send = view.findViewById(R.id.btn_send);
+        tv_price = view.findViewById(R.id.tv_price);
         bt_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,19 +105,20 @@ activity =(Home_Activity)getActivity();
 
 
     }
-    public void sendMessage(ResponseBody body){
+
+    public void sendMessage(ResponseBody body) {
         JSONObject obj = null;
 
         try {
-            String re=body.string();
-            Log.e("data",re);
+            String re = body.string();
+            Log.e("data", re);
             obj = new JSONObject(re);
             // Log.e("data",obj.stri);
-            order_id=obj.getInt("id");
+            order_id = obj.getInt("id");
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e("data",e.getMessage());
+            Log.e("data", e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -132,8 +133,9 @@ activity =(Home_Activity)getActivity();
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.endpoint.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
+
     private MobileRequest getMobileRequest() {
         MobileRequest mobile = new MobileRequest();
         mobile.setStore(STORE_ID);                       // Store ID
@@ -193,8 +195,6 @@ activity =(Home_Activity)getActivity();
         }*/
 
 
-
-
         Api.getService(Tags.base_url).getserviceprice().enqueue(new Callback<ServicePriceModel>() {
             @Override
             public void onResponse(Call<ServicePriceModel> call, Response<ServicePriceModel> response) {
@@ -206,7 +206,7 @@ activity =(Home_Activity)getActivity();
 
                     // edt_pass.setText("");
                     //  updateprofile();
-                    updatesrvice(response. body());
+                    updatesrvice(response.body());
                 } else {
 
                     try {
@@ -225,8 +225,7 @@ activity =(Home_Activity)getActivity();
                 try {
                     //  Toast.makeText(homeActivity, getString(R.string.something), Toast.LENGTH_SHORT).show();
                     Log.e("Error", t.getMessage());
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -236,48 +235,46 @@ activity =(Home_Activity)getActivity();
     }
 
     private void updatesrvice(ServicePriceModel body) {
-        this.servicepricemodel=body;
-        tv_price.setText(activity.getResources().getString(R.string.price)+servicepricemodel.getApply_job());
+        this.servicepricemodel = body;
+        tv_price.setText(activity.getResources().getString(R.string.price) + servicepricemodel.getApply_job());
 
     }
+
     private void chechdata() {
-      link=edt_link.getText().toString();
-        if(!TextUtils.isEmpty(link)){
+        link = edt_link.getText().toString();
+        if (!TextUtils.isEmpty(link)) {
             edt_link.setError(null);
-            if(userModel!=null){
-CreateUserNotSignInAlertDialog(activity);
-            }
-            else {
+            if (userModel != null) {
+                CreateUserNotSignInAlertDialog(activity);
+            } else {
                 Common.CreateUserNotSignInAlertDialog(activity);
             }
-        }
-        else {
-            if(TextUtils.isEmpty(link)){
+        } else {
+            if (TextUtils.isEmpty(link)) {
                 edt_link.setError(getResources().getString(R.string.field_req));
-            }
-            else {
+            } else {
                 edt_link.setError("");
             }
         }
     }
 
     private void Send_link(String link) {
-Log.e("kkkkkk",fileUri1.toString());
+        Log.e("kkkkkk", fileUri1.toString());
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        RequestBody name_part = Common.getRequestBodyText(userModel.getUser().getId()+"");
+        RequestBody name_part = Common.getRequestBodyText(userModel.getUser().getId() + "");
 
         RequestBody link_part = Common.getRequestBodyText(link);
         MultipartBody.Part image_part = Common.getMultiPartdoc(activity, Uri.parse(fileUri1.toString()), "cv");
 
-        Api.getService(Tags.base_url).send_link(name_part,link_part,image_part).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).send_link(name_part, link_part, image_part).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
                     sendMessage(response.body());
 //                    activity.Displayorder();
 
@@ -303,20 +300,21 @@ Log.e("kkkkkk",fileUri1.toString());
             }
         });
     }
+
     private void Send_linkwithoutimage(String link) {
-        Log.e("kkkkkk",fileUri1.toString());
+        Log.e("kkkkkk", fileUri1.toString());
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
 
 
-        Api.getService(Tags.base_url).send_link_without_image(userModel.getUser().getId()+"",link).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).send_link_without_image(userModel.getUser().getId() + "", link).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
                     sendMessage(response.body());
 //                    activity.Displayorder();
 
@@ -342,9 +340,11 @@ Log.e("kkkkkk",fileUri1.toString());
             }
         });
     }
+
     public static Fragment_Apply_For_Job newInstance() {
         return new Fragment_Apply_For_Job();
     }
+
     private void CheckReadPermission() {
         if (ActivityCompat.checkSelfPermission(activity, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{READ_PERM}, File_REQ1);
@@ -352,8 +352,8 @@ Log.e("kkkkkk",fileUri1.toString());
             select_photo(File_REQ1);
         }
     }
-    public  void CreateUserNotSignInAlertDialog(final Context context)
-    {
+
+    public void CreateUserNotSignInAlertDialog(final Context context) {
 
 
         final AlertDialog dialog = new AlertDialog.Builder(context)
@@ -361,7 +361,7 @@ Log.e("kkkkkk",fileUri1.toString());
                 .create();
 
 
-        View view = LayoutInflater.from(context).inflate(R.layout.question_dialog,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.question_dialog, null);
         Button btn_sign_in = view.findViewById(R.id.btn_sign_in);
         Button btn_cancel = view.findViewById(R.id.btn_cancel);
 
@@ -373,8 +373,7 @@ Log.e("kkkkkk",fileUri1.toString());
                 dialog.dismiss();
 
 
-                    CheckReadPermission();
-
+                CheckReadPermission();
 
 
             }
@@ -389,11 +388,12 @@ Log.e("kkkkkk",fileUri1.toString());
             }
         });
 
-        dialog.getWindow().getAttributes().windowAnimations= R.style.dialog_congratulation_animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.setView(view);
         dialog.show();
     }
+
     private void SelectFile(int file_req) {
 
 /*
@@ -425,6 +425,7 @@ Log.e("kkkkkk",fileUri1.toString());
         startActivityForResult(i2, File_REQ1);
 
     }
+
     private void select_photo(int img1) {
         Intent intent;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -469,18 +470,15 @@ Log.e("kkkkkk",fileUri1.toString());
             Send_link(link);
 
 
-        }
-        else  if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+        } else if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
 
-            Log.e("kvnnvjvb",data.getStringExtra("text"));
-
-
-
+            Log.e("kvnnvjvb", data.getStringExtra("text"));
 
 
         }
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -501,31 +499,33 @@ Log.e("kkkkkk",fileUri1.toString());
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("gggggg",preferences.Ispaid(activity)+"");
-        if(order_id!=0){
-            if(preferences.Ispaid(activity)){
+        Log.e("gggggg", preferences.Ispaid(activity) + "");
+        if (order_id != 0) {
+            if (preferences.Ispaid(activity)) {
                 paid(1);
-            }
-            else {
+            } else {
                 paid(0);
-            }}
+            }
+        }
     }
+
     private void paid(int i) {
 
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).setpaid(order_id,i).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).setpaid(order_id, i).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if(i==1){
-                        Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();}
-                    else {
+                    if (i == 1) {
+                        Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
+                    } else {
                         Toast.makeText(activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
-                    }                      activity.Displayorder();
+                    }
+                    activity.Displayorder();
                     // Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
 
                 } else {

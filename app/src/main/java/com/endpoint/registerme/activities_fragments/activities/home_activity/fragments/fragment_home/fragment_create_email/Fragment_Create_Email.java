@@ -71,11 +71,12 @@ public class Fragment_Create_Email extends Fragment {
     private ServicePriceModel servicepricemodel;
     public static final String KEY = "gQq9M^TFrFs~FJPr";        // TODO: Insert your Key here
     public static final String STORE_ID = "22865";    // TODO: Insert your Store ID here
-    public static final String EMAIL= "al-waafi8567@hotmail.com";     // TODO: Insert the customer email here
+    public static final String EMAIL = "al-waafi8567@hotmail.com";     // TODO: Insert the customer email here
 
-private TextView tv_price;
+    private TextView tv_price;
     public static final boolean isSecurityEnabled = false;
     private int order_id;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ private TextView tv_price;
         Paper.init(home_activity);
         cuurent_language = Paper.book().read("lang", Locale.getDefault().getLanguage());
         preferences = Preferences.getInstance();
-        tv_price=view.findViewById(R.id.tv_price);
+        tv_price = view.findViewById(R.id.tv_price);
         userModel = preferences.getUserData(home_activity);
         mail_adapter = new Mail_Adapter(dataList, home_activity, this);
         rec_job = view.findViewById(R.id.recView);
@@ -121,19 +122,20 @@ private TextView tv_price;
         rec_job.setAdapter(mail_adapter);
 
     }
-    public void sendMessage(ResponseBody body){
+
+    public void sendMessage(ResponseBody body) {
         JSONObject obj = null;
 
         try {
-            String re=body.string();
-            Log.e("data",re);
+            String re = body.string();
+            Log.e("data", re);
             obj = new JSONObject(re);
             // Log.e("data",obj.stri);
-            order_id=obj.getInt("id");
+            order_id = obj.getInt("id");
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e("data",e.getMessage());
+            Log.e("data", e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -148,8 +150,9 @@ private TextView tv_price;
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.endpoint.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
+
     private MobileRequest getMobileRequest() {
         Log.e("adddfmgg", com.endpoint.registerme.models.Address.getAddress());
         MobileRequest mobile = new MobileRequest();
@@ -210,8 +213,6 @@ private TextView tv_price;
         }*/
 
 
-
-
         Api.getService(Tags.base_url).getserviceprice().enqueue(new Callback<ServicePriceModel>() {
             @Override
             public void onResponse(Call<ServicePriceModel> call, Response<ServicePriceModel> response) {
@@ -223,7 +224,7 @@ private TextView tv_price;
 
                     // edt_pass.setText("");
                     //  updateprofile();
-                    updatesrvice(response. body());
+                    updatesrvice(response.body());
                 } else {
 
                     try {
@@ -242,8 +243,7 @@ private TextView tv_price;
                 try {
                     //  Toast.makeText(homeActivity, getString(R.string.something), Toast.LENGTH_SHORT).show();
                     Log.e("Error", t.getMessage());
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -253,16 +253,17 @@ private TextView tv_price;
     }
 
     private void updatesrvice(ServicePriceModel body) {
-        this.servicepricemodel=body;
-        tv_price.setText(home_activity.getResources().getString(R.string.price)+servicepricemodel.getCreate_email());
+        this.servicepricemodel = body;
+        tv_price.setText(home_activity.getResources().getString(R.string.price) + servicepricemodel.getCreate_email());
     }
+
     private void chechdata() {
         String name = edt_name.getText().toString();
         String pass = edt_password.getText().toString();
         if (email_id != -1 && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(pass) && pass.length() >= 6) {
             edt_name.setError(null);
             edt_password.setError(null);
-            Common.CloseKeyBoard(home_activity,edt_name);
+            Common.CloseKeyBoard(home_activity, edt_name);
 
             if (userModel != null) {
                 Create_email(name, pass);
@@ -301,7 +302,7 @@ private TextView tv_price;
                 if (response.isSuccessful()) {
                     Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
                     //home_activity.Displayorder();
-sendMessage(response.body());
+                    sendMessage(response.body());
                     // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
 
                 } else {
@@ -382,16 +383,13 @@ sendMessage(response.body());
     public void setid(int id) {
         this.email_id = id;
     }
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 &&  data != null) {
+        if (requestCode == 1 && data != null) {
 
-Log.e("kvnnvjvb",data.getStringExtra("text"));
-
-
-
+            Log.e("kvnnvjvb", data.getStringExtra("text"));
 
 
         }
@@ -400,29 +398,30 @@ Log.e("kvnnvjvb",data.getStringExtra("text"));
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("gggggg",preferences.Ispaid(home_activity)+""+order_id);
-        if(order_id!=0){
-        if(preferences.Ispaid(home_activity)){
-            paid(1);
+        Log.e("gggggg", preferences.Ispaid(home_activity) + "" + order_id);
+        if (order_id != 0) {
+            if (preferences.Ispaid(home_activity)) {
+                paid(1);
+            } else {
+                paid(0);
+            }
         }
-        else {
-            paid(0);
-        }}
     }
+
     private void paid(int i) {
 
         final ProgressDialog dialog = Common.createProgressDialog(home_activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).setpaid(order_id,i).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).setpaid(order_id, i).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if(i==1){
-                    Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();}
-                    else {
+                    if (i == 1) {
+                        Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
+                    } else {
                         Toast.makeText(home_activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
                     }
                     home_activity.Displayorder();

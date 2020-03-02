@@ -68,14 +68,14 @@ import retrofit2.Response;
 
 
 public class Fragment_Government_Sector extends Fragment {
-private RecyclerView rec_job;
-private List<AllInFo_Model.Data.Gcompanies> dataList;
-private Government_Job_Adapter governmentJob_adapter;
-private Home_Activity activity;
-private LinearLayout ll_no_store;
+    private RecyclerView rec_job;
+    private List<AllInFo_Model.Data.Gcompanies> dataList;
+    private Government_Job_Adapter governmentJob_adapter;
+    private Home_Activity activity;
+    private LinearLayout ll_no_store;
     private ProgressBar progBar;
     private Button bt_send;
-    private int company_id=-1;
+    private int company_id = -1;
     private Preferences preferences;
     private UserModel userModel;
     private final int File_REQ1 = 2;
@@ -84,7 +84,7 @@ private LinearLayout ll_no_store;
     private ServicePriceModel servicepricemodel;
     public static final String KEY = "gQq9M^TFrFs~FJPr";        // TODO: Insert your Key here
     public static final String STORE_ID = "22865";    // TODO: Insert your Store ID here
-    public static final String EMAIL= "al-waafi8567@hotmail.com";
+    public static final String EMAIL = "al-waafi8567@hotmail.com";
     public static final boolean isSecurityEnabled = false;
     private int order_id;
     private TextView tv_price;
@@ -101,18 +101,18 @@ private LinearLayout ll_no_store;
     }
 
     private void initView(View view) {
-activity =(Home_Activity)getActivity();
-        preferences= Preferences.getInstance();
-        userModel=preferences.getUserData(activity);
-dataList=new ArrayList<>();
-governmentJob_adapter =new Government_Job_Adapter(dataList, activity,this);
-rec_job=view.findViewById(R.id.recView);
-rec_job.setLayoutManager(new GridLayoutManager(activity,3));
-rec_job.setAdapter(governmentJob_adapter);
-ll_no_store=view.findViewById(R.id.ll_no_store);
+        activity = (Home_Activity) getActivity();
+        preferences = Preferences.getInstance();
+        userModel = preferences.getUserData(activity);
+        dataList = new ArrayList<>();
+        governmentJob_adapter = new Government_Job_Adapter(dataList, activity, this);
+        rec_job = view.findViewById(R.id.recView);
+        rec_job.setLayoutManager(new GridLayoutManager(activity, 3));
+        rec_job.setAdapter(governmentJob_adapter);
+        ll_no_store = view.findViewById(R.id.ll_no_store);
         progBar = view.findViewById(R.id.progBar);
-        bt_send=view.findViewById(R.id.btn_send);
-        tv_price=view.findViewById(R.id.tv_price);
+        bt_send = view.findViewById(R.id.btn_send);
+        tv_price = view.findViewById(R.id.tv_price);
 
 
         progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
@@ -125,19 +125,20 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
             }
         });
     }
-    public void sendMessage(ResponseBody body){
+
+    public void sendMessage(ResponseBody body) {
         JSONObject obj = null;
 
         try {
-            String re=body.string();
-            Log.e("data",re);
+            String re = body.string();
+            Log.e("data", re);
             obj = new JSONObject(re);
             // Log.e("data",obj.stri);
-            order_id=obj.getInt("id");
+            order_id = obj.getInt("id");
 
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e("data",e.getMessage());
+            Log.e("data", e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -152,8 +153,9 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.endpoint.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
+
     private MobileRequest getMobileRequest() {
         MobileRequest mobile = new MobileRequest();
         mobile.setStore(STORE_ID);                       // Store ID
@@ -213,8 +215,6 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
         }*/
 
 
-
-
         Api.getService(Tags.base_url).getserviceprice().enqueue(new Callback<ServicePriceModel>() {
             @Override
             public void onResponse(Call<ServicePriceModel> call, Response<ServicePriceModel> response) {
@@ -226,7 +226,7 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
 
                     // edt_pass.setText("");
                     //  updateprofile();
-                    updatesrvice(response. body());
+                    updatesrvice(response.body());
                 } else {
 
                     try {
@@ -245,8 +245,7 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
                 try {
                     //  Toast.makeText(homeActivity, getString(R.string.something), Toast.LENGTH_SHORT).show();
                     Log.e("Error", t.getMessage());
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -256,41 +255,42 @@ ll_no_store=view.findViewById(R.id.ll_no_store);
     }
 
     private void updatesrvice(ServicePriceModel body) {
-        this.servicepricemodel=body;
-        tv_price.setText(activity.getResources().getString(R.string.price)+servicepricemodel.getApply_job());
+        this.servicepricemodel = body;
+        tv_price.setText(activity.getResources().getString(R.string.price) + servicepricemodel.getApply_job());
 
     }
+
     private void checkdata() {
-        if(company_id!=-1){
-            if(userModel!=null){
-CreateUserNotSignInAlertDialog(activity);            }
-            else {
+        if (company_id != -1) {
+            if (userModel != null) {
+                CreateUserNotSignInAlertDialog(activity);
+            } else {
                 Common.CreateUserNotSignInAlertDialog(activity);
             }
-        }
-        else {
-            Toast.makeText(activity,getResources().getString(R.string.choose_company),Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(activity, getResources().getString(R.string.choose_company), Toast.LENGTH_LONG).show();
         }
     }
+
     private void Company_odere() {
 
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        RequestBody name_part = Common.getRequestBodyText(userModel.getUser().getId()+"");
+        RequestBody name_part = Common.getRequestBodyText(userModel.getUser().getId() + "");
 
-        RequestBody company_part = Common.getRequestBodyText(company_id+"");
+        RequestBody company_part = Common.getRequestBodyText(company_id + "");
         MultipartBody.Part image_part = Common.getMultiPartdoc(activity, Uri.parse(fileUri1.toString()), "cv");
-        Api.getService(Tags.base_url).send_company(name_part,company_part,image_part).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).send_company(name_part, company_part, image_part).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
 
-                  //  Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
-                   // activity.Displayorder();
+                    //  Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
+                    // activity.Displayorder();
                     sendMessage(response.body());
                 } else {
                     Common.CreateSignAlertDialog(activity, getString(R.string.failed));
@@ -314,8 +314,8 @@ CreateUserNotSignInAlertDialog(activity);            }
             }
         });
     }
-    public  void CreateUserNotSignInAlertDialog(final Context context)
-    {
+
+    public void CreateUserNotSignInAlertDialog(final Context context) {
 
 
         final AlertDialog dialog = new AlertDialog.Builder(context)
@@ -323,7 +323,7 @@ CreateUserNotSignInAlertDialog(activity);            }
                 .create();
 
 
-        View view = LayoutInflater.from(context).inflate(R.layout.question_dialog,null);
+        View view = LayoutInflater.from(context).inflate(R.layout.question_dialog, null);
         Button btn_sign_in = view.findViewById(R.id.btn_sign_in);
         Button btn_cancel = view.findViewById(R.id.btn_cancel);
 
@@ -338,7 +338,6 @@ CreateUserNotSignInAlertDialog(activity);            }
                 CheckReadPermission();
 
 
-
             }
         });
 
@@ -347,28 +346,29 @@ CreateUserNotSignInAlertDialog(activity);            }
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-Company_oderewithouimage();
+                Company_oderewithouimage();
             }
         });
 
-        dialog.getWindow().getAttributes().windowAnimations= R.style.dialog_congratulation_animation;
+        dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_congratulation_animation;
         dialog.setCanceledOnTouchOutside(false);
         dialog.setView(view);
         dialog.show();
     }
+
     private void Company_oderewithouimage() {
 
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
 
-        Api.getService(Tags.base_url).send_company(userModel.getUser().getId()+"",company_id+"").enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).send_company(userModel.getUser().getId() + "", company_id + "").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
 
                     //  Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
                     // activity.Displayorder();
@@ -397,19 +397,20 @@ Company_oderewithouimage();
     }
 
     public void setid(int id) {
-        this.company_id=id;
+        this.company_id = id;
     }
+
     public static Fragment_Government_Sector newInstance() {
         return new Fragment_Government_Sector();
     }
 
     private void get_goverjob() {
-     progBar.setVisibility(View.VISIBLE);
+        progBar.setVisibility(View.VISIBLE);
         Api.getService(Tags.base_url).get_Info().enqueue(new Callback<AllInFo_Model>() {
             @Override
             public void onResponse(Call<AllInFo_Model> call, Response<AllInFo_Model> response) {
-progBar.setVisibility(View.GONE);
-dataList.clear();
+                progBar.setVisibility(View.GONE);
+                dataList.clear();
                 if (response.isSuccessful()) {
                     if (response.body().getData().getGcompanies().size() > 0) {
                         ll_no_store.setVisibility(View.GONE);
@@ -442,8 +443,8 @@ dataList.clear();
             public void onFailure(Call<AllInFo_Model> call, Throwable t) {
                 try {
                     Log.e("Error", t.getMessage());
-                   progBar.setVisibility(View.GONE);
-                    Toast.makeText(activity,getString(R.string.something), Toast.LENGTH_SHORT).show();
+                    progBar.setVisibility(View.GONE);
+                    Toast.makeText(activity, getString(R.string.something), Toast.LENGTH_SHORT).show();
 
 //error.setText(activity.getString(R.string.faild));
                     //recc.setVisibility(View.GONE);
@@ -455,6 +456,7 @@ dataList.clear();
         });
 
     }
+
     private void CheckReadPermission() {
         if (ActivityCompat.checkSelfPermission(activity, READ_PERM) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, new String[]{READ_PERM}, File_REQ1);
@@ -545,46 +547,44 @@ dataList.clear();
             //String type = data.getType();
             // Log.e("datass",type);
             // editImageProfile(userModel.getUser().getId()+"",fileUri1.toString());(link);
-Company_odere();
+            Company_odere();
 
-        }
-        else  if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+        } else if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
 
-            Log.e("kvnnvjvb",data.getStringExtra("text"));
-
-
-
+            Log.e("kvnnvjvb", data.getStringExtra("text"));
 
 
         }
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("gggggg",preferences.Ispaid(activity)+"");
-        if(order_id!=0){
-            if(preferences.Ispaid(activity)){
+        Log.e("gggggg", preferences.Ispaid(activity) + "");
+        if (order_id != 0) {
+            if (preferences.Ispaid(activity)) {
                 paid(1);
-            }
-            else {
+            } else {
                 paid(0);
-            }}
+            }
+        }
     }
+
     private void paid(int i) {
 
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).setpaid(order_id,i).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).setpaid(order_id, i).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if(i==1){
-                        Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();}
-                    else {
+                    if (i == 1) {
+                        Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
+                    } else {
                         Toast.makeText(activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
                     }
                     activity.Displayorder();
