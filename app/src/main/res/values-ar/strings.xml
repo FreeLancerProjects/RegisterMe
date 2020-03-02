@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">سجلنى</string>
-    <string name="map_api_key">AIzaSyCbc2Y5AIwZ8uUeHRUXiozGN3CnpjKT0oI</string>
+    <string name="map_api_key">AIzaSyArjmbYWTWZhDFFtPOLRLKYwjtBDkOEGrY</string>
     <string name="cancel">إلغاء</string>
     <string name="suc"> تم بنجاح !</string>
     <string name="field_req">الحقل مطلوب</string>

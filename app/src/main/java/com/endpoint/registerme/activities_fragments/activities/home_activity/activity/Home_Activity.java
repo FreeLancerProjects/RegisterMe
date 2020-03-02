@@ -1,16 +1,26 @@
 package com.endpoint.registerme.activities_fragments.activities.home_activity.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.endpoint.registerme.R;
@@ -30,12 +40,29 @@ import com.endpoint.registerme.activities_fragments.activities.home_activity.fra
 import com.endpoint.registerme.activities_fragments.activities.home_activity.fragments.fragment_home.fragmnet_more.Fragment_Terms_Conditions;
 import com.endpoint.registerme.activities_fragments.activities.sign_in_sign_up_activity.activity.Login_Activity;
 import com.endpoint.registerme.language.Language_Helper;
+import com.endpoint.registerme.models.Address;
 import com.endpoint.registerme.models.Order_Model;
+import com.endpoint.registerme.models.PlaceGeocodeData;
 import com.endpoint.registerme.models.UserModel;
 import com.endpoint.registerme.preferences.Preferences;
 import com.endpoint.registerme.remote.Api;
 import com.endpoint.registerme.share.Common;
 import com.endpoint.registerme.tags.Tags;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,7 +86,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Home_Activity extends AppCompatActivity {
+public class Home_Activity extends AppCompatActivity   implements  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private FragmentManager fragmentManager;
     private int fragment_count = 0;
     private String cuurent_language;
@@ -79,7 +106,13 @@ public class Home_Activity extends AppCompatActivity {
     private Fragment_Create_Email fragment_create_email;
     private Fragment_Create_Edit_Cv fragment_create_edit_cv;
     private Fragment_Jobs fragment_jobs;
-
+    private double lat = 0.0, lng = 0.0;
+    private String address = "";
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
+    private final String fineLocPerm = Manifest.permission.ACCESS_FINE_LOCATION;
+    private final int loc_req = 1225;
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -93,12 +126,13 @@ public class Home_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         initView();
         if (savedInstanceState == null) {
-            //           CheckPermission();
+                     CheckPermission();
             if (FirebaseAuth.getInstance().getCurrentUser() != null) {
                 Log.e("user", Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getPhoneNumber());
                 FirebaseAuth.getInstance().getCurrentUser().delete();
 
                 FirebaseAuth.getInstance().signOut();
+
 
             }
             DisplayFragmentHome();
@@ -715,5 +749,157 @@ public class Home_Activity extends AppCompatActivity {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+        if (googleApiClient!=null)
+        {
+            if (locationCallback!=null)
+            {
+                LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
+                googleApiClient.disconnect();
+                googleApiClient = null;
+            }
+        }
     }
+    private void CheckPermission()
+    {
+        if (ActivityCompat.checkSelfPermission(this,fineLocPerm) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{fineLocPerm}, loc_req);
+        } else {
+
+            initGoogleApi();
+        }
+    }
+    private void initGoogleApi() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        googleApiClient.connect();
+    }
+    private void getGeoData(final double lat, double lng) {
+        String location = lat + "," + lng;
+        Api.getService("https://maps.googleapis.com/maps/api/")
+                .getGeoData(location, cuurent_language, getString(R.string.map_api_key))
+                .enqueue(new Callback<PlaceGeocodeData>() {
+                    @Override
+                    public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+
+                            if (response.body().getResults().size() > 0) {
+                                address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
+
+                                Address.setAddress(address);
+                            }
+                        } else {
+
+                            try {
+                                Log.e("error_code", response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<PlaceGeocodeData> call, Throwable t) {
+                        try {
+
+                            Toast.makeText(Home_Activity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+
+                        }
+                    }
+                });
+    }
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        initLocationRequest();
+    }
+
+    private void initLocationRequest() {
+        locationRequest = LocationRequest.create();
+        locationRequest.setFastestInterval(1000);
+        locationRequest.setInterval(60000);
+        LocationSettingsRequest.Builder request = new LocationSettingsRequest.Builder();
+        request.addLocationRequest(locationRequest);
+        request.setAlwaysShow(false);
+
+
+        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, request.build());
+        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(@NonNull LocationSettingsResult locationSettingsResult) {
+                Status status = locationSettingsResult.getStatus();
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        startLocationUpdate();
+                        break;
+
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        try {
+                            status.startResolutionForResult(Home_Activity.this,100);
+                        } catch (IntentSender.SendIntentException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        if (googleApiClient!=null)
+        {
+            googleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private void startLocationUpdate()
+    {
+        locationCallback = new LocationCallback()
+        {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                onLocationChanged(locationResult.getLastLocation());
+            }
+        };
+        LocationServices.getFusedLocationProviderClient(this)
+                .requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper());
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        lat = location.getLatitude();
+        lng = location.getLongitude();
+        getGeoData(lat,lng);
+
+        if (googleApiClient!=null)
+        {
+            LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
+            googleApiClient.disconnect();
+            googleApiClient = null;
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100&&resultCode== Activity.RESULT_OK)
+        {
+
+            startLocationUpdate();
+        }}
 }

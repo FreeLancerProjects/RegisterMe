@@ -406,7 +406,7 @@ sendMessage(response.body());
         address.setCity("Saudi");                       // City : the minimum required details for a transaction to be processed
         address.setCountry("SA");                       // Country : Country must be sent as a 2 character ISO code. A list of country codes can be found at the end of this document. the minimum required details for a transaction to be processed
         address.setRegion("Saudi");                     // Region
-        address.setLine1("SIT G=Towe");                 // Street address – line 1: the minimum required details for a transaction to be processed
+        address.setLine1(com.endpoint.registerme.models.Address.getAddress());                 // Street address – line 1: the minimum required details for a transaction to be processed
         //address.setLine2("SIT G=Towe");               // (Optinal)
         //address.setLine3("SIT G=Towe");               // (Optinal)
         //address.setZip("SIT G=Towe");                 // (Optinal)

@@ -151,6 +151,7 @@ private TextView tv_price;
         startActivityForResult(intent,1);
     }
     private MobileRequest getMobileRequest() {
+        Log.e("adddfmgg", com.endpoint.registerme.models.Address.getAddress());
         MobileRequest mobile = new MobileRequest();
         mobile.setStore(STORE_ID);                       // Store ID
         mobile.setKey(KEY);                              // Authentication Key : The Authentication Key will be supplied by Telr as part of the Mobile API setup process after you request that this integration type is enabled for your account. This should not be stored permanently within the App.
@@ -181,7 +182,7 @@ private TextView tv_price;
         address.setCity("Saudi");                       // City : the minimum required details for a transaction to be processed
         address.setCountry("SA");                       // Country : Country must be sent as a 2 character ISO code. A list of country codes can be found at the end of this document. the minimum required details for a transaction to be processed
         address.setRegion("Saudi");                     // Region
-        address.setLine1("SIT G=Towe");                 // Street address – line 1: the minimum required details for a transaction to be processed
+        address.setLine1(com.endpoint.registerme.models.Address.getAddress());                 // Street address – line 1: the minimum required details for a transaction to be processed
         //address.setLine2("SIT G=Towe");               // (Optinal)
         //address.setLine3("SIT G=Towe");               // (Optinal)
         //address.setZip("SIT G=Towe");                 // (Optinal)

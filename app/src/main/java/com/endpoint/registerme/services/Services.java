@@ -7,6 +7,7 @@ import com.endpoint.registerme.models.BankDataModel;
 import com.endpoint.registerme.models.ImageTypeModel;
 import com.endpoint.registerme.models.NotificationDataModel;
 import com.endpoint.registerme.models.Order_Model;
+import com.endpoint.registerme.models.PlaceGeocodeData;
 import com.endpoint.registerme.models.Profile_Order_Model;
 import com.endpoint.registerme.models.ServicePriceModel;
 import com.endpoint.registerme.models.Slider_Model;
@@ -24,8 +25,13 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface Services {
+    @GET("geocode/json")
+    Call<PlaceGeocodeData> getGeoData(@Query(value = "latlng") String latlng,
+                                      @Query(value = "language") String language,
+                                      @Query(value = "key") String key);
     @FormUrlEncoded
     @POST("api/fireBase_token")
     Call<ResponseBody> updateToken(
