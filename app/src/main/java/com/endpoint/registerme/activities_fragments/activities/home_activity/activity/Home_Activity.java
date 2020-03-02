@@ -779,7 +779,7 @@ public class Home_Activity extends AppCompatActivity   implements  GoogleApiClie
     private void getGeoData(final double lat, double lng) {
         String location = lat + "," + lng;
         Api.getService("https://maps.googleapis.com/maps/api/")
-                .getGeoData(location, cuurent_language, getString(R.string.map_api_key))
+                .getGeoData(location, "en", getString(R.string.map_api_key))
                 .enqueue(new Callback<PlaceGeocodeData>() {
                     @Override
                     public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
