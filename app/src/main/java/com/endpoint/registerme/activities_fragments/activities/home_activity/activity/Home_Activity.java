@@ -113,6 +113,7 @@ public class Home_Activity extends AppCompatActivity   implements  GoogleApiClie
     private LocationCallback locationCallback;
     private final String fineLocPerm = Manifest.permission.ACCESS_FINE_LOCATION;
     private final int loc_req = 1225;
+    ProgressDialog dialog ;
     @Override
     protected void attachBaseContext(Context newBase) {
         Paper.init(newBase);
@@ -124,6 +125,9 @@ public class Home_Activity extends AppCompatActivity   implements  GoogleApiClie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+       dialog = Common.createProgressDialog(this, getString(R.string.wait));
+        dialog.setCancelable(false);
+
         initView();
         if (savedInstanceState == null) {
                      CheckPermission();
@@ -769,6 +773,8 @@ public class Home_Activity extends AppCompatActivity   implements  GoogleApiClie
         }
     }
     private void initGoogleApi() {
+        dialog.show();
+
         googleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
@@ -783,13 +789,14 @@ public class Home_Activity extends AppCompatActivity   implements  GoogleApiClie
                 .enqueue(new Callback<PlaceGeocodeData>() {
                     @Override
                     public void onResponse(Call<PlaceGeocodeData> call, Response<PlaceGeocodeData> response) {
-
+dialog.dismiss();
                         if (response.isSuccessful() && response.body() != null) {
 
                             if (response.body().getResults().size() > 0) {
                                 address = response.body().getResults().get(0).getFormatted_address().replace("Unnamed Road,", "");
 
                                 Address.setAddress(address);
+
                             }
                         } else {
 
@@ -806,6 +813,7 @@ public class Home_Activity extends AppCompatActivity   implements  GoogleApiClie
                     @Override
                     public void onFailure(Call<PlaceGeocodeData> call, Throwable t) {
                         try {
+                            dialog.dismiss();
 
                             Toast.makeText(Home_Activity.this, getString(R.string.something), Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
@@ -902,4 +910,19 @@ public class Home_Activity extends AppCompatActivity   implements  GoogleApiClie
 
             startLocationUpdate();
         }}
-}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == loc_req)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                initGoogleApi();
+            }else
+            {
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }}

@@ -311,7 +311,12 @@ private Preferences preferences;
     public void pay(int layoutPosition) {
 order_id=dataList.get(layoutPosition).getId();
 orders=dataList.get(layoutPosition);
-sendMessage();
+if(com.endpoint.registerme.models.Address.getAddress()!=null){
+sendMessage();}
+else {
+    Common.CreateSuccessDialog2(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+
+}
     }
     @Override
     public void onResume() {
