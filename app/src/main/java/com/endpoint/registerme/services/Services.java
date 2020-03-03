@@ -32,6 +32,7 @@ public interface Services {
     Call<PlaceGeocodeData> getGeoData(@Query(value = "latlng") String latlng,
                                       @Query(value = "language") String language,
                                       @Query(value = "key") String key);
+
     @FormUrlEncoded
     @POST("api/fireBase_token")
     Call<ResponseBody> updateToken(
