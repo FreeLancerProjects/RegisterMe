@@ -301,8 +301,11 @@ private TextView tv_price;
                 if (response.isSuccessful()) {
                     Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
                     //home_activity.Displayorder();
-sendMessage(response.body());
-                    // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
+                    if(com.endpoint.registerme.models.Address.getAddress()!=null){
+                        sendMessage(response.body());}
+                    else {
+                        Common.CreateSuccessDialog(home_activity,home_activity.getResources().getString(R.string.fetch_your_location_first));
+                    }                    // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
 
                 } else {
                     Common.CreateSignAlertDialog(home_activity, getString(R.string.failed));

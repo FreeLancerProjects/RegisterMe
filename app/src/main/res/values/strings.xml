@@ -131,4 +131,5 @@
     <string name="ratig">Ratig</string>
     <string name="rate">Rate Company</string>
     <string name="pay">Pay</string>
+    <string name="fetch_your_location_first">Fetch Your Location First</string>
 </resources>

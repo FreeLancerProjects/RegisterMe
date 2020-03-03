@@ -129,4 +129,5 @@
     <string name="ratig">تقييم</string>
     <string name="rate">تقييم الشركه</string>
     <string name="pay">دفع</string>
+    <string name="fetch_your_location_first">حدد موقعك اولا </string>
 </resources>

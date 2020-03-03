@@ -291,8 +291,11 @@ CreateUserNotSignInAlertDialog(activity);            }
 
                   //  Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
                    // activity.Displayorder();
-                    sendMessage(response.body());
-                } else {
+                    if(com.endpoint.registerme.models.Address.getAddress()!=null){
+                        sendMessage(response.body());}
+                    else {
+                        Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                    }                 } else {
                     Common.CreateSignAlertDialog(activity, getString(R.string.failed));
 
                     try {
@@ -372,8 +375,11 @@ Company_oderewithouimage();
 
                     //  Common.CreateSignAlertDialog(activity, getResources().getString(R.string.sucess));
                     // activity.Displayorder();
-                    sendMessage(response.body());
-                } else {
+                    if(com.endpoint.registerme.models.Address.getAddress()!=null){
+                        sendMessage(response.body());}
+                    else {
+                        Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                    }                 } else {
                     Common.CreateSignAlertDialog(activity, getString(R.string.failed));
 
                     try {

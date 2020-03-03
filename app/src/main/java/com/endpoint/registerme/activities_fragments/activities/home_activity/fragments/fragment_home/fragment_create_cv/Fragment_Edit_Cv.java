@@ -270,8 +270,11 @@ public class Fragment_Edit_Cv extends Fragment {
                         // Common.CreateSignAlertDialog(adsActivity,getResources().getString(R.string.suc));
                         Toast.makeText(activity, getString(R.string.suc), Toast.LENGTH_SHORT).show();
                       //  activity.Displayorder();
-sendMessage(response.body());
-                        //  adsActivity.finish(response.body().getId_advertisement());
+                        if(com.endpoint.registerme.models.Address.getAddress()!=null){
+                            sendMessage(response.body());}
+                        else {
+                            Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                        }                        //  adsActivity.finish(response.body().getId_advertisement());
 
                     } else {
                         try {

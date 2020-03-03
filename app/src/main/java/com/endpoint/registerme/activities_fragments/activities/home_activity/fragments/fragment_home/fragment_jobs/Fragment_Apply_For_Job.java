@@ -278,8 +278,11 @@ Log.e("kkkkkk",fileUri1.toString());
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
-                    sendMessage(response.body());
-//                    activity.Displayorder();
+                    if(com.endpoint.registerme.models.Address.getAddress()!=null){
+                        sendMessage(response.body());}
+                    else {
+                        Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                    } //                    activity.Displayorder();
 
                 } else {
                     Common.CreateSignAlertDialog(activity, getString(R.string.failed));
@@ -317,8 +320,11 @@ Log.e("kkkkkk",fileUri1.toString());
                 dialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(activity,getResources().getString(R.string.sucess),Toast.LENGTH_LONG).show();
-                    sendMessage(response.body());
-//                    activity.Displayorder();
+                    if(com.endpoint.registerme.models.Address.getAddress()!=null){
+                        sendMessage(response.body());}
+                    else {
+                        Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                    } //                    activity.Displayorder();
 
                 } else {
                     Common.CreateSignAlertDialog(activity, getString(R.string.failed));
