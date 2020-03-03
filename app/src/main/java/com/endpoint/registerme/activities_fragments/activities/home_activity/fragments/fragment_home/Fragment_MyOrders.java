@@ -61,13 +61,13 @@ public class Fragment_MyOrders extends Fragment {
     private Order_Adapter order_adapter;
     private GridLayoutManager gridLayoutManager;
     private LinearLayout ll_no_store;
-private Preferences preferences;
+    private Preferences preferences;
     private ServicePriceModel servicepricemodel;
 
     private UserModel userModel;
     public static final String KEY = "gQq9M^TFrFs~FJPr";        // TODO: Insert your Key here
     public static final String STORE_ID = "22865";    // TODO: Insert your Store ID here
-    public static final String EMAIL= "al-waafi8567@hotmail.com";     // TODO: Insert the customer email here
+    public static final String EMAIL = "al-waafi8567@hotmail.com";     // TODO: Insert the customer email here
 
     private TextView tv_price;
     public static final boolean isSecurityEnabled = false;
@@ -84,21 +84,21 @@ private Preferences preferences;
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_myorders, container, false);
+        View view = inflater.inflate(R.layout.fragment_myorders, container, false);
         intitview(view);
-        if(userModel!=null){
+        if (userModel != null) {
             getOrders();
         }
         getserviceprive();
 
         return view;
     }
-    public void sendMessage(){
+
+    public void sendMessage() {
 
 
         Intent intent = new Intent(activity, WebviewActivity.class);
@@ -112,8 +112,9 @@ private Preferences preferences;
         intent.putExtra(WebviewActivity.FAILED_ACTIVTY_CLASS_NAME, "com.endpoint.registerme.activities_fragments.activities.activity_payment.FailedTransationActivity");
         intent.putExtra(WebviewActivity.IS_SECURITY_ENABLED, isSecurityEnabled);
 
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
+
     private MobileRequest getMobileRequest() {
         MobileRequest mobile = new MobileRequest();
         mobile.setStore(STORE_ID);                       // Store ID
@@ -136,16 +137,14 @@ private Preferences preferences;
         tran.setCartid(String.valueOf(new BigInteger(128, new Random()))); //// Transaction cart ID : An example use of the cart ID field would be your own transaction or order reference.
         tran.setDescription("Test Mobile API");         // Transaction description
         tran.setCurrency("SAR");                        // Transaction currency : Currency must be sent as a 3 character ISO code. A list of currency codes can be found at the end of this document. For voids or refunds, this must match the currency of the original transaction.
-       if(orders.getType()==3){
-           tran.setAmount(servicepricemodel.getApply_job());
-       }
-       else if(orders.getType()==2){
-           tran.setAmount(servicepricemodel.getCreate_email());
-       }
-       else {
-           tran.setAmount(servicepricemodel.getCreate_cv());
-       }
-                              // Transaction amount : The transaction amount must be sent in major units, for example 9 dollars 50 cents must be sent as 9.50 not 950. There must be no currency symbol, and no thousands separators. Thedecimal part must be separated using a dot.
+        if (orders.getType() == 3) {
+            tran.setAmount(servicepricemodel.getApply_job());
+        } else if (orders.getType() == 2) {
+            tran.setAmount(servicepricemodel.getCreate_email());
+        } else {
+            tran.setAmount(servicepricemodel.getCreate_cv());
+        }
+        // Transaction amount : The transaction amount must be sent in major units, for example 9 dollars 50 cents must be sent as 9.50 not 950. There must be no currency symbol, and no thousands separators. Thedecimal part must be separated using a dot.
         //tran.setRef(???);                           // (Optinal) Previous transaction reference : The previous transaction reference is required for any continuous authority transaction. It must contain the reference that was supplied in the response for the original transaction.
         tran.setLangauge("en");                        // (Optinal) default is en -> English
         mobile.setTran(tran);
@@ -182,8 +181,6 @@ private Preferences preferences;
         }*/
 
 
-
-
         Api.getService(Tags.base_url).getserviceprice().enqueue(new Callback<ServicePriceModel>() {
             @Override
             public void onResponse(Call<ServicePriceModel> call, Response<ServicePriceModel> response) {
@@ -195,7 +192,7 @@ private Preferences preferences;
 
                     // edt_pass.setText("");
                     //  updateprofile();
-                    updatesrvice(response. body());
+                    updatesrvice(response.body());
                 } else {
 
                     try {
@@ -214,8 +211,7 @@ private Preferences preferences;
                 try {
                     //  Toast.makeText(homeActivity, getString(R.string.something), Toast.LENGTH_SHORT).show();
                     Log.e("Error", t.getMessage());
-                }
-                catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -225,20 +221,20 @@ private Preferences preferences;
     }
 
     private void updatesrvice(ServicePriceModel body) {
-        this.servicepricemodel=body;
+        this.servicepricemodel = body;
     }
+
     private void intitview(View view) {
-        dataList=new ArrayList<>();
+        dataList = new ArrayList<>();
         activity = (Home_Activity) getActivity();
-        preferences= Preferences.getInstance();
-        userModel=preferences.getUserData(activity);
+        preferences = Preferences.getInstance();
+        userModel = preferences.getUserData(activity);
 
         progBar = view.findViewById(R.id.progBar2);
-        ll_no_store=view.findViewById(R.id.ll_no_store);
-        rec_depart=view.findViewById(R.id.rec_orders);
+        ll_no_store = view.findViewById(R.id.ll_no_store);
+        rec_depart = view.findViewById(R.id.rec_orders);
 
         progBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-
 
 
         progBar.setVisibility(View.GONE);
@@ -247,9 +243,9 @@ private Preferences preferences;
         rec_depart.setItemViewCacheSize(25);
 
 
-        gridLayoutManager=new GridLayoutManager(activity,1);
+        gridLayoutManager = new GridLayoutManager(activity, 1);
         rec_depart.setLayoutManager(gridLayoutManager);
-        order_adapter =new Order_Adapter(dataList,activity,this);
+        order_adapter = new Order_Adapter(dataList, activity, this);
         rec_depart.setAdapter(order_adapter);
     }
 
@@ -309,47 +305,48 @@ private Preferences preferences;
 
 
     public void pay(int layoutPosition) {
-order_id=dataList.get(layoutPosition).getId();
-orders=dataList.get(layoutPosition);
-if(com.endpoint.registerme.models.Address.getAddress()!=null){
-sendMessage();}
-else {
-    Common.CreateSuccessDialog2(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+        order_id = dataList.get(layoutPosition).getId();
+        orders = dataList.get(layoutPosition);
+        if (com.endpoint.registerme.models.Address.getAddress() != null) {
+            sendMessage();
+        } else {
+            Common.CreateSuccessDialog2(activity, activity.getResources().getString(R.string.fetch_your_location_first));
 
-}
+        }
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("gggggg",preferences.Ispaid(activity)+""+order_id);
-        if(order_id!=0){
-            if(preferences.Ispaid(activity)){
+        Log.e("gggggg", preferences.Ispaid(activity) + "" + order_id);
+        if (order_id != 0) {
+            if (preferences.Ispaid(activity)) {
                 paid(1);
-            }
-            else {
+            } else {
                 paid(0);
-            }}
+            }
+        }
     }
+
     private void paid(int i) {
 
         final ProgressDialog dialog = Common.createProgressDialog(activity, getString(R.string.wait));
         dialog.setCancelable(false);
         dialog.show();
-        Api.getService(Tags.base_url).setpaid(order_id,i).enqueue(new Callback<ResponseBody>() {
+        Api.getService(Tags.base_url).setpaid(order_id, i).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if(i==1){
+                    if (i == 1) {
                         Toast.makeText(activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
-                    getOrders();
-                    
-                    }
-                    else {
+                        getOrders();
+
+                    } else {
                         Toast.makeText(activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
                     }
-                  //  activity.Displayorder();
+                    //  activity.Displayorder();
                     // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
 
                 } else {
