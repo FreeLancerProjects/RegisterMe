@@ -278,7 +278,7 @@ public class Fragment_Apply_For_Job extends Fragment {
                     if(com.endpoint.registerme.models.Address.getAddress()!=null){
                         sendMessage(response.body());}
                     else {
-                        Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                        Common.CreateSuccessDialog2(activity,activity.getResources().getString(R.string.fetch_your_location_first));
                     } //                    activity.Displayorder();
 
                 } else {
@@ -321,7 +321,7 @@ public class Fragment_Apply_For_Job extends Fragment {
                     if(com.endpoint.registerme.models.Address.getAddress()!=null){
                         sendMessage(response.body());}
                     else {
-                        Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                        Common.CreateSuccessDialog2(activity,activity.getResources().getString(R.string.fetch_your_location_first));
                     } //                    activity.Displayorder();
 
                 } else {

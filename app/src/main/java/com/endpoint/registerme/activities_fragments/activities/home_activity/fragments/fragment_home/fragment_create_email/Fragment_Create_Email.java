@@ -305,7 +305,7 @@ public class Fragment_Create_Email extends Fragment {
                     if(com.endpoint.registerme.models.Address.getAddress()!=null){
                         sendMessage(response.body());}
                     else {
-                        Common.CreateSuccessDialog(home_activity,home_activity.getResources().getString(R.string.fetch_your_location_first));
+                        Common.CreateSuccessDialog2(home_activity,home_activity.getResources().getString(R.string.fetch_your_location_first));
                     }                    // Common.CreateSignAlertDialog(home_activity, getResources().getString(R.string.sucess));
 
                 } else {
@@ -422,9 +422,9 @@ public class Fragment_Create_Email extends Fragment {
 
                 dialog.dismiss();
                 if (response.isSuccessful()) {
-                    if (i == 1) {
-                        Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();
-                    } else {
+                    if(i==1){
+                    Toast.makeText(home_activity, getResources().getString(R.string.sucess), Toast.LENGTH_LONG).show();}
+                    else {
                         Toast.makeText(home_activity, getResources().getString(R.string.order_sent), Toast.LENGTH_LONG).show();
                     }
                     home_activity.Displayorder();

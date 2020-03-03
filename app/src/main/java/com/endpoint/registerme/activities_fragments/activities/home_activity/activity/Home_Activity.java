@@ -759,7 +759,7 @@ public class Home_Activity extends AppCompatActivity   implements  GoogleApiClie
             }
         }
     }
-    private void CheckPermission()
+    public void CheckPermission()
     {
         if (ActivityCompat.checkSelfPermission(this,fineLocPerm) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{fineLocPerm}, loc_req);

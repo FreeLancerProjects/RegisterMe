@@ -294,7 +294,7 @@ public class Fragment_Government_Sector extends Fragment {
                     if(com.endpoint.registerme.models.Address.getAddress()!=null){
                         sendMessage(response.body());}
                     else {
-                        Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                        Common.CreateSuccessDialog2(activity,activity.getResources().getString(R.string.fetch_your_location_first));
                     }                 } else {
                     Common.CreateSignAlertDialog(activity, getString(R.string.failed));
 
@@ -378,7 +378,7 @@ public class Fragment_Government_Sector extends Fragment {
                     if(com.endpoint.registerme.models.Address.getAddress()!=null){
                         sendMessage(response.body());}
                     else {
-                        Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                        Common.CreateSuccessDialog2(activity,activity.getResources().getString(R.string.fetch_your_location_first));
                     }                 } else {
                     Common.CreateSignAlertDialog(activity, getString(R.string.failed));
 

@@ -273,7 +273,7 @@ public class Fragment_Edit_Cv extends Fragment {
                         if(com.endpoint.registerme.models.Address.getAddress()!=null){
                             sendMessage(response.body());}
                         else {
-                            Common.CreateSuccessDialog(activity,activity.getResources().getString(R.string.fetch_your_location_first));
+                            Common.CreateSuccessDialog2(activity,activity.getResources().getString(R.string.fetch_your_location_first));
                         }                        //  adsActivity.finish(response.body().getId_advertisement());
 
                     } else {

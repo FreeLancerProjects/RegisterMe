@@ -126,7 +126,13 @@ public class Common {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-            }
+
+                if (context instanceof Home_Activity)
+                {
+                    Home_Activity activity = (Home_Activity) context;
+                    activity.NavigateToSignInActivity(false);
+
+                }            }
         });
 
         dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
@@ -162,7 +168,37 @@ public class Common {
         dialog.setView(view);
         dialog.show();
     }
+    public static void CreateSuccessDialog2(Context context, String msg)
+    {
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setCancelable(true)
+                .create();
 
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_sign,null);
+        Button doneBtn = view.findViewById(R.id.doneBtn);
+        TextView tv_title = view.findViewById(R.id.tv_title);
+        tv_title.setText(R.string.suc);
+        TextView tv_msg = view.findViewById(R.id.tv_msg);
+        tv_msg.setText(msg);
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if (context instanceof Home_Activity)
+                {
+                    Home_Activity activity = (Home_Activity) context;
+                    activity.CheckPermission();
+
+                }
+            }
+        });
+
+        dialog.getWindow().getAttributes().windowAnimations=R.style.dialog_congratulation_animation;
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog_window_bg);
+        dialog.setView(view);
+        dialog.show();
+    }
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static String getImagePath(Context context, Uri uri)
     {
