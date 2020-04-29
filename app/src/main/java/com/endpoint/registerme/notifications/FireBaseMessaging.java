@@ -92,7 +92,6 @@ manageNotification(map);
         String sound_Path = "android.resource://" + getPackageName() + "/" + R.raw.not;
 
         String not_type = map.get("notification_type");
-Log.e("type",map.get("notification_type"));
      if(not_type.equals("order"))
         {
 
@@ -105,8 +104,90 @@ Log.e("type",map.get("notification_type"));
             }
             sendNotification_VersionNew(content,sound_Path);
         }
+     else {
 
-    }
+         String CHANNEL_ID = "my_channel_02";
+         CharSequence CHANNEL_NAME = "my_channel_name";
+         int IMPORTANCE = NotificationManager.IMPORTANCE_HIGH;
+
+         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+         final NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE);
+         channel.setShowBadge(true);
+         channel.setSound(Uri.parse(sound_Path), new AudioAttributes.Builder()
+                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                 .setUsage(AudioAttributes.USAGE_NOTIFICATION_EVENT)
+                 .setLegacyStreamType(AudioManager.STREAM_NOTIFICATION)
+                 .build()
+         );
+
+         builder.setChannelId(CHANNEL_ID);
+         builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
+         builder.setSmallIcon(R.drawable.ic_notification);
+
+         if (not_type.equals("general_message")) {
+
+
+             builder.setContentTitle(map.get("note_title"));
+
+
+
+                 builder.setContentText(map.get("note_text"));
+
+
+
+
+
+
+             final Target target = new Target() {
+                 @Override
+                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                     NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                     if (manager != null) {
+                         builder.setLargeIcon(bitmap);
+                         manager.createNotificationChannel(channel);
+                         manager.notify(new Random().nextInt(200), builder.build());
+                     }
+
+                 }
+
+                 @Override
+                 public void onBitmapFailed(Drawable errorDrawable) {
+
+                 }
+
+                 @Override
+                 public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                 }
+             };
+
+
+             new Handler(Looper.getMainLooper())
+                     .postDelayed(new Runnable() {
+                         @Override
+                         public void run() {
+
+                             String from_image = map.get("note_image");
+                             if (from_image.equals("0"))
+                             {
+
+                                 Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
+
+                             }else
+                             {
+                                 Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_image)).resize(250,250).into(target);
+
+                             }
+
+
+
+
+                         }
+                     }, 1);
+
+
+
+         } }    }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private void createOldNotificationVersion(Map<String, String> map)
@@ -129,6 +210,81 @@ else {
 }
             sendNotification_VersionOld(content,sound_Path);
         }
+     else {
+
+
+         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+         builder.setSound(Uri.parse(sound_Path), AudioManager.STREAM_NOTIFICATION);
+         builder.setSmallIcon(R.drawable.ic_notification);
+
+         if (not_type.equals("general_message")) {
+             builder.setContentTitle(map.get("note_title"));
+
+
+
+
+             String order_status = map.get("note_text");
+
+                 builder.setContentText(map.get(""));
+
+
+
+
+
+
+             final Target target = new Target() {
+                 @Override
+                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                     NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                     if (manager != null) {
+                         builder.setLargeIcon(bitmap);
+                         manager.notify(new Random().nextInt(200), builder.build());
+                     }
+
+                 }
+
+                 @Override
+                 public void onBitmapFailed(Drawable errorDrawable) {
+
+                 }
+
+                 @Override
+                 public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                 }
+             };
+
+
+             new Handler(Looper.getMainLooper())
+                     .postDelayed(new Runnable() {
+                         @Override
+                         public void run() {
+
+                             String from_image = map.get("note_image");
+                             if (from_image.equals("0"))
+                             {
+
+                                 Picasso.with(FireBaseMessaging.this).load(R.drawable.logo).into(target);
+
+                             }else
+                             {
+                                 Picasso.with(FireBaseMessaging.this).load(Uri.parse(Tags.IMAGE_URL + from_image)).resize(250,250).into(target);
+
+                             }
+
+
+
+
+                         }
+                     }, 1);
+
+
+
+         }
+
+
+     }
 
     }
 
