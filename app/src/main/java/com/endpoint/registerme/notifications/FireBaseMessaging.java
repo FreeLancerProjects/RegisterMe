@@ -226,7 +226,7 @@ else {
 
              String order_status = map.get("note_text");
 
-                 builder.setContentText(map.get(""));
+                 builder.setContentText(map.get("note_text"));
 
 
 
