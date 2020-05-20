@@ -104,12 +104,14 @@ public interface Services {
             @Part MultipartBody.Part partimageInsideList
 
     );
+
     @FormUrlEncoded
     @POST("api/job_order_link")
     Call<ResponseBody> send_link_without_image(
 
             @Field("user_id") String user_id,
             @Field("lik_job") String lik_job);
+
     @Multipart
     @POST("api/job_order_company")
     Call<ResponseBody> send_company(
@@ -178,27 +180,19 @@ public interface Services {
              @Field("qualification_id_fk") String qualification_id_fk,
              @Field("hand_graduation_id_fk") String hand_graduation_id_fk,
              @Field("skills_id[]") List<Integer> skills_id
-
-//
             );
 
     @FormUrlEncoded
     @POST("api/my_orders")
     Call<Order_Model> getorders(
-
             @Field("user_id") int user_id
-
-
     );
 
     @FormUrlEncoded
     @POST("api/my_end_order")
     Call<Profile_Order_Model> getorders_type(
-
             @Field("user_id") int user_id,
             @Field("type") int type
-
-
     );
 
     @FormUrlEncoded
@@ -242,10 +236,11 @@ public interface Services {
     Call<ResponseBody> setpaid(@Field("order_id") int order_id,
                                @Field("is_payed") int is_payed
     );
+
     @FormUrlEncoded
     @POST("api/rate")
     Call<ResponseBody> rate(@Field("user_id_fk") String user_id_fk,
-                               @Field("employee_id_fk") String employee_id_fk,
+                            @Field("employee_id_fk") String employee_id_fk,
                             @Field("rate") String rate
 
     );
